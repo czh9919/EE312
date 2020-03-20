@@ -1,5 +1,5 @@
 module NOTGATE(
-    input wire a_i1
+    input wire a_i
     output wire b_o
     input wire <.>
     output wire <?>
