@@ -13,52 +13,52 @@ module ALU(A,B,OP,C,Cout);
 		case (OP)
 			// !Arithmetic
 			OP_ADD: begin
-				//TODO
+				{Cout,C}=A+B
 			end
 			OP_SUB: begin
 				//TODO
 			end
 			// !Bitwise Boolean operation
 			OP_AND: begin
-				//TODO
+				{Cout,C}=A&B;
 			end
 			OP_OR: begin
 				//TODO
 			end
 			OP_NAND: begin
-				//TODO
+				{Cout,C}=A~&B;
 			end
 			OP_NOR: begin
 				//TODO
 			end
 			OP_XOR: begin
-				//TODO
+				{Cout,C}=A^B;
 			end
 			OP_XNOR: begin
 				//TODO
 			end
 			// !Logic
 			OP_ID: begin
-				//TODO
+				{Cout,C}=A;
 			end
 			OP_NOT: begin
 				//TODO
 			end
 			// !shift
 			OP_LRS: begin
-				//TODO
+				{Cout,C}=A >> 1 ;
 			end
 			OP_ARS: begin
 				//TODO
 			end
 			OP_RR: begin
-				//TODO
+				{Cout,C}=A[0]A[15:1] ;
 			end
 			OP_LLS: begin
 				//TODO
 			end
 			OP_ALS: begin
-				//TODO
+			    {Cout,C}=A <<< 1 ;
 			end
 			OP_RL: begin
 				//TODO
