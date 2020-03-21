@@ -15,7 +15,7 @@ module ALU(A,B,OP,C,Cout);
 				{Cout,C}=A+B
 			end
 			OP_SUB: begin
-				C = (A>B)?(A-B):(~(B-A-16'h1));
+				C = (A>=B)?(A-B):(~(B-A-16'h1));
 				Cout = 0;
 			end
 			// !Bitwise Boolean operation
