@@ -20,21 +20,24 @@ module ALU(A,B,OP,C,Cout);
 			end
 			// !Bitwise Boolean operation
 			OP_AND: begin
-				{Cout,C}=A&B;
+				C=A&B;
+				cout=0;
 			end
 			OP_OR: begin
 				C = A|B;
 				Cout=0;
 			end
 			OP_NAND: begin
-				{Cout,C}=A~&B;
+				C=A~&B;
+				cout=0
 			end
 			OP_NOR: begin
 				C = !(A | B);
 				Cout=0;
 			end
 			OP_XOR: begin
-				{Cout,C}=A^B;
+				C=A^B;
+				cout=0;
 			end
 			OP_XNOR: begin
 				C = A ^~ B;
@@ -42,7 +45,8 @@ module ALU(A,B,OP,C,Cout);
 			end
 			// !Logic
 			OP_ID: begin
-				{Cout,C}=A;
+				C=A;
+				cout=0;
 			end
 			OP_NOT: begin
 				C = ~A;
@@ -50,21 +54,24 @@ module ALU(A,B,OP,C,Cout);
 			end
 			// !shift
 			OP_LRS: begin
-				{Cout,C}=A >> 1 ;
+				C=A >> 1 ;
+				cout=0;
 			end
 			OP_ARS: begin
 				C = A>>>1;
 				Cout = 0;
 			end
 			OP_RR: begin
-				{Cout,C}=A[0]A[15:1] ;
+			    C=A[0]A[15:1] ;
+				Cout=0;
 			end
 			OP_LLS: begin
 				C = A <<1;
 				Cout = 0;
 			end
 			OP_ALS: begin
-			    {Cout,C}=A <<< 1 ;
+			    C=A <<< 1 ;
+				Cout=0;
 			end
 			OP_RL: begin
 				C = {{A[14:0]},{A[15]}};
