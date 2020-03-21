@@ -67,7 +67,7 @@ module ALU(A,B,OP,C,Cout);
 				//TODO
 			end
 			OP_RL: begin
-				C = {{A[14:0]},{A[15]}}
+				C = {{A[14:0]},{A[15]}};
 			end
 		endcase
 	end
