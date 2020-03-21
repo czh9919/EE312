@@ -8,7 +8,6 @@ module ALU(A,B,OP,C,Cout);
 	output [15:0]C;
 	output Cout;
 
-	//TODO
 	always @(*) begin
 		case (OP)
 			// !Arithmetic
@@ -16,52 +15,59 @@ module ALU(A,B,OP,C,Cout);
 				//TODO
 			end
 			OP_SUB: begin
-				//TODO
+				C = (A>B)?(A-B):(~(B-A));
+				Cout = 0;
 			end
 			// !Bitwise Boolean operation
 			OP_AND: begin
 				//TODO
 			end
 			OP_OR: begin
-				//TODO
+				C = A|B;
+				Cout=0;
 			end
 			OP_NAND: begin
 				//TODO
 			end
 			OP_NOR: begin
-				//TODO
+				C = !(A | B);
+				Cout=0;
 			end
 			OP_XOR: begin
 				//TODO
 			end
 			OP_XNOR: begin
-				//TODO
+				C = A ^~ B;
+				Cout=0;
 			end
 			// !Logic
 			OP_ID: begin
 				//TODO
 			end
 			OP_NOT: begin
-				//TODO
+				C = ~A;
+				Cout = 0;
 			end
 			// !shift
 			OP_LRS: begin
 				//TODO
 			end
 			OP_ARS: begin
-				//TODO
+				C = A>>>1;
+				Cout = 0;
 			end
 			OP_RR: begin
 				//TODO
 			end
 			OP_LLS: begin
-				//TODO
+				C = A <<1;
+				Cout = 0;
 			end
 			OP_ALS: begin
 				//TODO
 			end
 			OP_RL: begin
-				//TODO
+				C = {{A[14:0]},{A[15]}}
 			end
 		endcase
 	end
