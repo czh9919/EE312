@@ -11,69 +11,62 @@ module ALU(A,B,OP,C,Cout);
 	always @(*) begin
 		case (OP)
 			// !Arithmetic
-			OP_ADD: begin
-				{Cout,C}=A+B
+			4'b0000: begin
+				{Cout,C}=A+B;
 			end
-			OP_SUB: begin
+			4'b0001: begin
 				C = (A>=B)?(A-B):(~(B-A-16'h1));
 				Cout = 0;
 			end
 			// !Bitwise Boolean operation
-			OP_AND: begin
-				C=A&B;
-				cout=0;
+			4'b0010: begin
+				{Cout,C}=A&B;
 			end
-			OP_OR: begin
+			4'b0011: begin
 				C = A|B;
 				Cout=0;
 			end
-			OP_NAND: begin
-				C=A~&B;
-				cout=0
+			4'b0100: begin
+				{Cout,C}=A~&B;
 			end
-			OP_NOR: begin
+			4'b0101: begin
 				C = !(A | B);
 				Cout=0;
 			end
-			OP_XOR: begin
-				C=A^B;
-				cout=0;
+			4'b0110: begin
+				{Cout,C}=A^B;
 			end
-			OP_XNOR: begin
+			4'b0111: begin
 				C = A ^~ B;
 				Cout=0;
 			end
 			// !Logic
-			OP_ID: begin
-				C=A;
-				cout=0;
+			4'b1000: begin
+				{Cout,C}=A;
 			end
-			OP_NOT: begin
+			4'b1001: begin
 				C = ~A;
 				Cout = 0;
 			end
 			// !shift
-			OP_LRS: begin
-				C=A >> 1 ;
-				cout=0;
+			4'b1010: begin
+				{Cout,C}=A >> 1 ;
 			end
-			OP_ARS: begin
+			4'b1011: begin
 				C = A>>>1;
 				Cout = 0;
 			end
-			OP_RR: begin
-			    C=A[0]A[15:1] ;
-				Cout=0;
+			4'b1100: begin
+				{Cout,C}=A[0]A[15:1] ;
 			end
-			OP_LLS: begin
+			4'b1101: begin
 				C = A <<1;
 				Cout = 0;
 			end
-			OP_ALS: begin
-			    C=A <<< 1 ;
-				Cout=0;
+			4'b1110: begin
+			    {Cout,C}=A <<< 1 ;
 			end
-			OP_RL: begin
+			4'b1111: begin
 				C = {{A[14:0]},{A[15]}};
 			end
 		endcase
