@@ -5,8 +5,8 @@ module ALU(A,B,OP,C,Cout);
 	input [15:0]A;
 	input [15:0]B;
 	input [3:0]OP;
-	output [15:0]C;
-	output Cout;
+	output reg [15:0]C;
+	output reg Cout;
 
 	always @(*) begin
 		case (OP)
@@ -27,10 +27,11 @@ module ALU(A,B,OP,C,Cout);
 				Cout=0;
 			end
 			4'b0100: begin
-				{Cout,C}=A~&B;
+				C=~(A&B);
+				Cout=0;
 			end
 			4'b0101: begin
-				C = !(A | B);
+				C = ~(A | B);
 				Cout=0;
 			end
 			4'b0110: begin
@@ -52,22 +53,25 @@ module ALU(A,B,OP,C,Cout);
 			4'b1010: begin
 				{Cout,C}=A >> 1 ;
 			end
-			4'b1011: begin
-				C = A>>>1;
+			4'b1011: begin //! something wrong
+				C =A>>>1;
 				Cout = 0;
 			end
 			4'b1100: begin
-				{Cout,C}=A[0]A[15:1] ;
+				C={A[0],A[15:1]} ;
+				Cout = 0;
 			end
 			4'b1101: begin
 				C = A <<1;
 				Cout = 0;
 			end
 			4'b1110: begin
-			    {Cout,C}=A <<< 1 ;
+			    C=A <<< 1 ;
+				Cout=0;
 			end
 			4'b1111: begin
 				C = {{A[14:0]},{A[15]}};
+				Cout=0;
 			end
 		endcase
 	end
