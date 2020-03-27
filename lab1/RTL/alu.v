@@ -8,11 +8,15 @@ module ALU(A,B,OP,C,Cout);
 	output reg [15:0]C;
 	output reg Cout;
 
+	reg temp;
 	always @(*) begin
 		case (OP)
 			// !Arithmetic
 			4'b0000: begin
-				{Cout,C}=A+B;
+				C=A[14:0]+B[14:0];
+				temp=C[15];
+				{Cout,C[15]}=C[15]+A[15]+B[15];
+				Cout=Cout^temp;
 			end
 			4'b0001: begin
 				C = (A>=B)?(A-B):(~(B-A-16'h1));
@@ -54,7 +58,7 @@ module ALU(A,B,OP,C,Cout);
 				{Cout,C}=A >> 1 ;
 			end
 			4'b1011: begin //! something wrong
-				C =A>>>1;
+				C ={A[15],A[15:1]};
 				Cout = 0;
 			end
 			4'b1100: begin
