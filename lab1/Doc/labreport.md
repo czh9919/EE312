@@ -16,8 +16,8 @@ We use case structure to realize the operators.
 ### Module design
 
 For design an ALU module, we should know how the ALU work.
-This project is a simple ALU system. 
-Input 16-bit arrays and 4-bit operators, then inside the system the system will distinguish the operators and transport the data into related case. 
+This project is a simple ALU system.
+Input 16-bit arrays and 4-bit operators, then inside the system the system will distinguish the operators and transport the data into related case.
 Then use different operators to calculate the data, and get the results.
 
 we design a branch structure using OP to determine what we will do.
@@ -46,9 +46,9 @@ The circuit picture was shown below.
 
 ### AND
 
-For the AND operator. 
+For the AND operator.
 AND operator is the logical operator-> '&'.
-we input A, B and the operator AND, then get the output C= A & B. Besides, the AND operator does not exist the problem that overflow, so we only need to set cout=0.  
+we input A, B and the operator AND, then get the output C= A & B. Besides, the AND operator does not exist the problem that overflow, so we only need to set cout=0.
 
 ### OR
 
@@ -58,7 +58,7 @@ The picture was shown below.
 
 ### NAND
 
-NAND operator is based on AND operator, which is inverse of the AND operator. 
+NAND operator is based on AND operator, which is inverse of the AND operator.
 Like the process of "AND" operator, we only need to add a '~' before the process that "AND" operator, so we get C=~(A&B).
 It does not exist overflow.
 
@@ -68,9 +68,9 @@ This is a easy problem.
 The picture was shown below.
 ![NOR](NOR.PNG)
 
-### XOR 
+### XOR
 
-XOR operator is exclusive OR, which is the operator that if input are the same, then the output will be 0. 
+XOR operator is exclusive OR, which is the operator that if input are the same, then the output will be 0.
 And if the input are different, then the output will be 1.
 Then we get C= A^B.
 It does not exist overflow.
@@ -83,7 +83,7 @@ The gate works by receiving two inputs, each of which is specified as 1 or 0.If 
 ### identity
 
 As for identity, that output is equal to its input A.
-Then we get C= A. 
+Then we get C= A.
 It does not exist overflow.
 
 ### NOT
@@ -91,7 +91,7 @@ It does not exist overflow.
 The gate works by receiving one input. If the input is 1, the gate produce 0. If the input is 0, the gate produce 0.
 
 
-### Logical shift 
+### Logical shift
 
 logical shift operator is about let the element in Array A shift right side for 1 position, and use 0 to supplement the empty space due to displacement.
 we will get C=A >> 1.
@@ -101,9 +101,9 @@ It does not exist overflow.
 
 Instead of padding all zeros like a logical translation, when moving to the right, the leftmost bit is copied to fill all empty bits.
 
-### rotate right 
+### rotate right
 
-Rotate right operator is that let the last element of the arrar A to be the first element, and then other element shift right for one position. 
+Rotate right operator is that let the last element of the arrar A to be the first element, and then other element shift right for one position.
 We will get C={A[0],A[15:1]}.
 It does not exist overflow.
 
@@ -112,9 +112,9 @@ It does not exist overflow.
 Simply move each bit in the operand by a given number of bit positions, then fill the empty bit positions with 0.
 
 
-### Arithmetic left shift 
+### Arithmetic left shift
 
-The Arithmetic left shift operator is to rotate the element in the array A lefthand 1 position, and use 0 to supplement the empty space due to displacement.  
+The Arithmetic left shift operator is to rotate the element in the array A lefthand 1 position, and use 0 to supplement the empty space due to displacement.
 Then C=A <<< 1.
 It does not exist overflow.
 
