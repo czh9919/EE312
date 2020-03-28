@@ -13,9 +13,173 @@ We use case structure to realize the operators.
 
 ## Design
 
+### Module design
+
+we design a branch structure using OP to determine what we will do.
+![1.jpg](1.jpg)
+The whole circuit is shown as follow.
+![lab1](lab1.pdf)
+
+#### Addition
+
+We need to detected overflow.
+When overflow happen, Cout must be one.
+So when overflow happens?
+The Wikipedia picture shows that if the two left rounds are not the same, overflow occurs.
+![Wikipedia picture](2.PNG)
+So I designed a structure that detects the two carry on the left and XORs it.
+![structure](3.PNG)
+
+#### subtraction
+
+This is a easy problem.
+We can judge who is smaller before calculating.
+The circuit picture was shown below.
+![sub](sub.PNG)
+
+#### OR
+
+This is a easy problem.
+The picture was shown below.
+![OR](OR.PNG)
+
+#### NOR
+
+This is a easy problem.
+The picture was shown below.
+![NOR](NOR.PNG)
+
+#### XNOR
+
+The gate works by receiving two inputs, each of which is specified as 1 or 0.If both inputs are 0, the gate will produce 1.If both inputs are 1, the gate will also produce 1.However, if one of the inputs is different from the other, the gate will output 0.
+
+#### NOT
+
+The gate works by receiving one input. If the input is 1, the gate produce 0. If the input is 0, the gate produce 0.
+
+#### Arithmetic right shift
+
+Instead of padding all zeros like a logical translation, when moving to the right, the leftmost bit is copied to fill all empty bits.
+
+#### Logical left shift
+
+Simply move each bit in the operand by a given number of bit positions, then fill the empty bit positions with 0.
+
+#### Rotate left
+
+Simply move each bit in the operand by a given number of bit positions, and put the left most to the right.
+
 ## Implementation
 
 ## Evaluation
+
+We evaluate my design though these test.
+We pass all the test.
+
+    run -all
+    # TEST             Add-1 :
+    # PASSED
+    # TEST             Add-2 :
+    # PASSED
+    # TEST             Add-3 :
+    # PASSED
+    # TEST             Add-4 :
+    # PASSED
+    # TEST             Add-5 :
+    # PASSED
+    # TEST             Add-6 :
+    # PASSED
+    # TEST             Add-7 :
+    # PASSED
+    # TEST             Add-8 :
+    # PASSED
+    # TEST             Add-9 :
+    # PASSED
+    # TEST             Sub-1 :
+    # PASSED
+    # TEST             Sub-2 :
+    # PASSED
+    # TEST             Sub-3 :
+    # PASSED
+    # TEST             Sub-4 :
+    # PASSED
+    # TEST             Sub-5 :
+    # PASSED
+    # TEST             Sub-6 :
+    # PASSED
+    # TEST             Sub-7 :
+    # PASSED
+    # TEST             And-1 :
+    # PASSED
+    # TEST             And-2 :
+    # PASSED
+    # TEST              Or-1 :
+    # PASSED
+    # TEST              Or-2 :
+    # PASSED
+    # TEST            Nand-1 :
+    # PASSED
+    # TEST            Nand-2 :
+    # PASSED
+    # TEST             Nor-1 :
+    # PASSED
+    # TEST             Nor-2 :
+    # PASSED
+    # TEST             Xor-1 :
+    # PASSED
+    # TEST             Xor-2 :
+    # PASSED
+    # TEST            Xnor-1 :
+    # PASSED
+    # TEST            Xnor-2 :
+    # PASSED
+    # TEST              Id-1 :
+    # PASSED
+    # TEST              Id-2 :
+    # PASSED
+    # TEST              Id-3 :
+    # PASSED
+    # TEST             Not-1 :
+    # PASSED
+    # TEST             Not-2 :
+    # PASSED
+    # TEST             Not-3 :
+    # PASSED
+    # TEST             Lrs-1 :
+    # PASSED
+    # TEST             Lrs-2 :
+    # PASSED
+    # TEST             Lrs-3 :
+    # PASSED
+    # TEST             Lrs-4 :
+    # PASSED
+    # TEST             Ars-1 :
+    # PASSED
+    # TEST             Ars-2 :
+    # PASSED
+    # TEST             Ars-3 :
+    # PASSED
+    # TEST             Ars-4 :
+    # PASSED
+    # TEST              Rr-1 :
+    # PASSED
+    # TEST              Rr-2 :
+    # PASSED
+    # TEST             Lls-1 :
+    # PASSED
+    # TEST             Lls-2 :
+    # PASSED
+    # TEST             Als-1 :
+    # PASSED
+    # TEST             Als-2 :
+    # PASSED
+    # TEST              Rl-1 :
+    # PASSED
+    # TEST              Rl-2 :
+    # PASSED
+    # Passed = 50, Failed = 0
+    # ** Note: $finish    : G:/FPGA/EE312/lab1/RTL/ALU_TB.v(55)
+    #    Time: 50 ns  Iteration: 0  Instance: /ALU_TB
 
 ## Discussion
 
