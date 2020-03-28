@@ -183,5 +183,12 @@ We pass all the test.
 
 ## Discussion
 
+We had problems with the addition and arithmetic right shift and later found our problems under the guidance of TA.
+We have forgotten a little bit of the past knowledge, but later recalled a lot of knowledge.
+And at last, we pass all the test and finished the whole assignment.
+
 ## Conclusion
 
+We implement an Arithmetic Logic Unit (ALU) by using Verilog language.
+We implemented 16 operators to complete our ALU.
+As discussed before in implementation, We did our best to complete 16 operators.
