@@ -135,9 +135,11 @@ module vending_machine (
 	// Combinational logic for the outputs
 	always @(*) begin
 	// TODO: o_available_item
-
-
-
+		o_available_item=(num_items>=10)?0:(10-num_items);	//10 means sold out
+		o_output_item=(num_items>=10)?10:num_items;			//10 means sold out
+		o_return_coin[0]=(num_coins[0]>=returning_coin_0)?returning_coin_0:num_coins[0];
+		o_return_coin[1]=(num_coins[1]>=returning_coin_1)?returning_coin_1:num_coins[1];
+		o_return_coin[2]=(num_coins[2]>=returning_coin_2)?returning_coin_2:num_coins[2];
 	// TODO: o_output_item
 
 
