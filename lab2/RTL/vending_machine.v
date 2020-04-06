@@ -90,8 +90,36 @@ module vending_machine (
 	always @(*) begin
 		// TODO: current_total_nxt
 		// You don't have to worry about concurrent activations in each input vector (or array).
-
-
+		case (i_input_coin)
+			3'b001:begin
+				current_total_nxt=current_total+100;
+				num_coins_nxt[0]=num_coins[0]+1;
+			end
+			3'b010:begin
+				current_total_nxt=current_total+500;
+				num_coins_nxt[1]=num_coins[1]+1;
+			end
+			3'b100'begin
+				current_total_nxt=current_total+1000;
+				num_coins_nxt[2]=num_coins[2]+1;
+			end
+			default: 
+		endcase
+		case (i_select_item)
+			3'b001:begin
+				current_total_nxt=current_total-400;
+				num_items_nxt[0]=num_items[0]-1;
+			end
+			3'b010:begin
+				current_total_nxt=current_total-500;
+				num_items_nxt[1]=num_items[1]-1;
+			end
+			3'b100'begin
+				current_total_nxt=current_total-1000;
+				num_items_nxt[2]=num_items[2]-1;
+			end
+			default: 
+		endcase
 
 
 
