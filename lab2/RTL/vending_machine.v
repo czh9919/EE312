@@ -90,13 +90,33 @@ module vending_machine (
 	always @(*) begin
 		// TODO: current_total_nxt
 		// You don't have to worry about concurrent activations in each input vector (or array).
-
+        
 
 
 
 
 		// Calculate the next current_total state. current_total_nxt =
-
+		
+			
+		
+        while (current_total_nxt==0)
+		 begin
+			if (current_total>=1000)
+			{
+				returning_coin_2=returning_coin_2+1;
+				current_total_nxt-1000;
+			}
+			if (current_total>=500)
+			{
+				returning_coin_2=returning_coin_1+1;
+				current_total_nxt-500;
+				
+			}if (current_total>=100)
+			{
+				returning_coin_2=returning_coin_0+1;
+				current_total_nxt-100;
+			}
+		end
 
 	end
 
