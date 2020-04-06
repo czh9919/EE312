@@ -133,7 +133,7 @@ module vending_machine (
 	// Combinational logic for the outputs
 	always @(*) begin
 	// TODO: o_available_item
-	for (i = 0; i<3; i++) begin
+	for (i = 0; i<3; i=i+1) begin
 		o_available_item[i]=(num_items[i]>=10)?0:(10-num_items[i]);	//10 means sold out
 		o_output_item[i]=(num_items[i]>=10)?10:num_items[i];			//10 means sold out
 	end
@@ -149,7 +149,7 @@ module vending_machine (
 	always @(posedge clk) begin
 		if (!reset_n) begin
 			// TODO: reset all states.
-            for (i = 0; i<3; i++) begin
+            for (i = 0; i<3; i=i+1) begin
 				o_available_item[i]=0;
 				o_output_item[i]=0;
 				num_coins_nxt[i]=0;
@@ -174,23 +174,24 @@ module vending_machine (
 
 			//if you have to return some coins then you have to turn on the bit
 
-		while (current_total_nxt!=0&&i_trigger_return==1)
+		while (current_total!=0&&i_trigger_return==1)
 			begin
 				if (current_total>=1000)
-				{
+				begin
 					returning_coin_2=returning_coin_2+1;
-					current_total_nxt-1000;
-				}
+					current_total=current_total-1000;
+				end
 				if (current_total>=500)
-				{
+				begin
 					returning_coin_2=returning_coin_1+1;
-					current_total_nxt-500;
+					current_total=current_total-500;
 
-				}if (current_total>=100)
-				{
+				end
+				if (current_total>=100)
+				begin
 					returning_coin_2=returning_coin_0+1;
-					current_total_nxt-100;
-				}
+					current_total=current_total-100;
+				end
 			end
 
 		end		   //update all state end
