@@ -163,7 +163,7 @@ module vending_machine (
 
 			//if you have to return some coins then you have to turn on the bit
 
-		while (current_total_nxt==0&&i_trigger_return==1)
+		while (current_total_nxt!=0&&i_trigger_return==1)
 			begin
 				if (current_total>=1000)
 				{
