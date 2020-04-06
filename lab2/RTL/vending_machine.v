@@ -147,24 +147,7 @@ module vending_machine (
 	always @(posedge clk) begin
 		if (!reset_n) begin
 			// TODO: reset all states.
-            while (current_total_nxt!=0&&i_trigger_return==1)
-			    begin
-				    if (current_total>=1000)
-				    {
-					    returning_coin_2=returning_coin_2+1;
-					    current_total_nxt-1000;
-				    }
-				    if (current_total>=500)
-				    {
-					    returning_coin_2=returning_coin_1+1;
-					    current_total_nxt-500;
-
-				    }if (current_total>=100)
-				    {
-					    returning_coin_2=returning_coin_0+1;
-					    current_total_nxt-100;
-				    }
-			end
+            
 
 
 		end
@@ -180,7 +163,24 @@ module vending_machine (
 
 			//if you have to return some coins then you have to turn on the bit
 
-		
+		while (current_total_nxt!=0&&i_trigger_return==1)
+			begin
+				if (current_total>=1000)
+				{
+					returning_coin_2=returning_coin_2+1;
+					current_total_nxt-1000;
+				}
+				if (current_total>=500)
+				{
+					returning_coin_2=returning_coin_1+1;
+					current_total_nxt-500;
+
+				}if (current_total>=100)
+				{
+					returning_coin_2=returning_coin_0+1;
+					current_total_nxt-100;
+				}
+			end
 			current_total=current_total_nxt;
 		    num_coins[0]=num_coins_nxt[0];
 			num_coins[1]=num_coins_nxt[1];
@@ -188,7 +188,6 @@ module vending_machine (
 			num_items[0]=num_items_nxt[0];
 			num_items[1]=num_items_nxt[1];
 			num_items[2]=num_items_nxt[2];
-			end
 		end		   //update all state end
 	end	   //always end
 
