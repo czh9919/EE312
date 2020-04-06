@@ -99,11 +99,10 @@ module vending_machine (
 				current_total_nxt=current_total+500;
 				num_coins_nxt[1]=num_coins[1]+1;
 			end
-			3'b100'begin
+			3'b100:begin
 				current_total_nxt=current_total+1000;
 				num_coins_nxt[2]=num_coins[2]+1;
 			end
-			default: 
 		endcase
 		case (i_select_item)
 			3'b001:begin
@@ -114,11 +113,10 @@ module vending_machine (
 				current_total_nxt=current_total-500;
 				num_items_nxt[1]=num_items[1]+1;
 			end
-			3'b100'begin
+			3'b100:begin
 				current_total_nxt=current_total-1000;
 				num_items_nxt[2]=num_items[2]+1;
-			end
-			default: 
+			end 
 		endcase
 
 
@@ -154,7 +152,7 @@ module vending_machine (
             for (i = 0; i<3; i++) begin
 				o_available_item[i]=0;
 				o_output_item[i]=0;
-				num_coins_nxt[i]=0
+				num_coins_nxt[i]=0;
 				o_return_coin[i]=0;
 			end
 		end
