@@ -108,15 +108,15 @@ module vending_machine (
 		case (i_select_item)
 			3'b001:begin
 				current_total_nxt=current_total-400;
-				num_items_nxt[0]=num_items[0]-1;
+				num_items_nxt[0]=num_items[0]+1;
 			end
 			3'b010:begin
 				current_total_nxt=current_total-500;
-				num_items_nxt[1]=num_items[1]-1;
+				num_items_nxt[1]=num_items[1]+1;
 			end
 			3'b100'begin
 				current_total_nxt=current_total-1000;
-				num_items_nxt[2]=num_items[2]-1;
+				num_items_nxt[2]=num_items[2]+1;
 			end
 			default: 
 		endcase
@@ -163,7 +163,7 @@ module vending_machine (
 
 			//if you have to return some coins then you have to turn on the bit
 
-		while (current_total_nxt==0&&i_trigger_return==1)
+		while (current_total_nxt!=0&&i_trigger_return==1)
 			begin
 				if (current_total>=1000)
 				{
