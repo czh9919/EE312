@@ -122,10 +122,6 @@ module vending_machine (
 
 
 		// Calculate the next current_total state. current_total_nxt =
-		
-			
-		
-
 
 	end
 
@@ -133,15 +129,23 @@ module vending_machine (
 	// Combinational logic for the outputs
 	always @(*) begin
 	// TODO: o_available_item
-	for (i = 0; i<3; i=i+1) begin
-		o_available_item[i]=(num_items[i]>=10)?0:(10-num_items[i]);	//10 means sold out
-		o_output_item[i]=(num_items[i]>=10)?10:num_items[i];			//10 means sold out
-	end
-	o_return_coin[0]=(num_coins[0]>=returning_coin_0)?returning_coin_0:num_coins[0];
-	o_return_coin[1]=(num_coins[1]>=returning_coin_1)?returning_coin_1:num_coins[1];
-	o_return_coin[2]=(num_coins[2]>=returning_coin_2)?returning_coin_2:num_coins[2];
-	// TODO: o_output_item
-
+		o_available_item=(current_total_nxt>2000)?4'b1111:(
+			(current_total>1000)?4'b0111:(
+				(current_total>500)?4'b0011:(
+					(current_total>400)?4'b0001:4'b0000
+				)
+			)
+		);
+		//$display("HELLO1");
+		for (i = 0; i<4; i=i+1) begin
+			//!o_available_item[i]=(num_items[i]>=10)?0:(10-num_items[i]);	//10 means sold out
+			o_output_item[i]=(num_items[i]>=10)?10:num_items[i];			//10 means sold out
+		end
+		o_return_coin[0]=(num_coins[0]>=returning_coin_0)?returning_coin_0:num_coins[0];
+		o_return_coin[1]=(num_coins[1]>=returning_coin_1)?returning_coin_1:num_coins[1];
+		o_return_coin[2]=(num_coins[2]>=returning_coin_2)?returning_coin_2:num_coins[2];
+		// TODO: o_output_item
+		
 
 	end
 
@@ -149,8 +153,8 @@ module vending_machine (
 	always @(posedge clk) begin
 		if (!reset_n) begin
 			// TODO: reset all states.
-            for (i = 0; i<3; i=i+1) begin
-				o_available_item[i]=0;
+			for (i = 0; i<3; i=i+1) begin
+				current_total=0;
 				o_output_item[i]=0;
 				num_coins_nxt[i]=0;
 				o_return_coin[i]=0;
@@ -165,6 +169,7 @@ module vending_machine (
 			num_items[0]=num_items_nxt[0];
 			num_items[1]=num_items_nxt[1];
 			num_items[2]=num_items_nxt[2];
+			num_items[3]=num_items_nxt[3];
 /////////////////////////////////////////////////////////////////////////
 
 			// decreas stopwatch
@@ -174,7 +179,7 @@ module vending_machine (
 
 			//if you have to return some coins then you have to turn on the bit
 
-		while (current_total!=0&&i_trigger_return==1)
+		while (current_total>=0&&i_trigger_return==1)
 			begin
 				if (current_total>=1000)
 				begin
