@@ -111,11 +111,11 @@ initial begin
 	WaitReturnTest();
 	TriggerReturnTest();
 
-	//lack of item test
-	ItemTest();
-	//lack of coin test
-	CoinTest1();
-	CoinTest2();
+	// //lack of item test
+	// ItemTest();
+	// //lack of coin test
+	// CoinTest1();
+	// CoinTest2();
 	// == Tests end.
 
 	$display("Passed = %0d, Failed = %0d", Passed, Failed);

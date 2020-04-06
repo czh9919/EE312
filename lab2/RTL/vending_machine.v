@@ -90,63 +90,102 @@ module vending_machine (
 	always @(*) begin
 		// TODO: current_total_nxt
 		// You don't have to worry about concurrent activations in each input vector (or array).
+		//$display("%b", i_input_coin);
+		current_total_nxt=0;
+		for (j = 0; j<3; j=j+1) begin
+			num_coins_nxt[j]=0;
+			num_items_nxt[j]=0;
+		end
+		num_items_nxt[3]=0;
 		case (i_input_coin)
 			3'b001:begin
-				current_total_nxt=current_total+100;
-				num_coins_nxt[0]=num_coins[0]+1;
+				current_total_nxt=current_total_nxt+100;
+				num_coins_nxt[0]=num_coins_nxt[0]+1;
 			end
 			3'b010:begin
-				current_total_nxt=current_total+500;
-				num_coins_nxt[1]=num_coins[1]+1;
+				current_total_nxt=current_total_nxt+500;
+				num_coins_nxt[1]=num_coins_nxt[1]+1;
 			end
 			3'b100:begin
-				current_total_nxt=current_total+1000;
-				num_coins_nxt[2]=num_coins[2]+1;
+				current_total_nxt=current_total_nxt+1000;
+				num_coins_nxt[2]=num_coins_nxt[2]+1;
 			end
 		endcase
-		case (i_select_item)
-			3'b001:begin
-				current_total_nxt=current_total-400;
-				num_items_nxt[0]=num_items[0]+1;
-			end
-			3'b010:begin
-				current_total_nxt=current_total-500;
-				num_items_nxt[1]=num_items[1]+1;
-			end
-			3'b100:begin
-				current_total_nxt=current_total-1000;
-				num_items_nxt[2]=num_items[2]+1;
-			end 
-		endcase
 
-
-
+		//i_select_item
+		//$display("%b", i_select_item);
+		if (i_select_item[0]) begin
+			current_total_nxt=current_total_nxt-'d400;
+			num_items_nxt[0]=num_items_nxt[0]+1;
+		end
+		if (i_select_item[1]) begin
+			current_total_nxt=current_total_nxt-'d500;
+			num_items_nxt[1]=num_items_nxt[1]+1;
+		end
+		if (i_select_item[2]) begin
+			current_total_nxt=current_total_nxt-'d1000;
+			num_items_nxt[2]=num_items_nxt[2]+1;
+		end
+		if (i_select_item[3]) begin
+			current_total_nxt=current_total_nxt-'d2000;
+			num_items_nxt[3]=num_items_nxt[3]+1;
+		end
+			//$display("%d", current_total_nxt);
+			//$display("HELLO");
+			//$display("%d", current_total);
 		// Calculate the next current_total state. current_total_nxt =
 
 	end
 
-
+	reg [`kTotalBits-1:0] current_return;
 	// Combinational logic for the outputs
 	always @(*) begin
 	// TODO: o_available_item
-		o_available_item=(current_total_nxt>2000)?4'b1111:(
-			(current_total>1000)?4'b0111:(
-				(current_total>500)?4'b0011:(
-					(current_total>400)?4'b0001:4'b0000
-				)
-			)
-		);
-		//$display("HELLO1");
-		for (i = 0; i<4; i=i+1) begin
-			//!o_available_item[i]=(num_items[i]>=10)?0:(10-num_items[i]);	//10 means sold out
-			o_output_item[i]=(num_items[i]>=10)?10:num_items[i];			//10 means sold out
-		end
-		o_return_coin[0]=(num_coins[0]>=returning_coin_0)?returning_coin_0:num_coins[0];
-		o_return_coin[1]=(num_coins[1]>=returning_coin_1)?returning_coin_1:num_coins[1];
-		o_return_coin[2]=(num_coins[2]>=returning_coin_2)?returning_coin_2:num_coins[2];
-		// TODO: o_output_item
-		
+	//$display("Hello %d", current_total);
 
+		//$display("HELLO1");
+		//if(current_total>400)begin
+			o_output_item[0]=num_items[0];
+		//end
+		//if(current_total>500)begin
+			o_output_item[1]=num_items[1];
+		//end
+		//if(current_total>1000)begin
+			o_output_item[2]=num_items[2];
+		//end
+		//if(current_total>2000)begin
+			o_output_item[3]=num_items[3];
+		//end
+		// o_output_item[1]=num_items[1];
+		// o_output_item[2]=num_items[2];
+		// o_output_item[3]=num_items[3];
+		// for (i = 0; i<4; i=i+1) begin
+		// 	//!o_available_item[i]=(num_items[i]>=10)?0:(10-num_items[i]);	//10 means sold out
+		// 	o_output_item[i]=(num_items[i]>=10)?10:num_items[i];			//10 means sold out
+		// end
+
+
+		//TODO: o_output_item
+		// $display("%d", current_return);
+		// if (current_return>=1000)
+		// begin
+		// 	o_return_coin[2]=1;
+		// 	current_return=current_return-1000;
+		// end
+		// else if (current_return>=500)
+		// begin
+		// 	o_return_coin[2]=1;
+		// 	current_return=current_return-500;
+		// end
+		// else if (current_return>=100)
+		// begin
+		// 	o_return_coin[2]=1;
+		// 	current_return=current_return-100;
+		// end
+		// o_available_item[0]=(current_total>400)?1:0;
+		// o_available_item[1]=(current_total>500)?1:0;
+		// o_available_item[2]=(current_total>1000)?1:0;
+		// o_available_item[3]=(current_total>2000)?1:0;
 	end
 
 	// Sequential circuit to reset or update the states
@@ -157,47 +196,89 @@ module vending_machine (
 				current_total=0;
 				o_output_item[i]=0;
 				num_coins_nxt[i]=0;
+				num_coins[i]=0;
 				o_return_coin[i]=0;
+				num_items[i]=0;
 			end
+			num_items[3]=0;
+			current_total_nxt=0;
+			current_total=0;
+			returning_coin_2=0;
+			returning_coin_1=0;
+			returning_coin_0=0;
+			current_return=0;
 		end
 		else begin
 			// TODO: update all states.
-			current_total=current_total_nxt;
-		    num_coins[0]=num_coins_nxt[0];
-			num_coins[1]=num_coins_nxt[1];
-			num_coins[2]=num_coins_nxt[2];
-			num_items[0]=num_items_nxt[0];
-			num_items[1]=num_items_nxt[1];
-			num_items[2]=num_items_nxt[2];
-			num_items[3]=num_items_nxt[3];
+			//$display("HELLO");
+			current_total=current_total_nxt+current_total;
+		    num_coins[0]=num_coins[0]+num_coins_nxt[0];
+			num_coins[1]=num_coins[1]+num_coins_nxt[1];
+			num_coins[2]=num_coins[2]+num_coins_nxt[2];
+			num_items[0]=num_items[0]+num_items_nxt[0];
+			//$display("%d", num_items[0]);
+			num_items[1]=num_items[1]+num_items_nxt[1];
+			num_items[2]=num_items[2]+num_items_nxt[2];
+			num_items[3]=num_items[3]+num_items_nxt[3];
+			
+			//$display("%d", current_total);
 /////////////////////////////////////////////////////////////////////////
 
 			// decreas stopwatch
-
-
-
+		o_available_item=(current_total>='d2000)?4'b1111:(
+			(current_total>='d1000)?4'b0111:(
+				(current_total>='d500)?4'b0011:(
+					(current_total>='d400)?4'b0001:4'b0000
+				)
+			)
+		);
+		// o_available_item[0]=(current_total>400)?1:0;
+		// o_available_item[1]=(current_total>500)?1:0;
+		// o_available_item[2]=(current_total>1000)?1:0;
+		// o_available_item[3]=(current_total>2000)?1:0;
+		//$display("%d", current_return);
+		// if (current_return>=1000)
+		// begin
+		// 	o_return_coin[2]=1;
+		// 	current_return=current_return-1000;
+		// end
+		// else if (current_return>=500)
+		// begin
+		// 	o_return_coin[2]=1;
+		// 	current_return=current_return-500;
+		// end
+		// else if (current_return>=100)
+		// begin
+		// 	o_return_coin[2]=1;
+		// 	current_return=current_return-100;
+		// end
 
 			//if you have to return some coins then you have to turn on the bit
+		//$display("%d",returning_coin_1[0]);
+		//$display("%d",returning_coin_1[1]);
+		//$display("%d",returning_coin_1[2]);
+		
+		if (num_coins[0]>returning_coin_0&&current_total-current_return->100) begin
+			returning_coin_0=returning_coin_0+1;
+			o_return_coin[0]=1;
+			current_return=current_return+100;
+		end
+		else if (num_coins[1]>returning_coin_1&current_total>500) begin
+			returning_coin_1=returning_coin_1+1;
+			o_return_coin[1]=1;
+			current_return=current_return+500;
+		end
+		else if (num_coins[2]>returning_coin_2&current_total>1000) begin
+			returning_coin_2=returning_coin_2+1;
+			o_return_coin[2]=1;
+			current_return=current_return+1000;
+		end
 
-		while (current_total>=0&&i_trigger_return==1)
-			begin
-				if (current_total>=1000)
-				begin
-					returning_coin_2=returning_coin_2+1;
-					current_total=current_total-1000;
-				end
-				if (current_total>=500)
-				begin
-					returning_coin_2=returning_coin_1+1;
-					current_total=current_total-500;
-
-				end
-				if (current_total>=100)
-				begin
-					returning_coin_2=returning_coin_0+1;
-					current_total=current_total-100;
-				end
-			end
+			//$display("%d", i_trigger_return);
+			
+// 		&&i_trigger_return==1
+// &&i_trigger_return==1
+// &&i_trigger_return==1
 
 		end		   //update all state end
 	end	   //always end
