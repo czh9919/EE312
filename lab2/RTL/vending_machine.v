@@ -149,7 +149,7 @@ module vending_machine (
 	always @(posedge clk) begin
 		if (!reset_n) begin
 			// TODO: reset all states.
-
+            
 
 
 		end
@@ -183,7 +183,13 @@ module vending_machine (
 					current_total_nxt-100;
 				}
 			end
-/////////////////////////////////////////////////////////////////////////
+			current_total=current_total_nxt;
+		    num_coins[0]=num_coins_nxt[0];
+			num_coins[1]=num_coins_nxt[1];
+			num_coins[2]=num_coins_nxt[2];
+			num_items[0]=num_items_nxt[0];
+			num_items[1]=num_items_nxt[1];
+			num_items[2]=num_items_nxt[2];
 		end		   //update all state end
 	end	   //always end
 
