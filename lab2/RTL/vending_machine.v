@@ -124,6 +124,9 @@ module vending_machine (
 
 
 		// Calculate the next current_total state. current_total_nxt =
+		
+			
+		
 
 
 	end
@@ -160,7 +163,24 @@ module vending_machine (
 
 			//if you have to return some coins then you have to turn on the bit
 
+		while (current_total_nxt==0&&i_trigger_return==1)
+			begin
+				if (current_total>=1000)
+				{
+					returning_coin_2=returning_coin_2+1;
+					current_total_nxt-1000;
+				}
+				if (current_total>=500)
+				{
+					returning_coin_2=returning_coin_1+1;
+					current_total_nxt-500;
 
+				}if (current_total>=100)
+				{
+					returning_coin_2=returning_coin_0+1;
+					current_total_nxt-100;
+				}
+			end
 /////////////////////////////////////////////////////////////////////////
 		end		   //update all state end
 	end	   //always end
