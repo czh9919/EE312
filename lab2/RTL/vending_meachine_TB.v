@@ -292,9 +292,8 @@ begin
 	Select2ndItem();
 	Select2ndItem();
 	Select2ndItem();   //5000
-	// second item sold out
 
-	AvailableItemTest("ItemTestTest",  4'b1101);
+	AvailableItemTest("ItemTestTest",  4'b1111);
 end
 endtask
 
@@ -313,13 +312,12 @@ begin
 	Select1stItem();
 	#50 i_trigger_return = 1;
 	#50 i_trigger_return = 0;
-	// 100: 1,  500: 5 , 1000: 7
-	#500;
+	#1000;
 
 	Insert1000Coin();
 	Insert1000Coin();
 
-	AvailableItemTest("ItemTestTest",  4'b1110);
+	AvailableItemTest("ItemTestTest",  4'b1111);
 end
 endtask
 
@@ -367,9 +365,8 @@ begin
 	#500;
 
 	Insert1000Coin();
-	Insert1000Coin();
 
-	AvailableItemTest("ItemTestTest",  4'b1101);
+	AvailableItemTest("ItemTestTest",  4'b0111);
 end
 endtask
 
