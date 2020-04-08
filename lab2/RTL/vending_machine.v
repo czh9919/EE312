@@ -90,102 +90,122 @@ module vending_machine (
 	always @(*) begin
 		// TODO: current_total_nxt
 		// You don't have to worry about concurrent activations in each input vector (or array).
+		
+		current_total_nxt=0;
+		for (j = 0; j<3; j=j+1) begin
+			num_coins_nxt[j]=0;
+			num_items_nxt[j]=0;
+		end
+		num_items_nxt[3]=0;
 		case (i_input_coin)
 			3'b001:begin
-				current_total_nxt=current_total+100;
-				num_coins_nxt[0]=num_coins[0]+1;
+				current_total_nxt=current_total_nxt+100;
+				num_coins_nxt[0]=num_coins_nxt[0]+1;
 			end
 			3'b010:begin
-				current_total_nxt=current_total+500;
-				num_coins_nxt[1]=num_coins[1]+1;
+				current_total_nxt=current_total_nxt+500;
+				num_coins_nxt[1]=num_coins_nxt[1]+1;
 			end
 			3'b100:begin
-				current_total_nxt=current_total+1000;
-				num_coins_nxt[2]=num_coins[2]+1;
+				current_total_nxt=current_total_nxt+1000;
+				num_coins_nxt[2]=num_coins_nxt[2]+1;
 			end
 		endcase
-		case (i_select_item)
-			3'b001:begin
-				current_total_nxt=current_total-400;
-				num_items_nxt[0]=num_items[0]+1;
-			end
-			3'b010:begin
-				current_total_nxt=current_total-500;
-				num_items_nxt[1]=num_items[1]+1;
-			end
-			3'b100:begin
-				current_total_nxt=current_total-1000;
-				num_items_nxt[2]=num_items[2]+1;
-			end 
-		endcase
 
-
-
-		// Calculate the next current_total state. current_total_nxt =
 		
+		if (i_select_item[0]) begin
+			current_total_nxt=current_total_nxt-'d400;
+			num_items_nxt[0]=num_items_nxt[0]+1;
+		end
+		if (i_select_item[1]) begin
+			current_total_nxt=current_total_nxt-'d500;
+			num_items_nxt[1]=num_items_nxt[1]+1;
+		end
+		if (i_select_item[2]) begin
+			current_total_nxt=current_total_nxt-'d1000;
+			num_items_nxt[2]=num_items_nxt[2]+1;
+		end
+		if (i_select_item[3]) begin
+			current_total_nxt=current_total_nxt-'d2000;
+			num_items_nxt[3]=num_items_nxt[3]+1;
+		end
 			
-		
-
+		// Calculate the next current_total state. current_total_nxt =
 
 	end
 
-
+	reg [`kTotalBits-1:0] current_return;
 	// Combinational logic for the outputs
 	always @(*) begin
 	// TODO: o_available_item
-	for (i = 0; i<3; i++) begin
-		o_available_item[i]=(num_items[i]>=10)?0:(10-num_items[i]);	//10 means sold out
-		o_output_item[i]=(num_items[i]>=10)?10:num_items[i];			//10 means sold out
-	end
-	o_return_coin[0]=(num_coins[0]>=returning_coin_0)?returning_coin_0:num_coins[0];
-	o_return_coin[1]=(num_coins[1]>=returning_coin_1)?returning_coin_1:num_coins[1];
-	o_return_coin[2]=(num_coins[2]>=returning_coin_2)?returning_coin_2:num_coins[2];
-	// TODO: o_output_item
-
-
+	
+		o_output_item[0]=num_items[0];
+		o_output_item[1]=num_items[1];
+		o_output_item[2]=num_items[2];
+        o_output_item[3]=num_items[3];
+		
+		//TODO: o_output_item
+		
 	end
 
 	// Sequential circuit to reset or update the states
 	always @(posedge clk) begin
 		if (!reset_n) begin
 			// TODO: reset all states.
-            for (i = 0; i<3; i++) begin
-				o_available_item[i]=0;
+			for (i = 0; i<3; i=i+1) begin
+				current_total=0;
 				o_output_item[i]=0;
 				num_coins_nxt[i]=0;
+				num_coins[i]=0;
 				o_return_coin[i]=0;
+				num_items[i]=0;
 			end
+			num_items[3]=0;
+			current_total_nxt=0;
+			current_total=0;
+			returning_coin_2=0;
+			returning_coin_1=0;
+			returning_coin_0=0;
+			current_return=0;
 		end
 		else begin
 			// TODO: update all states.
-			current_total=current_total_nxt;
-		    num_coins[0]=num_coins_nxt[0];
-			num_coins[1]=num_coins_nxt[1];
-			num_coins[2]=num_coins_nxt[2];
-			num_items[0]=num_items_nxt[0];
-			num_items[1]=num_items_nxt[1];
-			num_items[2]=num_items_nxt[2];
-/////////////////////////////////////////////////////////////////////////
+			current_total=current_total_nxt+current_total;
+		    num_coins[0]=num_coins[0]+num_coins_nxt[0];
+			num_coins[1]=num_coins[1]+num_coins_nxt[1];
+			num_coins[2]=num_coins[2]+num_coins_nxt[2];
+			num_items[0]=num_items[0]+num_items_nxt[0];
+			num_items[1]=num_items[1]+num_items_nxt[1];
+			num_items[2]=num_items[2]+num_items_nxt[2];
+			num_items[3]=num_items[3]+num_items_nxt[3];
+			
+			
+		o_available_item=(current_total>='d2000)?4'b1111:(
+			(current_total>='d1000)?4'b0111:(
+				(current_total>='d500)?4'b0011:(
+					(current_total>='d400)?4'b0001:4'b0000
+				)
+			)
+		);
+		end
+		
+		if (num_coins[0]>returning_coin_0&&current_total-current_return->100) begin
+			returning_coin_0=returning_coin_0+1;
+			o_return_coin[0]=1;
+			current_return=current_return+100;
+		end
+		else if (num_coins[1]>returning_coin_1&current_total>500) begin
+			returning_coin_1=returning_coin_1+1;
+			o_return_coin[1]=1;
+			current_return=current_return+500;
+		end
+		else if (num_coins[2]>returning_coin_2&current_total>1000) begin
+			returning_coin_2=returning_coin_2+1;
+			o_return_coin[2]=1;
+			current_return=current_return+1000;
+		end
 
-			// decreas stopwatch
-
-
-
-
-			//if you have to return some coins then you have to turn on the bit
-
-		while (current_total_nxt!=0&&i_trigger_return==1)
-			begin
-				if (current_total>=1000)
-					returning_coin_2=returning_coin_2+1;
-					current_total_nxt-1000;
-				if (current_total>=500)
-					returning_coin_2=returning_coin_1+1;
-					current_total_nxt-500
-				if (current_total>=100)
-					returning_coin_2=returning_coin_0+1;
-					current_total_nxt-100;
-			end
+			
 
 		end		   //update all state end
 	end	   //always end

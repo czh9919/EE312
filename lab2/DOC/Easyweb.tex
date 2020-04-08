@@ -1,0 +1,105 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[]{listings}
+%packages used
+\usepackage[english]{babel}
+\usepackage[margin=1in,  left=1.25in]{geometry} %margins
+\usepackage{pslatex}%Times new roman font
+\usepackage{graphicx}%for images
+\usepackage{float}
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\fancyfoot{}
+
+%beginning of document
+\begin{document}
+%declaration page
+%\thispagestyle{empty}
+\pagenumbering{roman} 
+\begin{titlepage}
+  \begin{center}
+    \vspace*{1cm}
+
+    \textbf{\Huge ALU project report}
+
+    \vspace{0.5cm}
+
+         
+    \vspace{1.5cm}
+
+    \textbf{\large Chang Zihao \\20206018\\\large Cui Yuxuan\\20206019}
+
+    \vfill
+         
+
+         
+    \vspace{0.8cm}
+  
+
+
+         
+\end{center}
+\end{titlepage}
+
+
+\newpage
+%table of contents
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\section{Introduction}
+
+A Finite State Machine (FSM) is a machine that can be in exactly one of a finite number of states at any given time. 
+The FSM can transit from one state to another state in response to external inputs; 
+the transition between states is predefined in the FSM. 
+An FSM is defined with a list of state, conditions for each transition, and initial state. 
+FSMs are of two types of FSM, which are the Moore machine and Mealy machine. 
+A Moore machine is an FSM whose outputs are determined only by its current state. 
+This is in contrast to a Mealy machine whose outputs are determined by both its current state and inputs. 
+We will use these two structures to design a vending machine based on these two structures.
+
+
+\newpage
+
+\section{Design}
+\subsection{Module design}
+
+For design an vending machine, we should know how the vending machine works.
+This vending machine is a sample machine that based on the FSM.
+The process of the machine is that input coins and then choose items like drinking, or water, then it will give changes and output items.
+And in the code we devided in three parts. 
+The first parts is input coins, this part will gets the coin number and the total coin value, then select items.
+The second parts is combinational logic for the outputs.
+The third part is at the posedge, update the data, and return the coins. 
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[height=1in]{circuit.jpg}
+  \end{figure}
+
+
+\newpage
+
+\section{Implementation}
+
+
+\newpage
+
+\section{Evaluation}
+
+
+
+\newpage
+\section{Discussion}
+
+
+
+\section{Conclusion}
+
+
+
+\end{document}
