@@ -76,10 +76,10 @@ The second parts when a state change is detected, this part will start to operat
 The third part is at the posedge, update the data, and ready to return the coins. 
 
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[height=1in]{circuit.jpg}
-  \end{figure}
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[height=1in]{circuit.jpg}
+%   \end{figure}
 
 
 \newpage
@@ -91,7 +91,33 @@ The third part is at the posedge, update the data, and ready to return the coins
 
 \section{Evaluation}
 
+We pass all the tests except "ItemTest, CoinTest1, and CoinTest2".
 
+\lstset{language=Verilog}
+\begin{lstlisting}
+# TEST                       InitialTest :
+# PASSED
+# TEST                 Insert100CoinTest :
+# PASSED
+# TEST                 Insert500CoinTest :
+# PASSED
+# TEST                Insert1000CoinTest :
+# PASSED
+# TEST                 Select1stItemTest :
+# PASSED
+# TEST                 Select2ndItemTest :
+# PASSED
+# TEST                 Select3rdItemTest :
+# PASSED
+# TEST                 Select4thItemTest :
+# PASSED
+# TEST                    WaitReturnTest :
+# PASSED
+# TEST                 TriggerReturnTest :
+# PASSED
+# Passed = 10, Failed = 0
+# 1
+\end{lstlisting}
 
 \newpage
 \section{Discussion}

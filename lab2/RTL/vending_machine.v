@@ -187,7 +187,6 @@ module vending_machine (
 				)
 			)
 		);
-		end
 		
 		if (num_coins[0]>returning_coin_0&&current_total-current_return->100) begin
 			returning_coin_0=returning_coin_0+1;
