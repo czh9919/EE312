@@ -88,18 +88,19 @@ The third part is at the posedge, update the data, and ready to return the coins
 Like we said in the design part, we divided the code into three-part.
 First set 0 at the beginning, all inputs must set to 0, because if we don't set 0, all inputs will in a high resit
 Then input the coin. There are three kinds of coins 100,500,1000.
-$i_input_coin $are three bits binary number. 
-Then input $i_input_coin$, select the corresponding value coin, then coin number plus 1, the total value increase the corresponding coin value.
-Similar to the input coin select items are also used three bits binary number to control the items.
+$i\_input\_coin $are three bits binary number. 
+Then input $i\_input\_coin$, select the corresponding value coin, then coin number plus 1, the total value increase the corresponding coin value.
+Similar to the input coin select items are also used three bits binary number to control the items. 
+And determine which item can we buy.
 Then the number of the item plus 1.
 
 And for the second part is to output the items. 
-After we select items, then the number of the items is changed, at the posedge it will output the items, one item at a time.
+After we select items, then the number of the items is changed, after the posedge pass, it will output the items, one item at a time.
 
 The third part is the most important.
 At the posedge if we choose to reset, all variables should be set 0.
-And else case we first update the value, let $num_coins =num_coins + num_coins_nxt.$
-Then determine which items can we buy with the value of the coin.
+And else case we first update the value, let $num\_coins =num\_coins + num\_coins\_nxt$.
+Then update which items can we buy with the value of the coin.
 At last, we must calculate the remaining value of the coin, then return the coin.
 The method is, first determine how much the coin remained, and compare it with the coin value.
 If it more than or equal to 1000 then first return a 1000 coin, then the remained value is more than 500 then return a 500 coin and so on.
@@ -144,7 +145,8 @@ We pass all the tests except "ItemTest, CoinTest1, and CoinTest2".
 We first encountered some problems in understanding the meaning of the question, 
 but in the end by looking at the test code, 
 we thoroughly understood the meaning of the question.
-And at last, we pass all the test and finished the while project.
+And at last, we pass all the test and finished the whole project.
+I hope that future projects will give enough time to think and complete the code.
 
 \section{Conclusion}
 
