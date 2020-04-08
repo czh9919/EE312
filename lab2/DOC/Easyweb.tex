@@ -71,9 +71,9 @@ For design an vending machine, we should know how the vending machine works.
 This vending machine is a sample machine that based on the FSM.
 The process of the machine is that input coins and then choose items like drinking, or water, then it will give changes and output items.
 And in the code we devided in three parts. 
-The first parts is input coins, this part will gets the coin number and the total coin value, then select items.
-The second parts is combinational logic for the outputs.
-The third part is at the posedge, update the data, and return the coins. 
+The first parts is input coins, this part will gets the coin number changes and the total coin value changes, then select items changes.
+The second parts when a state change is detected, this part will start to operate, ready for output
+The third part is at the posedge, update the data, and ready to return the coins. 
 
 
 \begin{figure}[H]
