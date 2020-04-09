@@ -61,6 +61,28 @@ A Moore machine is an FSM whose outputs are determined only by its current state
 This is in contrast to a Mealy machine whose outputs are determined by both its current state and inputs. 
 We will use these two structures to design a vending machine based on these two structures.
 
+
+A vending machine needs to have the functions of coin-operating, checking available items, selecting items and refunding coins.
+
+\subsection{coin-operating}
+
+When someone puts in the coin, the vending machine records the number of changed coins, so that the number of coins updated can be recorded in this clock cycle.
+
+\subsection{checking available items}
+
+Once the coins changed in one cycle, the available items will be shows up.
+
+\subsection{selecting items}
+
+When someone chooses an item, the vending machine needs to first check whether the coins are sufficient, and then record it. 
+If there is no problem, the item is output in the next clock cycle.
+
+\subsection{refunding coins}
+
+My idea is that after each coin is thrown, after selecting the item, the remaining amount of money is calculated and the change is checked, and the currency is ready to be refunded. 
+Every clock cycle requires the currency to be refunded.
+When you need to refund coins, refund one at one time.
+
 \newpage
 
 \section{Design}
@@ -69,11 +91,19 @@ We will use these two structures to design a vending machine based on these two 
 To design a vending machine, we should know how the vending machine works.
 This vending machine is a sample machine based on the FSM.
 The process of the machine is that input coins and then choose items like drinking, or water, then it will give changes and output items.
-And in the code, we divided into three parts. 
-The first parts are input coins, this part will get the coin number changes and the total coin value changes, then select items changes.
-The second parts when a state change is detected, this part will start to operate, ready for output
-The third part is at the posedge, update the data, and ready to return the coins. 
+And in the code, we divided into three modules. 
 
+\subsection{input module}
+The input module is input coins, this part will get the coin number changes and the coin value changes, and select items changes.
+
+\subsection{output module}
+The output module is when a state change is detected, this part will start to operate, ready for output.
+
+\subsection{record module}
+
+The third part is at the posedge, update the data, and ready to return the coins. 
+Every record operation only can be done at this time.
+Once finished, the vending machine will jump to output module if needs.
 
 % \begin{figure}[H]
 %   \centering
@@ -86,6 +116,9 @@ The third part is at the posedge, update the data, and ready to return the coins
 \section{Implementation}
 
 Like we said in the design part, we divided the code into three-part.
+
+\subsection{input module}
+
 First set 0 at the beginning, all inputs must set to 0, because if we don't set 0, all inputs will in a high resit
 Then input the coin. There are three kinds of coins 100,500,1000.
 $i\_input\_coin $are three bits binary number. 
@@ -93,12 +126,19 @@ Then input $i\_input\_coin$, select the corresponding value coin, then coin numb
 Similar to the input coin select items are also used three bits binary number to control the items. 
 And determine which item can we buy.
 Then the number of the item plus 1.
+I used the case statement and if statement here.
+Both of them are fine for the feature.
+
+\subsection{output module}
 
 And for the second part is to output the items. 
 After we select items, then the number of the items is changed, after the posedge pass, it will output the items, one item at a time.
 
+\subsection{record module}
+
 The third part is the most important.
 At the posedge if we choose to reset, all variables should be set 0.
+And all inputs must set to 0, because if we don't set 0, all inputs will in a high resit
 And else case we first update the value, let $num\_coins =num\_coins + num\_coins\_nxt$.
 Then update which items can we buy with the value of the coin.
 At last, we must calculate the remaining value of the coin, then return the coin.
