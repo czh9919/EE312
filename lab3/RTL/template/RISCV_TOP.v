@@ -41,5 +41,17 @@ module RISCV_TOP (
 	end
 
 	// TODO: implement
+	// TODO: control
+	assign RF_RA1 = I_MEM_DI[25:21];
+	assign RF_RA2 = I_MEM_DI[20:16];
+	// TODO:WR
 
+	MUX #(
+		DWITH(5)
+	)mux1(
+		.CON(RegDst),
+		.DI(I_MEM_DI[20:16])
+		.DOUT(RF_WA1)
+	)
+	// TODO: to end
 endmodule //
