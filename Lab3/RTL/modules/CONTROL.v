@@ -1,0 +1,5 @@
+module CONTROL (
+	
+);
+
+endmodule //CONTROL
