@@ -42,16 +42,66 @@ module RISCV_TOP (
 
 	// TODO: implement
 	// TODO: control
-	assign RF_RA1 = I_MEM_DI[25:21];
-	assign RF_RA2 = I_MEM_DI[20:16];
+	assign RF_RA1 = I_MEM_DI[19:15];
+	assign RF_RA2 = I_MEM_DI[24:20];
+	assign RF_WA1=I_MEM_DI[11:7];
 	// TODO:WR
 
+	wire [12:0]PC_4_to_MUX;
+	wire [12:0]Back_to_PC;
+	wire [12:0]OUT_PC;
+	PC PC_TOP(
+		.clk(CLK),
+		.rstn(RSTn),
+		.I_MEM_ADDR(Back_to_PC),
+		.O_MEM_ADDR(OUT_PC)
+	);
+	assign I_MEM_ADDR=OUT_PC;
+	//TODO backTOPC connect with outPC
+	wire [24:0]SIGN_EXTEND_to_MUX_ADD;
+	wire [32:0]MUX_TO_ALU;
 	MUX #(
-		DWITH(5)
-	)mux1(
-		.CON(RegDst),
-		.DI(I_MEM_DI[20:16])
-		.DOUT(RF_WA1)
-	)
+		DWITH(12)
+	) BeforeALU(
+		.CON(ALUSrc),
+		.DI(RF_RA2),
+		.DI1(SIGN_EXTEND_to_MUX_ADD),
+		.DOUT(MUX_TO_ALU)//!ALU out
+	);
+	wire [32:0]ALU_Ans;
+	ALU(
+		.A(RF_RA1),
+		.B(MUX_TO_ALU),
+		.OP(ALUSrc),
+		.C(ALU_Ans)
+	);
+
+	SIGN_EXTEND #(
+		I_DWIDTH(12),
+		O_DWIDTH(24)
+	) Down_REG(
+		.I_DI(I_MEM_DI[31:20]),
+		.O_DI(SIGN_EXTEND_to_MUX_ADD)
+	);
+	assign D_MEM_ADDR=ALU_Ans;
+	assign D_MEM_DOUT=RF_RA2;
+	wire MUX_to_MUX;
+	MUX #(
+		DWITH(32)//! may not 32
+	)MUX_Down_MEM(
+		.CON(MemtoReg),
+		.DI(ALU_Ans),
+		.DI1(D_MEM_DI),
+		.DOUT(MUX_to_MUX)
+	);
+	MUX #(
+		DWITH(32)
+	) MUX_Left_WD(
+		.CON(isJAL),//!warning  may change name
+		.DI(MUX_to_MUX),
+		.DI1(PC_4_to_MUX),
+		.DOUT(RF_WD)
+	);
+
 	// TODO: to end
 endmodule //

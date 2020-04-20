@@ -26,7 +26,7 @@ module ALU(A,B,OP,C,Cout);
 			end
 			// !Bitwise Boolean operation
 			4'b0010: begin
-				{Cout,C}=A&B;
+				{Cout,C}=A & B;
 			end
 			4'b0011: begin
 				C = A|B;
