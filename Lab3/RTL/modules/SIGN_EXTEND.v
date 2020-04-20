@@ -1,11 +1,13 @@
-module SIGN_EXTEND(
-	input wire [15:0]  I_DI,
-	input wire clk,
-	output wire [31:0] O_DI
+module SIGN_EXTEND#(
+	parameter I_DWIDTH,
+	parameter O_DWIDTH
+)(
+	input wire [I_DWIDTH-1:0]  I_DI,
+	output wire [O_DWIDTH*2-1:0] O_DI
 );
 
-always @(posedge clk ) begin  //clk or *
-	o_Do[31:0]<={{16{i_DI[15]}},i_DI[15:0]};
+always @(*) begin  //clk or *
+	o_Do[O_DWIDTH:0]<={I_DWIDTH{{i_DI[I_DWIDTH]}},i_DI[I_DWIDTH-1:0]};
 end
 
 endmodule // SIGN_EXTEND
