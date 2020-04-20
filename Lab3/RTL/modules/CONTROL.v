@@ -22,17 +22,35 @@ always @(*) begin
 						O_MemWrite=0;
 						O_MemRead=0;
 						O_MemtoReg=1;
+						O_ALUSrc=1;
 						O_ALUOp=4'b0000;
 						//TODO ADD
 					end
 					3'b111:begin
-						
+						O_RegWrite=1;
+						O_MemWrite=0;
+						O_MemRead=0;
+						O_MemtoReg=1;
+						O_ALUSrc=1;
+						O_ALUOp=4'b0010;
 						//AND
 					end
 					3'b110:begin
+						O_RegWrite=1;
+						O_MemWrite=0;
+						O_MemRead=0;
+						O_MemtoReg=1;
+						O_ALUSrc=1;
+						O_ALUOp=4'b0011;
 						//OR
 					end
 					3'b100:begin
+						O_RegWrite=1;
+						O_MemWrite=0;
+						O_MemRead=0;
+						O_MemtoReg=1;
+						O_ALUSrc=1;
+						O_ALUOp=4'b0110;
 						//XOR
 					end
 					3'b010:begin
@@ -92,12 +110,30 @@ always @(*) begin
 				7'b0010011:begin
 					case (I_OP[14:12])
 						3'b000:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=0;
+							O_MemtoReg=1;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0000;
 							//ADDI
 						end
 						3'b111:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=0;
+							O_MemtoReg=1;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0010;
 							//ANDI
 						end
 						3'b110:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=0;
+							O_MemtoReg=1;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0011;
 							//ORI
 						end
 						3'b100:begin
