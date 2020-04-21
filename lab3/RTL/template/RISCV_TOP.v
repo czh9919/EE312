@@ -41,6 +41,9 @@ module RISCV_TOP (
 	end
 
 	// TODO: implement
+	wire isnot_PC_4;
+	wire back_PC_CON;
+	wire isJALR;
 	// TODO: control
 	assign RF_RA1 = I_MEM_DI[19:15];
 	assign RF_RA2 = I_MEM_DI[24:20];
@@ -98,10 +101,71 @@ module RISCV_TOP (
 		DWITH(32)
 	) MUX_Left_WD(
 		.CON(isJAL),//!warning  may change name
-		.DI(MUX_to_MUX),
-		.DI1(PC_4_to_MUX),
+		.DI(PC_4_to_MUX),
+		.DI1(MUX_to_MUX),
 		.DOUT(RF_WD)
 	);
 
+	wire Out_ADD;
+	ADD #(
+		DWITH(32)
+	) Up_reg_right(
+		.DI(OUT_PC),
+		.DI1(SIGN_EXTEND_to_MUX_ADD),
+		.DOUT(Out_ADD)
+	);
+
+	wire out_and;
+	wire out_mux_to_mux;
+	MUX#(
+		DWITH(32)
+	) Behind_ADD(
+		.CON(isJALR)
+		.DI(out_and),
+		.DI(Out_ADD),
+		.Dout(out_mux_to_mux)
+	);
+	wire backPC1;
+	MUX#(
+		DWITH(32)
+	)MUXtoMUX(
+		.CON(isnot_PC_4),
+		.DI(out_mux_to_mux),
+		.DI1(PC_4_to_MUX),
+		.DOUT(backPC1)
+	);
+
+	wire out_add_2;
+	MUX #(
+		DWITH(32)
+	) Jumpcheck(
+		.CON(isnot_PC_4),
+		.DI(out_add_2),
+		.DI1(backPC1),
+		.DOUT(Back_to_PC)
+	);
+
+	wire SIGN_EXTEND_to_ADD;
+	SIGN_EXTEND#(
+		I_DWITH(7)
+		O_DWIDTH(14)
+	)SIGN_EXTEND_to_add(
+		.I_DI(I_MEM_DI[31:25]),
+		.O_DI(SIGN_EXTEND_to_ADD)
+	);
+	ADD#(
+		DWITH(14)
+	) ADD_2(
+		.DI(SIGN_EXTEND_to_ADD),
+		.DI1(OUT_PC),
+		.DOUT(out_add_2)
+	);
+	MUX #(
+		DWITH(14)
+	)MUX_behind_PC(
+		.CON(back_PC_CON),
+		.DI(backPC1),
+		.DI1(out_add_2)
+	)
 	// TODO: to end
 endmodule //

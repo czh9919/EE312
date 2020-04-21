@@ -7,7 +7,10 @@ module CONTROL (
 	output wire O_MemRead,
 	output wire O_MemWrite,
 	//output wire O_Branch,
-	output wire O_ALUOp
+	output wire O_ALUOp,
+	output wire isnot_PC_4,
+	output wire back_PC_CON,
+	output wire isJALR
 	//output wire O_ALUOp2
 );
 
