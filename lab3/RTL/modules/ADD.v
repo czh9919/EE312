@@ -1,13 +1,13 @@
-module ADD 
+module ADD #(
+	parameter DWIDTH
+)
 (
-	input	wire				CON,
-	input	wire	[5:0]		DI, //data in
-	input	wire	[5:0]		DI1,
-	output	wire	[5:0]		DOUT // data out
+	input	wire	[DWIDTH:0]		DI, //data in
+	input	wire	[DWIDTH:0]		DI1,
+	output	wire	[DWIDTH:0]		DOUT // data out
 );
 	always @ (*) begin
-		if (CON)
-			DOUT=DI1+DI;
+		DOUT[DWIDTH:0]=DI1[DWIDTH:0]+DI[DWIDTH:0];
 	end
 
 endmodule
