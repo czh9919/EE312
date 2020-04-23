@@ -44,6 +44,7 @@ module RISCV_TOP (
 	wire isnot_PC_4;
 	wire back_PC_CON;
 	wire isJALR;
+	wire isCout;
 	// TODO: control
 	assign RF_RA1 = I_MEM_DI[19:15];
 	assign RF_RA2 = I_MEM_DI[24:20];
@@ -166,6 +167,15 @@ module RISCV_TOP (
 		.CON(back_PC_CON),
 		.DI(backPC1),
 		.DI1(out_add_2)
+	)
+	
+	MUX #(
+		DWITH(1)
+	) Afer_ALU(
+		.CON(isCout),
+		.DI(Cout),
+		.DI1(0),
+		.DOUT(back_PC_CON)
 	)
 	// TODO: to end
 endmodule //

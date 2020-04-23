@@ -10,7 +10,8 @@ module CONTROL (
 	output wire O_ALUOp,
 	output wire isnot_PC_4,
 	output wire back_PC_CON,
-	output wire isJALR
+	output wire isJALR,
+	output wire isCout
 	//output wire O_ALUOp2
 );
 always @(*) begin
