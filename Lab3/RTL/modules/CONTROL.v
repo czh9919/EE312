@@ -302,19 +302,43 @@ always @(*) begin
 							O_MemRead=0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
-							O_ALUOp=4'b1011;
+							O_ALUOp=4'b1110;
 							//BNE
 						end
 						3'b100:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=0;
+							O_MemtoReg=1;
+							O_ALUSrc=1;
+							O_ALUOp=4'b1111;
 							//BLT
 						end
 						3'b101:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=0;
+							O_MemtoReg=1;
+							O_ALUSrc=1;
+							O_ALUOp=4'b1111;
 							//BGE
 						end
 						3'b110:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=0;
+							O_MemtoReg=1;
+							O_ALUSrc=1;
+							O_ALUOp=4'b1111;
 							//BLTU
 						end
 						3'b111:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=0;
+							O_MemtoReg=1;
+							O_ALUSrc=1;
+							O_ALUOp=4'b1111;
 							//BGEU
 						end
 					endcase

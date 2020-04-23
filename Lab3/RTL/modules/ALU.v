@@ -91,14 +91,14 @@ module ALU(A,B,OP,C,Cout);
 				//LUI
 			end
 			4'b1110: begin
-			    C = ( A == B ) ? C + D : PC + 4;
-				Cout=0;
-				//BEQ
+			    C = ( A == B ) ? C + D : C + 4;
+				Cout= ( A != B ) ? C + D : C + 4;
+				//BEQ/BNE
 			end
 			4'b1111: begin
-				C = ( A != B ) ? C + D : PC + 4;
-				Cout=0;
-				//BNE
+				C = ( A < B ) ? C + D : C + 4
+				Cout= ( A >=B) ? C + D : C + 4;
+				//BGE/BLT
 			end
 		endcase
 	end
