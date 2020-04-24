@@ -1,24 +1,21 @@
 module CONTROL (
 	input wire [31:0] I_OP,
-	output wire O_RegDst,
-	output wire O_ALUSrc,
-	output wire O_MemtoReg,
-	output wire O_RegWrite,
-	output wire O_MemRead,
-	output wire O_MemWrite,
-	//output wire O_Branch,
-	output wire O_ALUOp,
-	output wire isnot_PC_4,
-	output wire isJALR,
-	output wire isCout,
-	output wire isJAL,
-	output wire is_down_se
-	output wire isLUI,
-	output wire isLUIAUI
+	output reg O_ALUSrc,
+	output reg O_MemtoReg,
+	output reg O_RegWrite,
+	output reg O_MemRead,
+	output reg O_MemWrite,
+	output reg O_ALUOp,
+	output reg isnot_PC_4,
+	output reg isJALR,
+	output reg isCout,
+	output reg isJAL,
+	output reg is_down_se,
+	output reg isLUI,
+	output reg isLUIAUI
 	//output wire O_ALUOp2
 );
-always @(*) begin
-	case (I_CON)
+
 
 always @(*) begin
 	case (I_OP[31:25])
@@ -368,14 +365,14 @@ always @(*) begin
 						O_MemRead=0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
-						O_ALUOp=4'1101;
-							isnot_PC_4=1;
-							isJALR=1;
-							isCout=0;
-							isJAL=0;
-							is_down_se=0;
-							isLUI=0;
-							isLUIAUI=0;
+						O_ALUOp=4'b1101;
+						isnot_PC_4=1;
+						isJALR=1;
+						isCout=0;
+						isJAL=0;
+						is_down_se=0;
+						isLUI=0;
+						isLUIAUI=0;
 					//LUI
 				end
 				7'b0010111:begin
@@ -384,7 +381,7 @@ always @(*) begin
 						O_MemRead=0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
-						O_ALUOp=4'1000;
+						O_ALUOp=4'b1000;
 					//AUIPC
 				end
 				7'b0000011:begin
