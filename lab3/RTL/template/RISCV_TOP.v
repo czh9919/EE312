@@ -80,10 +80,12 @@ module RISCV_TOP (
 	PC PC_TOP(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_MEM_ADDR(Back_to_PC),
-		.O_MEM_ADDR(OUT_PC)
+		.I_MEM_ADD(Back_to_PC),
+		.O_MEM_ADD(OUT_PC)
 	);
-	assign I_MEM_ADDR=OUT_PC;
+	always @(*) begin
+		I_MEM_ADDR=OUT_PC;
+	end
 	//TODO backTOPC connect with outPC
 	wire [24:0]SIGN_EXTEND_to_MUX_ADD;
 	wire [32:0]MUX_TO_ALU;
@@ -111,8 +113,8 @@ module RISCV_TOP (
 		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_0)
 	);
 	SIGN_EXTEND#(
-		I_DWIDTH(20),
-		O_DWIDTH(40)
+		.I_DWIDTH(20),
+		.O_DWIDTH(40)
 	)Down_Down_REG(
 		.I_DI(I_MEM_DI[31:12]),
 		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_1)
