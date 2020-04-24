@@ -45,6 +45,9 @@ module RISCV_TOP (
 	wire back_PC_CON;
 	wire isJALR;
 	wire isCout;
+	wire isLUI;
+	wire isLUIAUI;
+
 	// TODO: control
 	assign RF_RA1 = I_MEM_DI[19:15];
 	assign RF_RA2 = I_MEM_DI[24:20];
@@ -85,8 +88,22 @@ module RISCV_TOP (
 		O_DWIDTH(24)
 	) Down_REG(
 		.I_DI(I_MEM_DI[31:20]),
-		.O_DI(SIGN_EXTEND_to_MUX_ADD)
+		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_0)
 	);
+	SIGN_EXTEND#(
+		I_DWIDTH(20)
+		O_DWIDTH(40)
+	)Down_Down_REG(
+		.I_DI(I_MEM_DI[31:12]),
+		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_1)
+	)
+	MUX #(
+		DWITH(12)
+	)After_Down_REG(
+		.DI(SIGN_EXTEND_to_ready_MUX_ADD_1),
+		.DI1(SIGN_EXTEND_to_ready_MUX_ADD_0),
+		.DOUT(SIGN_EXTEND_to_MUX_ADD)
+	)
 	assign D_MEM_ADDR=ALU_Ans;
 	assign D_MEM_DOUT=RF_RA2;
 	wire MUX_to_MUX;
@@ -95,7 +112,7 @@ module RISCV_TOP (
 	)MUX_Down_MEM(
 		.CON(MemtoReg),
 		.DI(ALU_Ans),
-		.DI1(D_MEM_DI),
+		.DI1(chos_LUI_JALR),
 		.DOUT(MUX_to_MUX)
 	);
 	MUX #(
@@ -109,7 +126,7 @@ module RISCV_TOP (
 
 	wire Out_ADD;
 	ADD #(
-		DWITH(32)
+		DWITH(14)
 	) Up_reg_right(
 		.DI(OUT_PC),
 		.DI1(SIGN_EXTEND_to_MUX_ADD),
@@ -155,7 +172,7 @@ module RISCV_TOP (
 		.O_DI(SIGN_EXTEND_to_ADD)
 	);
 	ADD#(
-		DWITH(14)
+		DWITH(12)
 	) ADD_2(
 		.DI(SIGN_EXTEND_to_ADD),
 		.DI1(OUT_PC),
@@ -176,6 +193,36 @@ module RISCV_TOP (
 		.DI(Cout),
 		.DI1(0),
 		.DOUT(back_PC_CON)
-	)
+	);
+	wire for_LUI_AUIPC_i;
+	wire for_LUI_AUIPC_o;
+	wire chos_LUI_JALR;
+	wire imm_12;
+	assign imm_12=I_MEM_DI[31:12]<<12;
+	ADD#(
+		DWITH(12)
+	) forLUI_AUI(
+		.DI(imm_12),
+		.DI1(OUT_PC),
+		.DOUT(for_LUI_AUIPC_i)
+	);
+
+	MUX #(
+		DWITH(32)
+	) isLUIMUX(
+		.CON(isLUI),
+		.DI(imm_12),
+		.DI1(for_LUI_AUIPC_i),
+		.DOUT(for_LUI_AUIPC_o)
+	);
+	MUX #(
+		DWITH(32)
+	) MUX_right_MEM(
+		.CON(isLUIAUI),
+		.DI(for_LUI_AUIPC_o),
+		.DI1(D_MEM_DI),//! wrong
+		.DOUT(chos_LUI_JALR)
+	);
+
 	// TODO: to end
 endmodule //
