@@ -1,15 +1,11 @@
-`timescale 1ns / 100ps
+module ALU(
 
-module ALU(A,B,OP,C,Cout);
-
-	input [31:0]A;
-	input [31:0]B;
-	input [5:0]OP;
-	output [31:0]C;
-	output Cout;
-
-	reg [15:0]C;
-	reg Cout;
+	input wire [31:0]A,
+	input wire [31:0]B,
+	input wire [5:0]OP,
+	output reg [31:0]C,
+	output reg Cout
+);
 	reg temp;
 	always @(*) begin
 		case (OP)
@@ -103,5 +99,5 @@ module ALU(A,B,OP,C,Cout);
 			end
 		endcase
 	end
-	
+
 endmodule
