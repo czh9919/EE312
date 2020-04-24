@@ -65,7 +65,7 @@ always @(*) begin
 						O_MemRead=0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
-						O_ALUOp=4'b0100;
+						O_ALUOp=4'b1100;
 						//SLT
 					end
 					3'b011:begin
