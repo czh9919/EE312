@@ -43,6 +43,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0010;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//AND
 					end
 					3'b110:begin
@@ -52,6 +56,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0011;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//OR
 					end
 					3'b100:begin
@@ -61,6 +69,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0110;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//XOR
 					end
 					3'b010:begin
@@ -70,6 +82,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1100;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//SLT
 					end
 					3'b011:begin
@@ -79,6 +95,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0100;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//SLTU
 					end
 					3'b101:begin
@@ -88,6 +108,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1010;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//SRL
 					end
 					3'b001:begin
@@ -97,6 +121,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0101;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//SLL
 					end
 				endcase
@@ -110,6 +138,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1010;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//SRLI
 					end
 					3'b001:begin
@@ -119,6 +151,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0101;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//SLLI
 					end
 				endcase
@@ -137,6 +173,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b0001;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//SUB
 						end
 						3'b101:begin
@@ -146,6 +186,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b0111;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//SRA
 						end
 					endcase
@@ -159,6 +203,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b0111;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//SRAI
 						end
 					endcase
@@ -180,6 +228,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0000;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//ADDI
 						end
 						3'b111:begin
@@ -189,6 +241,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0010;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//ANDI
 						end
 						3'b110:begin
@@ -198,6 +254,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0011;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//ORI
 						end
 						3'b100:begin
@@ -207,6 +267,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0110;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//XORI
 						end
 						3'b010:begin
@@ -216,6 +280,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0100;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//SLTI
 						end
 						3'b011:begin
@@ -225,6 +293,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0100;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//SLTIU
 						end
 
@@ -253,10 +325,14 @@ always @(*) begin
 						3'b010:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
-							O_MemtoReg=1;
+							O_MemRead=1;
+							O_MemtoReg=0;
 							O_ALUSrc=0;
-							O_ALUOp=4'b;
+							O_ALUOp=4'b0000;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//LW
 						end
 					endcase
@@ -264,12 +340,16 @@ always @(*) begin
 				7'b0100011:begin
 					case (I_OP[14:12])
 						3'b010:begin
-							O_RegWrite=1;
-							O_MemWrite=0;
+							O_RegWrite=0;
+							O_MemWrite=1;
 							O_MemRead=0;
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0101;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
 							//SW
 						end
 					endcase
@@ -281,6 +361,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1001;
+						isnot_PC_4=1;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 					//JAL
 				end
 				7'b1100111:begin
@@ -290,21 +374,29 @@ always @(*) begin
 						O_MemWrite=0;
 						O_MemRead=0;
 						O_MemtoReg=1;
-						O_ALUSrc=1;
-						O_ALUOp=4'b1011;
-							//JALR
+						O_ALUSrc=0;
+						O_ALUOp=4'b0000;
+						isnot_PC_4=1;
+						isJALR=1;
+						isCout=0;
+						isJAL=1;
+						//JALR
 						end
 					endcase
 				end
 				7'b1100011:begin
 					case (I_OP[14:12])
 						3'b000:begin
-							O_RegWrite=1;
+							O_RegWrite=0;
 							O_MemWrite=0;
 							O_MemRead=0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b0000;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=1;
+							isJAL=0;
 							//BEQ
 						end
 						3'b001:begin
@@ -314,6 +406,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1110;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=1;
+							isJAL=0;
 							//BNE
 						end
 						3'b100:begin
@@ -323,6 +419,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1101;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=1;
+							isJAL=0;
 							//BLT
 						end
 						3'b101:begin
@@ -332,6 +432,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1111;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=1;
+							isJAL=0;
 							//BGE
 						end
 						3'b110:begin
@@ -341,6 +445,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1111;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=1;
+							isJAL=0;
 							//BLTU
 						end
 						3'b111:begin
@@ -350,6 +458,10 @@ always @(*) begin
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1111;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=1;
+							isJAL=0;
 							//BGEU
 						end
 					endcase
