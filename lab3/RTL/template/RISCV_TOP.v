@@ -58,7 +58,7 @@ module RISCV_TOP (
 		.O_ALUSrc(ALUSrc),
 		.O_RegWrite(RF_WE),
 		.O_MemWrite(D_MEM_WEN),
-		.MemRead(D_MEM_BE),
+		.O_MemRead(D_MEM_BE[0]),
 		.O_ALPOp(ALUOp),
 		.isnot_PC_4(isnot_PC_4),
 		.isJALR(isJALR),
@@ -98,7 +98,7 @@ module RISCV_TOP (
 		.DOUT(MUX_TO_ALU)//!ALU out
 	);
 	wire [32:0]ALU_Ans;
-	ALU(
+	ALU alu(
 		.A(RF_RA1),
 		.B(MUX_TO_ALU),
 		.OP(ALUOp),
@@ -149,7 +149,7 @@ module RISCV_TOP (
 
 	wire Out_ADD;
 	ADD #(
-		.DWITH(14)
+		.DWIDTH(14)
 	) Up_reg_right(
 		.DI(OUT_PC),
 		.DI1(SIGN_EXTEND_to_MUX_ADD),
@@ -188,14 +188,14 @@ module RISCV_TOP (
 
 	wire SIGN_EXTEND_to_ADD;
 	SIGN_EXTEND#(
-		.I_DWITH(7),
+		.I_DWIDTH(7),
 		.O_DWIDTH(14)
 	)SIGN_EXTEND_to_add(
 		.I_DI(I_MEM_DI[31:25]),
 		.O_DI(SIGN_EXTEND_to_ADD)
 	);
 	ADD#(
-		.DWITH(12)
+		.DWIDTH(12)
 	) ADD_2(
 		.DI(SIGN_EXTEND_to_ADD),
 		.DI1(OUT_PC),
@@ -222,7 +222,7 @@ module RISCV_TOP (
 	wire imm_12;
 	assign imm_12=I_MEM_DI[31:12]<<12;
 	ADD#(
-		.DWITH(12)
+		.DWIDTH(12)
 	) forLUI_AUI(
 		.DI(imm_12),
 		.DI1(OUT_PC),

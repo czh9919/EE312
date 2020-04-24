@@ -5,7 +5,7 @@ module CONTROL (
 	output reg O_RegWrite,
 	output reg O_MemRead,
 	output reg O_MemWrite,
-	output reg O_ALUOp,
+	output reg [3:0] O_ALUOp,
 	output reg isnot_PC_4,
 	output reg isJALR,
 	output reg isCout,
