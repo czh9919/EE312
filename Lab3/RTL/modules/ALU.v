@@ -2,10 +2,10 @@
 
 module ALU(A,B,OP,C,Cout);
 
-	input [15:0]A;
-	input [15:0]B;
+	input [31:0]A;
+	input [31:0]B;
 	input [5:0]OP;
-	output [15:0]C;
+	output [31:0]C;
 	output Cout;
 
 	reg [15:0]C;
@@ -20,7 +20,7 @@ module ALU(A,B,OP,C,Cout);
 				//Add/BEQ
 			end
 			4'b0001: begin
-				C = (A>=B)?(A-B):(~(B-A-16'h1));
+				C = (A>=B)?(A-B):(~(B-A-32'h1));
 				//sub
 				Cout = 0;
 			end
