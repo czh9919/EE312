@@ -16,10 +16,8 @@ module ALU(A,B,OP,C,Cout);
 		case (OP)
 			// !Arithmetic
 			4'b0000: begin
-				C=A[14:0]+B[14:0];
-				temp=C[15];
-				{Cout,C[15]}=C[15]+A[15]+B[15];
-				Cout=Cout^temp;//Add
+				C=A+B;
+				//Add
 			end
 			4'b0001: begin
 				C = (A>=B)?(A-B):(~(B-A-16'h1));
@@ -28,7 +26,8 @@ module ALU(A,B,OP,C,Cout);
 			end
 			// !Bitwise Boolean operation
 			4'b0010: begin
-				{Cout,C}=A & B;
+				C=A & B;
+				Cout=0;
 				//and
 			end
 			4'b0011: begin
@@ -38,10 +37,10 @@ module ALU(A,B,OP,C,Cout);
 			end
 			4'b0100: begin
 				if (A<B)
-					C=1;
+					Cout=1;
 				else
-					C=0;
-				//slt
+					Cout=0;
+				//sltu
 			end
 			4'b0101: begin
 				C = A << B;
@@ -76,14 +75,20 @@ module ALU(A,B,OP,C,Cout);
 				//srl
 			end
 			4'b1011: begin 
-				C = A + 4; 
-				A = ( B + D ) & 0xfffffffe;
+				Cout = A + 4; 
+				A =  B + D ;
 				Cout = 0;
 				//JALR
 			end
 			4'b1100: begin
-				C={A[0],A[15:1]} ;
-				Cout = 0;
+				if (A[0]==B[0])
+					if (A[4:1]<B[4:1])
+						Cout=1;
+				if((A[0]==1) & (B[0]==0))
+					Cout=1;
+				if((A[0]==0) & (B[0]==1))
+					Cout=0;
+				//SLT
 			end
 			4'b1101: begin
 				C = A <<12;
