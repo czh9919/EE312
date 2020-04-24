@@ -59,7 +59,7 @@ module RISCV_TOP (
 		.O_RegWrite(RF_WE),
 		.O_MemWrite(D_MEM_WEN),
 		.O_MemRead(D_MEM_BE[0]),
-		.O_ALPOp(ALUOp),
+		.O_ALUOp(ALUOp),
 		.isnot_PC_4(isnot_PC_4),
 		.isJALR(isJALR),
 		.isCout(isCout),
