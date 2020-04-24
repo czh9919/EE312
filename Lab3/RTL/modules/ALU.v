@@ -16,7 +16,8 @@ module ALU(A,B,OP,C,Cout);
 			// !Arithmetic
 			4'b0000: begin
 				C=A+B;
-				//Add
+				Cout = ( A == B ) ;
+				//Add/BEQ
 			end
 			4'b0001: begin
 				C = (A>=B)?(A-B):(~(B-A-16'h1));
@@ -49,7 +50,7 @@ module ALU(A,B,OP,C,Cout);
 			4'b0110: begin
 				C=A^B;
 				//xor
-				cout=0;
+				Cout=0;
 			end
 			4'b0111: begin
 				C = A >>> B;
@@ -59,7 +60,7 @@ module ALU(A,B,OP,C,Cout);
 			// !Logic
 			4'b1000: begin
 				C=A+(B<<12);
-				cout=0;
+				Cout=0;
 				//ALUPC
 			end
 			4'b1001: begin
@@ -89,16 +90,15 @@ module ALU(A,B,OP,C,Cout);
 			end
 			4'b1101: begin
 				C = A <<12;
-				Cout = 0;
+				Cout = ( A < B ); 
 				//LUI
 			end
 			4'b1110: begin
-			    C = ( A == B ) ;
 				Cout= ( A != B ) ;
-				//BEQ/BNE
+				//BNE
 			end
 			4'b1111: begin
-				C = ( A < B ); 
+				
 				Cout= ( A >=B) ;
 				//BGE/BLT
 			end

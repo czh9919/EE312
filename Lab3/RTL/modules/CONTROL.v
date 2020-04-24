@@ -149,6 +149,12 @@ always @(*) begin
 				7'b0010011:begin
 					case (I_OP[14:12])
 						3'b101:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=0;
+							O_MemtoReg=1;
+							O_ALUSrc=1;
+							O_ALUOp=4'b0111;
 							//SRAI
 						end
 					endcase
@@ -245,7 +251,7 @@ always @(*) begin
 							O_MemWrite=0;
 							O_MemRead=0;
 							O_MemtoReg=1;
-							O_ALUSrc=1;
+							O_ALUSrc=0;
 							O_ALUOp=4'b;
 							//LW
 						end
@@ -258,7 +264,7 @@ always @(*) begin
 							O_MemWrite=0;
 							O_MemRead=0;
 							O_MemtoReg=1;
-							O_ALUSrc=1;
+							O_ALUSrc=0;
 							O_ALUOp=4'b0101;
 							//SW
 						end
@@ -294,7 +300,7 @@ always @(*) begin
 							O_MemRead=0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
-							O_ALUOp=4'b1110;
+							O_ALUOp=4'b0000;
 							//BEQ
 						end
 						3'b001:begin
@@ -312,7 +318,7 @@ always @(*) begin
 							O_MemRead=0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
-							O_ALUOp=4'b1111;
+							O_ALUOp=4'b1101;
 							//BLT
 						end
 						3'b101:begin
