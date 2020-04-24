@@ -64,8 +64,7 @@ module ALU(A,B,OP,C,Cout);
 				//ALUPC
 			end
 			4'b1001: begin
-				C=A+4;
-				A=A+B;
+				C=0;
 				Cout = 0;
 				//JAL
 			end
