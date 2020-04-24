@@ -4,7 +4,7 @@ module ALU(A,B,OP,C,Cout);
 
 	input [15:0]A;
 	input [15:0]B;
-	input [5:0]OP;
+	input [3:0]OP;
 	output [15:0]C;
 	output Cout;
 
@@ -75,7 +75,7 @@ module ALU(A,B,OP,C,Cout);
 				//srl
 			end
 			4'b1011: begin 
-				Cout = A + 4; 
+				C = A + 4; 
 				//JALR
 			end
 			4'b1100: begin
