@@ -77,7 +77,7 @@ module ALU(A,B,OP,C,Cout);
 			4'b1011: begin 
 				Cout = A + 4; 
 				A =  B + D ;
-				Cout = 0;
+				
 				//JALR
 			end
 			4'b1100: begin
