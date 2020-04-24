@@ -1,15 +1,11 @@
-`timescale 1ns / 100ps
+module ALU(
 
-module ALU(A,B,OP,C,Cout);
-
-	input [15:0]A;
-	input [15:0]B;
-	input [3:0]OP;
-	output [15:0]C;
-	output Cout;
-
-	reg [15:0]C;
-	reg Cout;
+	input wire [31:0]A,
+	input wire [31:0]B,
+	input wire [5:0]OP,
+	output reg [31:0]C,
+	output reg Cout
+);
 	reg temp;
 	always @(*) begin
 		case (OP)
@@ -20,7 +16,7 @@ module ALU(A,B,OP,C,Cout);
 				//Add/BEQ
 			end
 			4'b0001: begin
-				C = (A>=B)?(A-B):(~(B-A-16'h1));
+				C = (A>=B)?(A-B):(~(B-A-32'h1));
 				//sub
 				Cout = 0;
 			end
@@ -64,8 +60,7 @@ module ALU(A,B,OP,C,Cout);
 				//ALUPC
 			end
 			4'b1001: begin
-				C=A+4;
-				A=A+B;
+				C=0;
 				Cout = 0;
 				//JAL
 			end
@@ -104,5 +99,5 @@ module ALU(A,B,OP,C,Cout);
 			end
 		endcase
 	end
-	
+
 endmodule
