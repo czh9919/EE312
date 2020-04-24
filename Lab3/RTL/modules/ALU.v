@@ -4,7 +4,6 @@ module ALU(A,B,OP,C,Cout);
 
 	input [15:0]A;
 	input [15:0]B;
-	input [15:0]D;
 	input [5:0]OP;
 	output [15:0]C;
 	output Cout;
@@ -94,13 +93,13 @@ module ALU(A,B,OP,C,Cout);
 				//LUI
 			end
 			4'b1110: begin
-			    C = ( A == B ) ? C + D : C + 4;
-				Cout= ( A != B ) ? C + D : C + 4;
+			    C = ( A == B ) ;
+				Cout= ( A != B ) ;
 				//BEQ/BNE
 			end
 			4'b1111: begin
-				C = ( A < B ) ? C + D : C + 4
-				Cout= ( A >=B) ? C + D : C + 4;
+				C = ( A < B ); 
+				Cout= ( A >=B) ;
 				//BGE/BLT
 			end
 		endcase
