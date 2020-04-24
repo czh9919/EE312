@@ -9,9 +9,9 @@ module CONTROL (
 	//output wire O_Branch,
 	output wire O_ALUOp,
 	output wire isnot_PC_4,
-	output wire back_PC_CON,
 	output wire isJALR,
-	output wire isCout
+	output wire isCout,
+	output wire isJAL
 	//output wire O_ALUOp2
 );
 always @(*) begin
@@ -30,6 +30,10 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0000;
+						isnot_PC_4=0;
+						isJALR=0;
+						isCout=0;
+						isJAL=0;
 						//TODO ADD
 					end
 					3'b111:begin
