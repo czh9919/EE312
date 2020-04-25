@@ -1,4 +1,4 @@
-0module ALU(
+module ALU(
 
 	input wire [31:0]A,
 	input wire [31:0]B,
