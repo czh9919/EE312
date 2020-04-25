@@ -75,7 +75,7 @@ module RISCV_TOP (
 	assign RF_WA1=I_MEM_DI[11:7];
 	// TODO:WR
 
-	wire [31:0]PC_4_to_MUX;
+	wire [11:0]PC_4_to_MUX;
 	wire [11:0]Back_to_PC;
 	wire [11:0]OUT_PC;
 	wire [31:0]out_and;
@@ -85,8 +85,7 @@ module RISCV_TOP (
 		.I_MEM_ADD(Back_to_PC),
 		.O_MEM_ADD(OUT_PC),
 		.I_MEM_CSN(I_MEM_CSN),
-		.D_MEM_CSN(D_MEM_CSN),
-		.PC_4_to_MUX(PC_4_to_MUX)
+		.D_MEM_CSN(D_MEM_CSN)
 	);
 	always @(*) begin
 		I_MEM_ADDR=OUT_PC;
@@ -156,24 +155,22 @@ module RISCV_TOP (
 		.DI1(chos_LUI_JALR),
 		.DOUT(MUX_to_MUX)
 	);
-	wire [31:0]pc_4temp;
 	ADD #(
-		.DWIDTH(32)
+		.DWIDTH(12)
 	) PC_4(
 		.clk(CLK),
 		.rstn(RSTn),
-		.DI({20'b0,OUT_PC}),
-		.DI1(32'b0100),
-		.DOUT(pc_4temp)
+		.DI(OUT_PC),
+		.DI1(12'b0100),
+		.DOUT(PC_4_to_MUX)
 	);
-	assign PC_4_to_MUX[11:0]=pc_4temp;
 	MUX #(
 		.DWITH(32)
 	) MUX_Left_WD(
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(isJAL),//!warning  may change name
-		.DI(PC_4_to_MUX),
+		.DI({20'b0,PC_4_to_MUX}),
 		.DI1(MUX_to_MUX),
 		.DOUT(RF_WD)
 	);
@@ -209,7 +206,7 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.CON(isnot_PC_4),
 		.DI(out_mux_to_mux),
-		.DI1(PC_4_to_MUX[11:0]),
+		.DI1({20'b0,PC_4_to_MUX}),
 		.DOUT(backPC1)
 	);
 
