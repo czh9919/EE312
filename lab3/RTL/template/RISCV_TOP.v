@@ -59,7 +59,7 @@ module RISCV_TOP (
 		.O_ALUSrc(ALUSrc),
 		.O_RegWrite(RF_WE),
 		.O_MemWrite(D_MEM_WEN),
-		.O_MemRead(D_MEM_BE[3:0]),
+		.O_MemRead(D_MEM_BE[0]),
 		.O_ALUOp(ALUOp),
 		.isnot_PC_4(isnot_PC_4),
 		.isJALR(isJALR),
@@ -97,6 +97,8 @@ module RISCV_TOP (
 	MUX #(
 		.DWITH(32)
 	) BeforeALU(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(ALUSrc),
 		.DI(RF_RD2),
 		.DI1(SIGN_EXTEND_to_MUX_ADD),
@@ -116,6 +118,8 @@ module RISCV_TOP (
 		.I_DWIDTH(12),
 		.O_DWIDTH(32)
 	) Down_REG(
+		.clk(CLK),
+		.rstn(RSTn),
 		.I_DI(I_MEM_DI[31:20]),
 		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_0)
 	);
@@ -124,12 +128,16 @@ module RISCV_TOP (
 		.I_DWIDTH(20),
 		.O_DWIDTH(32)
 	)Down_Down_REG(
+		.clk(CLK),
+		.rstn(RSTn),
 		.I_DI(I_MEM_DI[31:12]),
 		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_1)
 	);
 	MUX #(
 		.DWITH(32)
 	)After_Down_REG(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(is_down_se),
 		.DI(SIGN_EXTEND_to_ready_MUX_ADD_1),
 		.DI1(SIGN_EXTEND_to_ready_MUX_ADD_0),
@@ -141,6 +149,8 @@ module RISCV_TOP (
 	MUX #(
 		.DWITH(32)//! may not 32
 	)MUX_Down_MEM(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(MemtoReg),
 		.DI(ALU_Ans),
 		.DI1(chos_LUI_JALR),
@@ -160,6 +170,8 @@ module RISCV_TOP (
 	MUX #(
 		.DWITH(32)
 	) MUX_Left_WD(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(isJAL),//!warning  may change name
 		.DI(PC_4_to_MUX),
 		.DI1(MUX_to_MUX),
@@ -170,6 +182,8 @@ module RISCV_TOP (
 	ADD #(
 		.DWIDTH(12)
 	) Up_reg_right(
+		.clk(CLK),
+		.rstn(RSTn),
 		.DI(OUT_PC),
 		.DI1(SIGN_EXTEND_to_MUX_ADD[11:0]),
 		.DOUT(Out_ADD)
@@ -180,6 +194,8 @@ module RISCV_TOP (
 	MUX#(
 		.DWITH(12)
 	) Behind_ADD(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(isJALR),
 		.DI(out_and[11:0]),
 		.DI1(Out_ADD),
@@ -189,6 +205,8 @@ module RISCV_TOP (
 	MUX#(
 		.DWITH(12)
 	)MUXtoMUX(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(isnot_PC_4),
 		.DI(out_mux_to_mux),
 		.DI1(PC_4_to_MUX[11:0]),
@@ -199,7 +217,9 @@ module RISCV_TOP (
 	MUX #(
 		.DWITH(12)
 	) Jumpcheck(
-		.CON(),
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(back_PC_CON),
 		.DI(out_add_2),
 		.DI1(backPC1),
 		.DOUT(Back_to_PC)
@@ -210,28 +230,26 @@ module RISCV_TOP (
 		.I_DWIDTH(7),
 		.O_DWIDTH(12)
 	)SIGN_EXTEND_to_add(
+		.clk(CLK),
+		.rstn(RSTn),
 		.I_DI(I_MEM_DI[31:25]),
 		.O_DI(SIGN_EXTEND_to_ADD)
 	);
 	ADD#(
 		.DWIDTH(12)
 	) ADD_2(
+		.clk(CLK),
+		.rstn(RSTn),
 		.DI(SIGN_EXTEND_to_ADD),
 		.DI1(OUT_PC),
 		.DOUT(out_add_2)
-	);
-	MUX #(
-		.DWITH(12)
-	)MUX_behind_PC(
-		.CON(back_PC_CON),
-		.DI(backPC1),
-		.DI1(out_add_2),
-		.DOUT(Back_to_PC)
 	);
 	
 	MUX #(
 		.DWITH(1)
 	) Afer_ALU(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(isCout),
 		.DI(CoutAns),
 		.DI1(1'b0),
@@ -244,6 +262,8 @@ module RISCV_TOP (
 	ADD#(
 		.DWIDTH(12)
 	) forLUI_AUI(
+		.clk(CLK),
+		.rstn(RSTn),
 		.DI(imm_12),
 		.DI1(OUT_PC),
 		.DOUT(for_LUI_AUIPC_i)
@@ -252,6 +272,8 @@ module RISCV_TOP (
 	MUX #(
 		.DWITH(12)
 	) isLUIMUX(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(isLUI),
 		.DI(imm_12),
 		.DI1(for_LUI_AUIPC_i),
@@ -260,11 +282,13 @@ module RISCV_TOP (
 	MUX #(
 		.DWITH(32)
 	) MUX_right_MEM(
+		.clk(CLK),
+		.rstn(RSTn),
 		.CON(isLUIAUI),
 		.DI(for_LUI_AUIPC_o),
 		.DI1(D_MEM_DI),//! wrong
 		.DOUT(chos_LUI_JALR)
 	);
-	
+
 	// TODO: to end
 endmodule //
