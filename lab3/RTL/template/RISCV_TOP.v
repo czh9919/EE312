@@ -251,6 +251,6 @@ module RISCV_TOP (
 		.DI1(D_MEM_DI),//! wrong
 		.DOUT(chos_LUI_JALR)
 	);
-
+	
 	// TODO: to end
 endmodule //
