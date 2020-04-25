@@ -9,10 +9,8 @@ module ADD #(
 	output	reg		[DWIDTH-1:0]		DOUT // data out
 );
 
-always @(posedge clk) begin
-	if (~rstn) begin
+always @(posedge clk or negedge rstn) begin
 		DOUT=32'b0;
-	end
 end
 always @ (*) begin
 	DOUT[DWIDTH-1:0]=DI1[DWIDTH-1:0]+DI[DWIDTH-1:0];

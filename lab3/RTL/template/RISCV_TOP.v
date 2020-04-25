@@ -206,7 +206,7 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.CON(isnot_PC_4),
 		.DI(out_mux_to_mux),
-		.DI1({20'b0,PC_4_to_MUX}),
+		.DI1(PC_4_to_MUX),
 		.DOUT(backPC1)
 	);
 

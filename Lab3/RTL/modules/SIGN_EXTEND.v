@@ -8,10 +8,8 @@ module SIGN_EXTEND#(
 	output reg [O_DWIDTH-1:0] O_DI
 );
 
-always @(posedge clk) begin
-	if (~rstn) begin
-		O_DI=32'b0;
-	end
+always @(posedge clk or negedge rstn) begin
+	O_DI=32'b0;
 end
 
 always @(*) begin  //clk or *
