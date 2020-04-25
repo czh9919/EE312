@@ -43,6 +43,7 @@ module SP_SRAM #(parameter ROMDATA = "", AWIDTH = 12, SIZE = 4096) (
 		begin
 			if (WEN)
 				outline = ram[ADDR];
+				$display("%b has been passed",outline);
 		end
 	end
 
