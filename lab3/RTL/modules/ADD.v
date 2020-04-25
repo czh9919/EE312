@@ -14,9 +14,6 @@ always @(posedge clk or negedge rstn) begin
 end
 always @ (*) begin
 	DOUT[DWIDTH-1:0]=DI1[DWIDTH-1:0]+DI[DWIDTH-1:0];
-	$display("%b has been passed",DI1);
-	$display("%b has been passed",DI);
-	$display("%b has been passed",DOUT);
 end
 
 endmodule
