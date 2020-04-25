@@ -6,11 +6,12 @@ module PC (
 );
 
 always @(posedge clk) begin
-    if (rstn) begin
-        O_MEM_ADD=0;
+    if (~rstn) begin
+        O_MEM_ADD=12'b0;
     end
     else begin
-        O_MEM_ADD[12:0]=I_MEM_ADD[12:0];
+        O_MEM_ADD[11:0]=I_MEM_ADD[11:0];
+        $display("%b has been passed",O_MEM_ADD);
     end
 end
 

@@ -1,5 +1,5 @@
 module MUX #(
-	parameter DWITH
+	parameter DWITH=32
 )
 (
 	input	wire	CON,//chip select negative??
