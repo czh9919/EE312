@@ -51,7 +51,27 @@
 \setcounter{page}{1}
 
 \section{Introduction}
-
+Lab 3 is intended to give you hands-on experience in designing the simplest form of a modern microprocessor, whose operations are conducted within a single clock cycle. 
+Based on the concepts and skills you have acquired through Lab 1 and Lab 2, you are now ready to implement a single-cycle CPU. 
+Through this lab assignment, you will have gained an in-depth understanding on the fundamentals of designing a CPU microarchitecture.  
+  
+2. Backgrounds 
+Control Path & Data Path 
+A CPU is composed of two types of units, which are the control units and data units. 
+A control path consists of multiple control units, which “controls” the data path of the processor (e.g., ALUs, memory) how to respond to the instruction that is fetched to the processor. 
+Likewise, a data path is a collection of functional units such as arithmetic logic units (ALUs) or multipliers, that perform data processing operations, registers, and buses. 
+You can simply think of the data path as it literally means; the path where the data flow inside of the processor. 
+ 
+Single-cycle CPU 
+A single-cycle CPU processes an instruction per every single clock cycle. 
+At every single clock cycle, the singlecycle CPU must perform Instruction Fetch (IF), Instruction Decode (ID), Execute (EX), Memory operation (MEM), and Write Back (WB) stages of a single instruction, so the architectural states are updated as the instruction “instructs” the CPU. 
+The IF stage is to fetch the instruction that the Program Counter (PC) points to in the instruction memory. 
+The ID stage is to decode the fetched instruction, figure out which operations are required to carry out, which is defined by the Instruction Set Architecture (ISA). 
+The EX stage is where primitive operations (e.g., add, multiply, bit-wise operations) as well as memory address calculations are performed. 
+The MEM stage is to perform memory operations (e.g., load, store) on specified address by the instruction. 
+The WB stage is to update the architectural states of the processor; the values of registers or memory are updated as a result of executing the instruction. 
+The exact control and data path are shown in Fig. 1, which is the MIPS version of a single cycle CPU design. 
+Remember that the goal of Lab 3 is to design your own "RISC-V" version of such single cycle CPU microarchitecture. 
 
 
 
