@@ -1,6 +1,6 @@
 module SIGN_EXTEND#(
-	parameter I_DWIDTH,
-	parameter O_DWIDTH
+	parameter I_DWIDTH=12,
+	parameter O_DWIDTH=32
 )(
 	input wire [I_DWIDTH-1:0]  I_DI,
 	output reg [O_DWIDTH-1:0] O_DI

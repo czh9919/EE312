@@ -1,5 +1,5 @@
 module ADD #(
-	parameter DWIDTH
+	parameter DWIDTH=32
 )
 (
 	input	wire	[DWIDTH-1:0]		DI, //data in
