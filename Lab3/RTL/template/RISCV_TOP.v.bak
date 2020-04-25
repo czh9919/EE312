@@ -166,7 +166,7 @@ module RISCV_TOP (
 		.DI1(32'b0100),
 		.DOUT(pc_4temp)
 	);
-	assign PC_4_to_MUX[11:0]=pc_4temp;
+	assign PC_4_to_MUX=pc_4temp;
 	MUX #(
 		.DWITH(32)
 	) MUX_Left_WD(
