@@ -1,11 +1,18 @@
 module ALU(
-
+	input  wire clk,
+	input  wire rstn,
 	input wire [31:0]A,
 	input wire [31:0]B,
 	input wire [4:0]OP,
 	output reg [31:0]C,
 	output reg Cout
 );
+
+always @(posedge clk or negedge rstn) begin
+	Cout=0;
+	C=0;
+end
+
 	reg temp;
 	always @(*) begin
 		case (OP)

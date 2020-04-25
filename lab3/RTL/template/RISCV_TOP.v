@@ -106,6 +106,8 @@ module RISCV_TOP (
 	wire [31:0]ALU_Ans;
 	wire CoutAns;
 	ALU alu(
+		.clk(CLK),
+		.rstn(RSTn),
 		.A(RF_RD1),
 		.B(MUX_TO_ALU),
 		.OP(ALUOp),
