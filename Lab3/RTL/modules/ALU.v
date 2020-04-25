@@ -8,10 +8,7 @@ module ALU(
 	output reg Cout
 );
 
-always @(posedge clk or negedge rstn) begin
-	Cout=0;
-	C=0;
-end
+
 
 	reg temp;
 	always @(*) begin

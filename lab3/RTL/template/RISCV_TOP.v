@@ -93,27 +93,10 @@ module RISCV_TOP (
 	//TODO backTOPC connect with outPC
 	wire [31:0]SIGN_EXTEND_to_MUX_ADD;
 	wire [31:0]MUX_TO_ALU;
-	MUX #(
-		.DWITH(32)
-	) BeforeALU(
-		.clk(CLK),
-		.rstn(RSTn),
-		.CON(ALUSrc),
-		.DI(RF_RD2),
-		.DI1(SIGN_EXTEND_to_MUX_ADD),
-		.DOUT(MUX_TO_ALU)//!ALU out
-	);
+
 	wire [31:0]ALU_Ans;
 	wire CoutAns;
-	ALU alu(
-		.clk(CLK),
-		.rstn(RSTn),
-		.A(RF_RD1),
-		.B(MUX_TO_ALU),
-		.OP(ALUOp),
-		.C(ALU_Ans),
-		.Cout(CoutAns)
-	);
+
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_0;
 	SIGN_EXTEND #(
 		.I_DWIDTH(12),
@@ -143,6 +126,25 @@ module RISCV_TOP (
 		.DI(SIGN_EXTEND_to_ready_MUX_ADD_1),
 		.DI1(SIGN_EXTEND_to_ready_MUX_ADD_0),
 		.DOUT(SIGN_EXTEND_to_MUX_ADD)
+	);
+	MUX #(
+		.DWITH(32)
+	) BeforeALU(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(ALUSrc),
+		.DI(RF_RD2),
+		.DI1(SIGN_EXTEND_to_MUX_ADD),
+		.DOUT(MUX_TO_ALU)//!ALU out
+	);
+	ALU alu(
+		.clk(CLK),
+		.rstn(RSTn),
+		.A(RF_RD1),
+		.B(MUX_TO_ALU),
+		.OP(ALUOp),
+		.C(ALU_Ans),
+		.Cout(CoutAns)
 	);
 	assign D_MEM_ADDR=ALU_Ans;
 	assign D_MEM_DOUT=RF_RA2;
