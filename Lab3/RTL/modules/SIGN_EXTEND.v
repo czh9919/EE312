@@ -13,7 +13,7 @@ always @(posedge clk or negedge rstn) begin
 end
 
 always @(*) begin  //clk or *
-	O_DI[O_DWIDTH:0]<={{(O_DWIDTH-I_DWIDTH){I_DI[I_DWIDTH-1]}},I_DI};
+	O_DI[O_DWIDTH-1:0]<={{(O_DWIDTH-I_DWIDTH){I_DI[I_DWIDTH-1]}},I_DI};
 end
 
 endmodule // SIGN_EXTEND
