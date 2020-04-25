@@ -156,7 +156,7 @@ module RISCV_TOP (
 		.DI1(chos_LUI_JALR),
 		.DOUT(MUX_to_MUX)
 	);
-	wire [11:0]pc_4temp;
+	wire [31:0]pc_4temp;
 	ADD #(
 		.DWIDTH(32)
 	) PC_4(
