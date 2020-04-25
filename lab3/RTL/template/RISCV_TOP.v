@@ -85,7 +85,8 @@ module RISCV_TOP (
 		.I_MEM_ADD(Back_to_PC),
 		.O_MEM_ADD(OUT_PC),
 		.I_MEM_CSN(I_MEM_CSN),
-		.D_MEM_CSN(D_MEM_CSN)
+		.D_MEM_CSN(D_MEM_CSN),
+		.PC_4_to_MUX(PC_4_to_MUX)
 	);
 	always @(*) begin
 		I_MEM_ADDR=OUT_PC;
