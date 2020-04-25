@@ -1,8 +1,8 @@
 module PC (
     input wire clk,
     input  wire rstn,
-    input  wire [12:0] I_MEM_ADD,
-    output reg [12:0] O_MEM_ADD
+    input  wire [11:0] I_MEM_ADD,
+    output reg [11:0] O_MEM_ADD
 );
 
 always @(posedge clk) begin
