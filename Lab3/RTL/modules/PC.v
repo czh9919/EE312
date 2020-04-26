@@ -16,8 +16,6 @@ end
 always @(posedge clk) begin
     if (rstn) begin
         O_MEM_ADD[11:0]=I_MEM_ADD[11:0];
-        I_MEM_CSN = 0;
-        D_MEM_CSN =0;
     end
 end
 

@@ -140,6 +140,7 @@ module RISCV_TOP (
 		.DI1(SIGN_EXTEND_to_MUX_ADD),
 		.DOUT(MUX_TO_ALU)//!ALU out
 	);
+
 	ALU alu(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -150,7 +151,7 @@ module RISCV_TOP (
 		.Cout(CoutAns)
 	);
 	assign D_MEM_ADDR=ALU_Ans;
-	assign D_MEM_DOUT=RF_RA2;
+	assign D_MEM_DOUT=RF_RD2;
 	wire [31:0] MUX_to_MUX;
 	MUX #(
 		.DWITH(32)//! may not 32
@@ -240,13 +241,14 @@ module RISCV_TOP (
 		.O_DI(SIGN_EXTEND_to_ADD)
 	);
 	wire [31:0]SIGN_EXTEND_to_SW;
+	wire [11:0]temp_imm={I_MEM_DI[31:25],I_MEM_DI[11:7]};
 	SIGN_EXTEND#(
-		.I_DWIDTH(7),
+		.I_DWIDTH(12),
 		.O_DWIDTH(32)
 	)SIGN_EXTEND_to_sw(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(I_MEM_DI[31:25]),
+		.I_DI(temp_imm),
 		.O_DI(SIGN_EXTEND_to_SW)
 	);
 	MUX #(
