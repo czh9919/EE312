@@ -13,8 +13,8 @@ always @(posedge rstn) begin
     D_MEM_CSN =0;
 end
 
-always @(clk) begin
-    if (~rstn) begin
+always @(posedge clk) begin
+    if (rstn) begin
         O_MEM_ADD[11:0]=I_MEM_ADD[11:0];
         I_MEM_CSN = 1;
         D_MEM_CSN =1;
