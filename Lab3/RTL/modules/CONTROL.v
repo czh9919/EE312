@@ -5,7 +5,7 @@ module CONTROL (
 	output reg O_ALUSrc,
 	output reg O_MemtoReg,
 	output reg O_RegWrite,
-	output reg O_MemRead,
+	output reg [3:0]O_MemRead,
 	output reg O_MemWrite,
 	output reg [3:0] O_ALUOp,
 	output reg isnot_PC_4,
@@ -22,7 +22,7 @@ always @(posedge rstn) begin
 		O_ALUSrc=0;
 		O_MemtoReg=0;
 		O_RegWrite=0;
-		O_MemRead=0;
+		O_MemRead=4'b0;
 		O_MemWrite=0;
 		O_ALUOp=4'b0;
 		isnot_PC_4=0;
@@ -43,7 +43,7 @@ always @(*) begin
 					3'b000:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0000;
@@ -59,7 +59,7 @@ always @(*) begin
 					3'b111:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0010;
@@ -75,7 +75,7 @@ always @(*) begin
 					3'b110:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0011;
@@ -91,7 +91,7 @@ always @(*) begin
 					3'b100:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0110;
@@ -107,7 +107,7 @@ always @(*) begin
 					3'b010:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1100;
@@ -123,7 +123,7 @@ always @(*) begin
 					3'b011:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0100;
@@ -139,7 +139,7 @@ always @(*) begin
 					3'b101:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1010;
@@ -155,7 +155,7 @@ always @(*) begin
 					3'b001:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0101;
@@ -175,7 +175,7 @@ always @(*) begin
 					3'b101:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1010;
@@ -191,7 +191,7 @@ always @(*) begin
 					3'b001:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b0101;
@@ -216,7 +216,7 @@ always @(*) begin
 						3'b000:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b0001;
@@ -232,7 +232,7 @@ always @(*) begin
 						3'b101:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b0111;
@@ -252,7 +252,7 @@ always @(*) begin
 						3'b101:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b0111;
@@ -280,7 +280,7 @@ always @(*) begin
 						3'b000:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0000;
@@ -296,7 +296,7 @@ always @(*) begin
 						3'b111:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0010;
@@ -312,7 +312,7 @@ always @(*) begin
 						3'b110:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0011;
@@ -328,7 +328,7 @@ always @(*) begin
 						3'b100:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0110;
@@ -344,7 +344,7 @@ always @(*) begin
 						3'b010:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0100;
@@ -360,7 +360,7 @@ always @(*) begin
 						3'b011:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0100;
@@ -379,7 +379,7 @@ always @(*) begin
 				7'b0110111:begin	
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1101;
@@ -395,7 +395,7 @@ always @(*) begin
 				7'b0010111:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1000;
@@ -406,7 +406,7 @@ always @(*) begin
 						3'b010:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=1;
+							O_MemRead=4'b1111;
 							O_MemtoReg=0;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0000;
@@ -419,6 +419,70 @@ always @(*) begin
 							isLUIAUI=0;
 							//LW
 						end
+						3'b000:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=4'b0001;
+							O_MemtoReg=0;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0000;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
+							is_down_se=0;
+							isLUI=0;
+							isLUIAUI=0;
+							//LB
+						end
+						3'b001:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=4'b0011;
+							O_MemtoReg=0;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0000;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
+							is_down_se=0;
+							isLUI=0;
+							isLUIAUI=0;
+							//LH
+						end
+						3'b100:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=4'b0001;
+							O_MemtoReg=0;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0000;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
+							is_down_se=0;
+							isLUI=0;
+							isLUIAUI=0;
+							//LBU
+						end
+						3'b101:begin
+							O_RegWrite=1;
+							O_MemWrite=0;
+							O_MemRead=4'b0011;
+							O_MemtoReg=0;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0000;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
+							is_down_se=0;
+							isLUI=0;
+							isLUIAUI=0;
+							//LHU
+						end
 					endcase
 				end
 				7'b0100011:begin
@@ -426,7 +490,7 @@ always @(*) begin
 						3'b010:begin
 							O_RegWrite=0;
 							O_MemWrite=1;
-							O_MemRead=0;
+							O_MemRead=4'b1111;
 							O_MemtoReg=1;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0101;
@@ -439,12 +503,44 @@ always @(*) begin
 							isLUIAUI=0;
 							//SW
 						end
+						3'b001:begin
+							O_RegWrite=0;
+							O_MemWrite=1;
+							O_MemRead=4'b0011;
+							O_MemtoReg=1;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0101;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
+							is_down_se=0;
+							isLUI=0;
+							isLUIAUI=0;
+							//!SH
+						end
+						3'b000:begin
+							O_RegWrite=0;
+							O_MemWrite=1;
+							O_MemRead=4'b0001;
+							O_MemtoReg=1;
+							O_ALUSrc=0;
+							O_ALUOp=4'b0101;
+							isnot_PC_4=0;
+							isJALR=0;
+							isCout=0;
+							isJAL=0;
+							is_down_se=0;
+							isLUI=0;
+							isLUIAUI=0;
+							//!SB
+						end
 					endcase
 				end
 				7'b1101111:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1001;
@@ -462,7 +558,7 @@ always @(*) begin
 						3'b000:begin
 						O_RegWrite=1;
 						O_MemWrite=0;
-						O_MemRead=0;
+						O_MemRead=4'b0;
 						O_MemtoReg=1;
 						O_ALUSrc=0;
 						O_ALUOp=4'b0000;
@@ -482,7 +578,7 @@ always @(*) begin
 						3'b000:begin
 							O_RegWrite=0;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b0000;
@@ -498,7 +594,7 @@ always @(*) begin
 						3'b001:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1110;
@@ -514,7 +610,7 @@ always @(*) begin
 						3'b100:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1101;
@@ -530,7 +626,7 @@ always @(*) begin
 						3'b101:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1111;
@@ -546,7 +642,7 @@ always @(*) begin
 						3'b110:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1111;
@@ -562,7 +658,7 @@ always @(*) begin
 						3'b111:begin
 							O_RegWrite=1;
 							O_MemWrite=0;
-							O_MemRead=0;
+							O_MemRead=4'b0;
 							O_MemtoReg=1;
 							O_ALUSrc=1;
 							O_ALUOp=4'b1111;
