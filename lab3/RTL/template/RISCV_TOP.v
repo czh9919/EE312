@@ -251,7 +251,7 @@ module RISCV_TOP (
 	);
 	MUX #(
 		.DWITH(12)
-	) MUX_for_MUX(
+	) MUX_for_SW(
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(is_sign_ex),
