@@ -1,11 +1,13 @@
 module CONTROL (
+	input  wire clk,
+	input  wire rstn,
 	input wire [31:0] I_OP,
 	output reg O_ALUSrc,
 	output reg O_MemtoReg,
 	output reg O_RegWrite,
 	output reg O_MemRead,
 	output reg O_MemWrite,
-	output reg [4:0] O_ALUOp,
+	output reg [3:0] O_ALUOp,
 	output reg isnot_PC_4,
 	output reg isJALR,
 	output reg isCout,
@@ -16,6 +18,21 @@ module CONTROL (
 	//output wire O_ALUOp2
 );
 
+always @(posedge rstn) begin
+		O_ALUSrc=0;
+		O_MemtoReg=0;
+		O_RegWrite=0;
+		O_MemRead=0;
+		O_MemWrite=0;
+		O_ALUOp=4'b0;
+		isnot_PC_4=0;
+		isJALR=0;
+		isCout=0;
+		isJAL=0;
+		is_down_se=0;
+		isLUI=0;
+		isLUIAUI=0;
+end
 
 always @(*) begin
 	case (I_OP[31:25])

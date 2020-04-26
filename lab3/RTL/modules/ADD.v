@@ -9,7 +9,7 @@ module ADD #(
 	output	reg		[DWIDTH-1:0]		DOUT // data out
 );
 
-always @(posedge clk or negedge rstn) begin
+always @(posedge rstn) begin
 		DOUT=32'b0;
 end
 always @ (*) begin

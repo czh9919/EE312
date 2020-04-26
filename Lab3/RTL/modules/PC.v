@@ -7,17 +7,17 @@ module PC (
     output reg D_MEM_CSN
 );
 
-always @(posedge clk or negedge rstn) begin
+always @(posedge rstn) begin
     O_MEM_ADD=12'b0;
-    I_MEM_CSN = 1;
-    D_MEM_CSN =1;
+    I_MEM_CSN = 0;
+    D_MEM_CSN =0;
 end
 
-always @(posedge clk) begin
+always @(clk) begin
     if (~rstn) begin
         O_MEM_ADD[11:0]=I_MEM_ADD[11:0];
-        I_MEM_CSN = 0;
-        D_MEM_CSN =0;
+        I_MEM_CSN = 1;
+        D_MEM_CSN =1;
     end
 end
 

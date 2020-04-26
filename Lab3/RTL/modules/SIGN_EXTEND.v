@@ -8,12 +8,11 @@ module SIGN_EXTEND#(
 	output reg [O_DWIDTH-1:0] O_DI
 );
 
-always @(posedge clk or negedge rstn) begin
-	O_DI=32'b0;
+always @(posedge rstn) begin
+		O_DI=32'b0;
 end
-
 always @(*) begin  //clk or *
-	O_DI[O_DWIDTH:0]<={{(O_DWIDTH-I_DWIDTH){I_DI[I_DWIDTH-1]}},I_DI};
+	O_DI[O_DWIDTH-1:0]<={{(O_DWIDTH-I_DWIDTH){I_DI[I_DWIDTH-1]}},I_DI};
 end
 
 endmodule // SIGN_EXTEND

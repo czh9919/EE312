@@ -49,11 +49,13 @@ module RISCV_TOP (
 	wire isLUIAUI;
 	wire isJAL;
 	wire is_down_s;
-	wire [4:0]ALUOp;
+	wire [3:0]ALUOp;
 	wire [31:0]chos_LUI_JALR;
 	wire ALUSrc;
 
 	CONTROL CONT(
+		.clk(CLK),
+		.rstn(RSTn),
 		.I_OP(I_MEM_DI),
 		.O_MemtoReg(MemtoReg),
 		.O_ALUSrc(ALUSrc),
@@ -88,7 +90,7 @@ module RISCV_TOP (
 		.D_MEM_CSN(D_MEM_CSN)
 	);
 	always @(*) begin
-		I_MEM_ADDR=OUT_PC;
+		I_MEM_ADDR[11:0]=OUT_PC[11:0];
 	end
 	//TODO backTOPC connect with outPC
 	wire [31:0]SIGN_EXTEND_to_MUX_ADD;
