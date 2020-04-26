@@ -65,7 +65,7 @@ module TB_RISCV ();
 
 	//I-Memory
 	SP_SRAM #(
-		.ROMDATA ("G:\\FPGA\\EE312\\lab3\\RTL\\testcase\\hex\\forloop.hex"), //Initialize I-Memory
+		.ROMDATA ("D:\programming\EE312\Lab3\RTL\testcase\hex\forloop.hex"), //Initialize I-Memory
 		.AWIDTH  (10),
 		.SIZE    (1024)
 	) i_mem1 (
