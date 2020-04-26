@@ -52,7 +52,6 @@ module RISCV_TOP (
 	wire [3:0]ALUOp;
 	wire [31:0]chos_LUI_JALR;
 	wire ALUSrc;
-	wire SIGN_SW;
 	CONTROL CONT(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -69,8 +68,8 @@ module RISCV_TOP (
 		.isJAL(isJAL),
 		.is_down_se(is_down_se),
 		.isLUI(isLUI),
-		.isLUIAUI(isLUIAUI)
-		.SIGN_SW(is_sign_ex)
+		.isLUIAUI(isLUIAUI),
+		.is_sign_ex(is_sign_ex)
 	);
 	// TODO: control
 	assign RF_RA1 = I_MEM_DI[19:15];
@@ -101,6 +100,7 @@ module RISCV_TOP (
 	wire CoutAns;
 
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_0;
+	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_2;
 	SIGN_EXTEND #(
 		.I_DWIDTH(12),
 		.O_DWIDTH(32)
@@ -128,7 +128,7 @@ module RISCV_TOP (
 		.CON(is_down_se),
 		.DI(SIGN_EXTEND_to_ready_MUX_ADD_1),
 		.DI1(SIGN_EXTEND_to_ready_MUX_ADD_0),
-		.DOUT(SIGN_EXTEND_to_MUX_ADD)
+		.DOUT(SIGN_EXTEND_to_ready_MUX_ADD_2)
 	);
 	MUX #(
 		.DWITH(32)
@@ -239,7 +239,7 @@ module RISCV_TOP (
 		.I_DI(I_MEM_DI[31:25]),
 		.O_DI(SIGN_EXTEND_to_ADD)
 	);
-	wire [24:0]SIGN_EXTEND_to_SW;
+	wire [31:0]SIGN_EXTEND_to_SW;
 	SIGN_EXTEND#(
 		.I_DWIDTH(7),
 		.O_DWIDTH(32)
@@ -250,14 +250,14 @@ module RISCV_TOP (
 		.O_DI(SIGN_EXTEND_to_SW)
 	);
 	MUX #(
-		.DWITH(12)
+		.DWITH(32)
 	) MUX_for_SW(
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(is_sign_ex),
 		.DI(SIGN_EXTEND_to_SW),
-		.DI1(),
-		.DOUT()
+		.DI1(SIGN_EXTEND_to_ready_MUX_ADD_2),
+		.DOUT(SIGN_EXTEND_to_MUX_ADD)
 	);
 	ADD#(
 		.DWIDTH(12)

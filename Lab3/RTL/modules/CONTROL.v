@@ -33,6 +33,7 @@ always @(posedge rstn) begin
 		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
+		is_sign_ex=0;
 end
 
 always @(*) begin
@@ -55,6 +56,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//TODO ADD
 					end
 					3'b111:begin
@@ -71,6 +73,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//AND
 					end
 					3'b110:begin
@@ -87,6 +90,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//OR
 					end
 					3'b100:begin
@@ -103,6 +107,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//XOR
 					end
 					3'b010:begin
@@ -119,6 +124,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//SLT
 					end
 					3'b011:begin
@@ -135,6 +141,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//SLTU
 					end
 					3'b101:begin
@@ -151,6 +158,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//SRL
 					end
 					3'b001:begin
@@ -167,6 +175,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//SLL
 					end
 				endcase
@@ -187,6 +196,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//SRLI
 					end
 					3'b001:begin
@@ -203,6 +213,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//SLLI
 					end
 				endcase
@@ -228,6 +239,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//SUB
 						end
 						3'b101:begin
@@ -244,6 +256,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//SRA
 						end
 					endcase
@@ -264,6 +277,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//SRAI
 						end
 					endcase
@@ -292,6 +306,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//ADDI
 						end
 						3'b111:begin
@@ -308,6 +323,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//ANDI
 						end
 						3'b110:begin
@@ -324,6 +340,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//ORI
 						end
 						3'b100:begin
@@ -340,6 +357,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//XORI
 						end
 						3'b010:begin
@@ -356,6 +374,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//SLTI
 						end
 						3'b011:begin
@@ -372,6 +391,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//SLTIU
 						end
 
@@ -391,6 +411,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 					//LUI
 				end
 				7'b0010111:begin
@@ -400,6 +421,7 @@ always @(*) begin
 						O_MemtoReg=1;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1000;
+						is_sign_ex=0;
 					//AUIPC
 				end
 				7'b0000011:begin
@@ -418,6 +440,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//LW
 						end
 						3'b000:begin
@@ -434,6 +457,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//LB
 						end
 						3'b001:begin
@@ -450,6 +474,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//LH
 						end
 						3'b100:begin
@@ -466,6 +491,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//LBU
 						end
 						3'b101:begin
@@ -482,6 +508,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//LHU
 						end
 					endcase
@@ -519,6 +546,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=1;
 							//!SH
 						end
 						3'b000:begin
@@ -535,6 +563,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=1;
 							//!SB
 						end
 					endcase
@@ -553,6 +582,7 @@ always @(*) begin
 						is_down_se=1;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 					//JAL
 				end
 				7'b1100111:begin
@@ -571,6 +601,7 @@ always @(*) begin
 						is_down_se=0;
 						isLUI=0;
 						isLUIAUI=0;
+						is_sign_ex=0;
 						//JALR
 						end
 					endcase
@@ -591,6 +622,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//BEQ
 						end
 						3'b001:begin
@@ -607,6 +639,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//BNE
 						end
 						3'b100:begin
@@ -623,6 +656,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//BLT
 						end
 						3'b101:begin
@@ -639,6 +673,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//BGE
 						end
 						3'b110:begin
@@ -655,6 +690,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//BLTU
 						end
 						3'b111:begin
@@ -671,6 +707,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=0;
 							//BGEU
 						end
 					endcase
