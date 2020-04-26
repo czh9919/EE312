@@ -194,7 +194,7 @@ module RISCV_TOP (
 	);
 
 	assign out_and=ALU_Ans^8'hfffffffe;
-	wire [11:0]out_mux_to_mux;\
+	wire [11:0]out_mux_to_mux;
 	MUX#(
 		.DWITH(12)
 	) Behind_ADD(
