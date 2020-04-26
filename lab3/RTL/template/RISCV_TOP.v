@@ -52,7 +52,7 @@ module RISCV_TOP (
 	wire [3:0]ALUOp;
 	wire [31:0]chos_LUI_JALR;
 	wire ALUSrc;
-
+	wire SIGN_SW;
 	CONTROL CONT(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -70,6 +70,7 @@ module RISCV_TOP (
 		.is_down_se(is_down_se),
 		.isLUI(isLUI),
 		.isLUIAUI(isLUIAUI)
+		.SIGN_SW(is_sign_ex)
 	);
 	// TODO: control
 	assign RF_RA1 = I_MEM_DI[19:15];
@@ -237,6 +238,26 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.I_DI(I_MEM_DI[31:25]),
 		.O_DI(SIGN_EXTEND_to_ADD)
+	);
+	wire [24:0]SIGN_EXTEND_to_SW;
+	SIGN_EXTEND#(
+		.I_DWIDTH(7),
+		.O_DWIDTH(32)
+	)SIGN_EXTEND_to_sw(
+		.clk(CLK),
+		.rstn(RSTn),
+		.I_DI(I_MEM_DI[31:25]),
+		.O_DI(SIGN_EXTEND_to_SW)
+	);
+	MUX #(
+		.DWITH(12)
+	) MUX_for_MUX(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(is_sign_ex),
+		.DI(SIGN_EXTEND_to_SW),
+		.DI1(),
+		.DOUT()
 	);
 	ADD#(
 		.DWIDTH(12)
