@@ -14,7 +14,8 @@ module CONTROL (
 	output reg isJAL,
 	output reg is_down_se,
 	output reg isLUI,
-	output reg isLUIAUI
+	output reg isLUIAUI,
+	output reg is_sign_ex
 	//output wire O_ALUOp2
 );
 
@@ -501,6 +502,7 @@ always @(*) begin
 							is_down_se=0;
 							isLUI=0;
 							isLUIAUI=0;
+							is_sign_ex=1;
 							//SW
 						end
 						3'b001:begin
