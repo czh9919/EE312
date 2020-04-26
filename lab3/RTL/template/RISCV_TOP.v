@@ -301,8 +301,8 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(isLUI),
-		.DI(imm_12),
-		.DI1(for_LUI_AUIPC_i),
+		.DI(for_LUI_AUIPC_i),
+		.DI1(imm_12),
 		.DOUT(for_LUI_AUIPC_o[11:0])
 	);
 	MUX #(

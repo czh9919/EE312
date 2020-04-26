@@ -401,7 +401,7 @@ always @(*) begin
 						O_RegWrite=1;
 						O_MemWrite=0;
 						O_MemRead=4'b0;
-						O_MemtoReg=1;
+						O_MemtoReg=0;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1101;
 						isnot_PC_4=1;
@@ -410,7 +410,7 @@ always @(*) begin
 						isJAL=0;
 						is_down_se=0;
 						isLUI=0;
-						isLUIAUI=0;
+						isLUIAUI=1;
 						is_sign_ex=0;
 					//LUI
 				end
@@ -418,9 +418,16 @@ always @(*) begin
 						O_RegWrite=1;
 						O_MemWrite=0;
 						O_MemRead=4'b0;
-						O_MemtoReg=1;
+						O_MemtoReg=0;
 						O_ALUSrc=1;
 						O_ALUOp=4'b1000;
+						isnot_PC_4=0;
+						isJALR=1;
+						isCout=0;
+						isJAL=0;
+						is_down_se=0;
+						isLUI=1;
+						isLUIAUI=1;
 						is_sign_ex=0;
 					//AUIPC
 				end
@@ -519,7 +526,7 @@ always @(*) begin
 							O_RegWrite=0;
 							O_MemWrite=1;
 							O_MemRead=4'b1111;
-							O_MemtoReg=1;
+							O_MemtoReg=0;
 							O_ALUSrc=0;
 							O_ALUOp=4'b0101;
 							isnot_PC_4=0;
