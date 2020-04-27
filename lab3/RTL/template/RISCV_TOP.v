@@ -51,6 +51,7 @@ module RISCV_TOP (
 	wire is_down_s;
 	wire [3:0]ALUOp;
 	wire [31:0]chos_LUI_JALR;
+	wire temp_WEN;
 	wire ALUSrc;
 	CONTROL CONT(
 		.clk(CLK),
@@ -59,7 +60,7 @@ module RISCV_TOP (
 		.O_MemtoReg(MemtoReg),
 		.O_ALUSrc(ALUSrc),
 		.O_RegWrite(RF_WE),
-		.O_MemWrite(D_MEM_WEN),
+		.O_MemWrite(temp_WEN),
 		.O_MemRead(D_MEM_BE),
 		.O_ALUOp(ALUOp),
 		.isnot_PC_4(isnot_PC_4),
@@ -71,6 +72,7 @@ module RISCV_TOP (
 		.isLUIAUI(isLUIAUI),
 		.is_sign_ex(is_sign_ex)
 	);
+	assign D_MEM_WEN=~temp_WEN;
 	// TODO: control
 	assign RF_RA1 = I_MEM_DI[19:15];
 	assign RF_RA2 = I_MEM_DI[24:20];
