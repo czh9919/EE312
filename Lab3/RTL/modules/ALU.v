@@ -66,14 +66,30 @@ module ALU(
 				//ALUPC
 			end
 			4'b1001: begin
-				C=0;
-				Cout = 0;
-				//JAL
+				if (A[31]==B[31])begin
+					if (A[30:0]>=B[30:0])begin
+						C=1;
+						Cout=1;
+					end
+					else begin
+						C=0;
+						Cout=0;
+					end
+				end	
+				if((A[31]==1) & (B[31]==0))begin
+					C=0;
+					Cout=0;
+				end
+				if((A[31]==0) & (B[31]==1))begin
+					C=0;
+					Cout=0;
+				end
 			end
 			// !shift
 			4'b1010: begin
 				C=A >> B ;
-				//srl
+
+				//srl/BGE
 			end
 			4'b1011: begin 
 				if(A<B)begin
@@ -105,12 +121,12 @@ module ALU(
 					Cout=0;
 				end
 					
-				//SLT
+				//BLT
 			end
 			4'b1101: begin
 				C = A <<12;
 				Cout = ( A < B ); 
-				//LUI
+				//BLTU
 			end
 			4'b1110: begin
 				Cout= ( A != B ) ;
@@ -119,7 +135,7 @@ module ALU(
 			4'b1111: begin
 				
 				Cout= ( A >=B) ;
-				//BGE/BLT
+				//BGEU
 			end
 		endcase
 	end

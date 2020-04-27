@@ -625,7 +625,7 @@ always @(*) begin
 		isJALR=0;
 		isCout=0;
 		isJAL=1;
-		is_down_se=1;
+		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
 		is_sign_ex=0;
@@ -669,7 +669,7 @@ always @(*) begin
 		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
-		is_sign_ex=0;
+		is_sign_ex=1;
 		isSLLISRLISRAI=0;
 		issw=0;
 			//BEQ
@@ -690,7 +690,7 @@ always @(*) begin
 		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
-		is_sign_ex=0;
+		is_sign_ex=1;
 		isSLLISRLISRAI=0;
 		issw=0;
 			//BNE
@@ -698,6 +698,48 @@ always @(*) begin
 
 
 	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b100)begin
+		O_RegWrite=1;
+		O_MemWrite=0;
+		O_MemRead=4'b0;
+		O_MemtoReg=1;
+		O_ALUSrc=1;
+		O_ALUOp=4'b1100;
+		isnot_PC_4=0;
+		isJALR=0;
+		isCout=1;
+		isJAL=0;
+		is_down_se=0;
+		isLUI=0;
+		isLUIAUI=0;
+		is_sign_ex=1;
+		isSLLISRLISRAI=0;
+		issw=0;
+			//BLT
+	end
+
+
+	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b101)begin
+		O_RegWrite=1;
+		O_MemWrite=0;
+		O_MemRead=4'b0;
+		O_MemtoReg=1;
+		O_ALUSrc=1;
+		O_ALUOp=4'b1001;
+		isnot_PC_4=0;
+		isJALR=0;
+		isCout=1;
+		isJAL=0;
+		is_down_se=0;
+		isLUI=0;
+		isLUIAUI=0;
+		is_sign_ex=1;
+		isSLLISRLISRAI=0;
+		issw=0;
+			//BGE
+	end
+
+
+	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b110)begin
 		O_RegWrite=1;
 		O_MemWrite=0;
 		O_MemRead=4'b0;
@@ -711,49 +753,7 @@ always @(*) begin
 		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
-		is_sign_ex=0;
-		isSLLISRLISRAI=0;
-		issw=0;
-			//BLT
-	end
-
-
-	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b101)begin
-		O_RegWrite=1;
-		O_MemWrite=0;
-		O_MemRead=4'b0;
-		O_MemtoReg=1;
-		O_ALUSrc=1;
-		O_ALUOp=4'b1111;
-		isnot_PC_4=0;
-		isJALR=0;
-		isCout=1;
-		isJAL=0;
-		is_down_se=0;
-		isLUI=0;
-		isLUIAUI=0;
-		is_sign_ex=0;
-		isSLLISRLISRAI=0;
-		issw=0;
-			//BGE
-	end
-
-
-	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b110)begin
-		O_RegWrite=1;
-		O_MemWrite=0;
-		O_MemRead=4'b0;
-		O_MemtoReg=1;
-		O_ALUSrc=1;
-		O_ALUOp=4'b1111;
-		isnot_PC_4=0;
-		isJALR=0;
-		isCout=1;
-		isJAL=0;
-		is_down_se=0;
-		isLUI=0;
-		isLUIAUI=0;
-		is_sign_ex=0;
+		is_sign_ex=1;
 		isSLLISRLISRAI=0;
 		issw=0;
 			//BLTU
@@ -772,7 +772,7 @@ always @(*) begin
 		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
-		is_sign_ex=0;
+		is_sign_ex=1;
 		isSLLISRLISRAI=0;
 		issw=0;
 			//BGEU
