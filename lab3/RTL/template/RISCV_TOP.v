@@ -114,23 +114,39 @@ module RISCV_TOP (
 		.RF_RD(RF_RD1),
 		.HALT_o(HALT)
 	);
-	SIGN_EXTEND #(
+	wire [11:0]w1;
+	Reverse #(
+		.D(12)
+	)w11(
+		.rstn(RSTn),
+		.input1(I_MEM_DI[31:20]),
+		.output1(w1[11:0])
+	);
+	SIGN_EXTEND#(
 		.I_DWIDTH(12),
 		.O_DWIDTH(32)
 	) Down_REG(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(I_MEM_DI[31:20]),
+		.I_DI(w1[11:0]),
 		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_0)
 	);
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_1;
+	wire [19:0]w2;
+	Reverse #(
+		.D(20)
+	)w12(
+		.rstn(RSTn),
+		.input1(I_MEM_DI[31:12]),
+		.output1(w2[19:0])
+	);
 	SIGN_EXTEND#(
 		.I_DWIDTH(20),
 		.O_DWIDTH(32)
 	)Down_Down_REG(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(I_MEM_DI[31:12]),
+		.I_DI(w2[19:0]),
 		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_1)
 	);
 	MUX #(
@@ -244,26 +260,50 @@ module RISCV_TOP (
 	);
 
 	wire [11:0]SIGN_EXTEND_to_ADD;
+	wire [6:0]w3;
+	Reverse #(
+		.D(7)
+	)w13(
+		.rstn(RSTn),
+		.input1(I_MEM_DI[31:25]),
+		.output1(w3[6:0])
+	);
 	SIGN_EXTEND#(
 		.I_DWIDTH(7),
 		.O_DWIDTH(12)
 	)SIGN_EXTEND_to_add(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(I_MEM_DI[31:25]),
+		.I_DI(w3[6:0]),
 		.O_DI(SIGN_EXTEND_to_ADD)
 	);
 	wire [31:0]SIGN_EXTEND_to_SW;
 	wire [31:0]SIGN_EXTEND_4;
 	wire [11:0]temp_imm={I_MEM_DI[31:25],I_MEM_DI[11:7]};
+	wire [11:0]w4;
+	Reverse #(
+		.D(12)
+	)w14(
+		.rstn(RSTn),
+		.input1(temp_imm),
+		.output1(w4[11:0])
+	);
 	SIGN_EXTEND#(
 		.I_DWIDTH(12),
 		.O_DWIDTH(32)
 	)SIGN_EXTEND_to_sw(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(temp_imm),
+		.I_DI(w4[11:0]),
 		.O_DI(SIGN_EXTEND_to_SW)
+	);
+	wire [4:0]w5;
+	Reverse #(
+		.D(5)
+	)w15(
+		.rstn(RSTn),
+		.input1(I_MEM_DI[24:20]),
+		.output1(w5[4:0])
 	);
 	SIGN_EXTEND#(
 		.I_DWIDTH(5),
@@ -271,7 +311,7 @@ module RISCV_TOP (
 	) SIGN_EXTEND_mod_4(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(I_MEM_DI[24:20]),
+		.I_DI(w5[4:0]),
 		.O_DI(SIGN_EXTEND_4)
 	);
 	wire [31:0]connect_SIGN_EXTEND_4to_next;
