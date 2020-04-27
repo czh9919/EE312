@@ -53,6 +53,8 @@ module RISCV_TOP (
 	wire [31:0]chos_LUI_JALR;
 	wire temp_WEN;
 	wire ALUSrc;
+	wire isSLLISRLISRAI;
+	wire issw;
 	CONTROL CONT(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -70,7 +72,9 @@ module RISCV_TOP (
 		.is_down_se(is_down_se),
 		.isLUI(isLUI),
 		.isLUIAUI(isLUIAUI),
-		.is_sign_ex(is_sign_ex)
+		.is_sign_ex(is_sign_ex),
+		.isSLLISRLISRAI(isSLLISRLISRAI),
+		.issw(issw)
 	);
 	assign D_MEM_WEN=~temp_WEN;
 	// TODO: control
@@ -103,6 +107,11 @@ module RISCV_TOP (
 
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_0;
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_2;
+	HALT halt(
+		.I_MEM(I_MEM_DI),
+		.RF_RD(RF_RD1),
+		.HALT_o(HALT)
+	);
 	SIGN_EXTEND #(
 		.I_DWIDTH(12),
 		.O_DWIDTH(32)
@@ -243,6 +252,7 @@ module RISCV_TOP (
 		.O_DI(SIGN_EXTEND_to_ADD)
 	);
 	wire [31:0]SIGN_EXTEND_to_SW;
+	wire [31:0]SIGN_EXTEND_4;
 	wire [11:0]temp_imm={I_MEM_DI[31:25],I_MEM_DI[11:7]};
 	SIGN_EXTEND#(
 		.I_DWIDTH(12),
@@ -253,6 +263,26 @@ module RISCV_TOP (
 		.I_DI(temp_imm),
 		.O_DI(SIGN_EXTEND_to_SW)
 	);
+	SIGN_EXTEND#(
+		.I_DWIDTH(5),
+		.O_DWIDTH(32)
+	) SIGN_EXTEND_mod_4(
+		.clk(CLK),
+		.rstn(RSTn),
+		.I_DI(I_MEM_DI[24:20]),
+		.O_DI(SIGN_EXTEND_4)
+	);
+	wire [31:0]connect_SIGN_EXTEND_4to_next;
+	MUX #(
+		.DWITH(32)
+	)MUX_4(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(isSLLISRLISRAI),
+		.DI(SIGN_EXTEND_4),
+		.DI1(connect_SIGN_EXTEND_4to_next),
+		.DOUT(SIGN_EXTEND_to_MUX_ADD)
+	);
 	MUX #(
 		.DWITH(32)
 	) MUX_for_SW(
@@ -261,7 +291,7 @@ module RISCV_TOP (
 		.CON(is_sign_ex),
 		.DI(SIGN_EXTEND_to_SW),
 		.DI1(SIGN_EXTEND_to_ready_MUX_ADD_2),
-		.DOUT(SIGN_EXTEND_to_MUX_ADD)
+		.DOUT(connect_SIGN_EXTEND_4to_next)
 	);
 	ADD#(
 		.DWIDTH(12)
@@ -296,7 +326,7 @@ module RISCV_TOP (
 		.DI1(OUT_PC),
 		.DOUT(for_LUI_AUIPC_i)
 	);
-
+	wire [31:0]gan;
 	MUX #(
 		.DWITH(12)
 	) isLUIMUX(
@@ -315,8 +345,17 @@ module RISCV_TOP (
 		.CON(isLUIAUI),
 		.DI(for_LUI_AUIPC_o),
 		.DI1(D_MEM_DI),//! wrong
+		.DOUT(gan)
+	);
+	MUX #(
+		.DWITH(32)
+	) MUX_under_MEM(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(issw),
+		.DI(32'b0),
+		.DI1(gan),
 		.DOUT(chos_LUI_JALR)
 	);
-
 	// TODO: to end
 endmodule //

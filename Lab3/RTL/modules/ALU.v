@@ -34,10 +34,14 @@ module ALU(
 				Cout=0;
 			end
 			4'b0100: begin
-				if (A<B)
+				if (A<B)begin
 					Cout=1;
-				else
+					C=1;
+				end
+				else begin
 					Cout=0;
+					C=0;
+				end
 				//sltu
 			end
 			4'b0101: begin
@@ -72,17 +76,35 @@ module ALU(
 				//srl
 			end
 			4'b1011: begin 
+				if(A<B)begin
+					C=0;
+				end
+				else
+					C=1;
 				Cout = A + 4; 
 				//JALR
 			end
 			4'b1100: begin
-				if (A[0]==B[0])
-					if (A[4:1]<B[4:1])
+				if (A[31]==B[31])begin
+					if (A[30:0]<B[30:0])begin
+						C=32'b01;
 						Cout=1;
-				if((A[0]==1) & (B[0]==0))
+					end
+					else begin
+						Cout=0;
+						C=32'b00;
+					end
+				end
+					
+				if((A[31]==1) & (B[31]==0))begin
+					C=32'b01;
 					Cout=1;
-				if((A[0]==0) & (B[0]==1))
+				end
+				if((A[31]==0) & (B[31]==1))begin
+					C=32'b00;
 					Cout=0;
+				end
+					
 				//SLT
 			end
 			4'b1101: begin
