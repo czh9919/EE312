@@ -49,7 +49,7 @@ module RISCV_TOP (
 	wire isLUIAUI;
 	wire isJAL;
 	wire is_down_s;
-	wire [3:0]ALUOp;
+	wire [4:0]ALUOp;
 	wire [31:0]chos_LUI_JALR;
 	wire temp_WEN;
 	wire ALUSrc;
@@ -105,7 +105,6 @@ module RISCV_TOP (
 	wire [31:0]MUX_TO_ALU;
 
 	wire [31:0]ALU_Ans;
-	wire CoutAns;
 
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_0;
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_2;
@@ -169,8 +168,7 @@ module RISCV_TOP (
 		.A(RF_RD1),
 		.B(MUX_TO_ALU),
 		.OP(ALUOp),
-		.C(ALU_Ans),
-		.Cout(CoutAns)
+		.C(ALU_Ans)
 	);
 	assign D_MEM_ADDR=ALU_Ans;
 	assign D_MEM_DOUT=RF_RD2;
@@ -324,7 +322,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(isCout),
-		.DI(CoutAns),
+		.DI(ALU_Ans[0]),
 		.DI1(1'b0),
 		.DOUT(back_PC_CON)
 	);

@@ -7,7 +7,7 @@ module CONTROL (
 	output reg O_RegWrite,
 	output reg [3:0]O_MemRead,
 	output reg O_MemWrite,
-	output reg [3:0] O_ALUOp,
+	output reg [4:0] O_ALUOp,
 	output reg isnot_PC_4,
 	output reg isJALR,
 	output reg isCout,
@@ -27,7 +27,7 @@ always @(posedge rstn) begin
 		O_RegWrite=0;
 		O_MemRead=4'b0;
 		O_MemWrite=0;
-		O_ALUOp=4'b0;
+		O_ALUOp=5'b0;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -47,7 +47,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -67,7 +67,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0010;
+		O_ALUOp=5'b0010;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -87,7 +87,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0011;
+		O_ALUOp=5'b0011;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -107,7 +107,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0110;
+		O_ALUOp=5'b0110;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -126,7 +126,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1100;
+		O_ALUOp=5'b1100;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -147,7 +147,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0100;
+		O_ALUOp=5'b0100;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -167,7 +167,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1010;
+		O_ALUOp=5'b1010;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -187,7 +187,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0101;
+		O_ALUOp=5'b0101;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -210,7 +210,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b1010;
+		O_ALUOp=5'b1010;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -231,7 +231,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0101;
+		O_ALUOp=5'b0101;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -251,7 +251,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0001;
+		O_ALUOp=5'b0001;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -271,7 +271,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0111;
+		O_ALUOp=5'b0111;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -290,7 +290,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0111;
+		O_ALUOp=5'b0111;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -311,7 +311,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -330,7 +330,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0010;
+		O_ALUOp=5'b0010;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -349,7 +349,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0011;
+		O_ALUOp=5'b0011;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -368,7 +368,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0110;
+		O_ALUOp=5'b0110;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -387,7 +387,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b1100;
+		O_ALUOp=5'b1100;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -406,7 +406,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0100;
+		O_ALUOp=5'b0100;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -425,7 +425,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=0;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1101;
+		O_ALUOp=5'b1101;
 		isnot_PC_4=1;
 		isJALR=1;
 		isCout=0;
@@ -444,7 +444,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=0;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1000;
+		O_ALUOp=5'b1000;
 		isnot_PC_4=0;
 		isJALR=1;
 		isCout=0;
@@ -465,7 +465,7 @@ always @(*) begin
 		O_MemRead=4'b1111;
 		O_MemtoReg=0;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -484,7 +484,7 @@ always @(*) begin
 		O_MemRead=4'b0001;
 		O_MemtoReg=0;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -503,7 +503,7 @@ always @(*) begin
 		O_MemRead=4'b0011;
 		O_MemtoReg=0;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -524,7 +524,7 @@ always @(*) begin
 		O_MemRead=4'b0001;
 		O_MemtoReg=0;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -543,7 +543,7 @@ always @(*) begin
 		O_MemRead=4'b0011;
 		O_MemtoReg=0;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -562,7 +562,7 @@ always @(*) begin
 		O_MemRead=4'b1111;
 		O_MemtoReg=0;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -581,7 +581,7 @@ always @(*) begin
 		O_MemRead=4'b0011;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -600,7 +600,7 @@ always @(*) begin
 		O_MemRead=4'b0001;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -620,7 +620,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1001;
+		O_ALUOp=5'b1001;
 		isnot_PC_4=1;
 		isJALR=0;
 		isCout=0;
@@ -641,7 +641,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=1;
 		isJALR=1;
 		isCout=0;
@@ -661,7 +661,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b0000;
+		O_ALUOp=5'b10000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=1;
@@ -682,7 +682,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1110;
+		O_ALUOp=5'b1110;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=1;
@@ -703,7 +703,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1100;
+		O_ALUOp=5'b1100;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=1;
@@ -724,7 +724,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1001;
+		O_ALUOp=5'b1001;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=1;
@@ -745,7 +745,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1101;
+		O_ALUOp=5'b1101;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=1;
@@ -764,7 +764,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=1;
-		O_ALUOp=4'b1111;
+		O_ALUOp=5'b1111;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=1;
