@@ -55,6 +55,8 @@ module RISCV_TOP (
 	wire ALUSrc;
 	wire isSLLISRLISRAI;
 	wire issw;
+	wire is_sign_ex;
+	wire is_down_se;
 	CONTROL CONT(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -353,7 +355,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(issw),
-		.DI(32'b0),
+		.DI(ALU_Ans),
 		.DI1(gan),
 		.DOUT(chos_LUI_JALR)
 	);

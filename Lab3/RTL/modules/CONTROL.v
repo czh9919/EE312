@@ -562,7 +562,7 @@ always @(*) begin
 		O_MemRead=4'b1111;
 		O_MemtoReg=0;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0101;
+		O_ALUOp=4'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -581,7 +581,7 @@ always @(*) begin
 		O_MemRead=4'b0011;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0101;
+		O_ALUOp=4'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -600,7 +600,7 @@ always @(*) begin
 		O_MemRead=4'b0001;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=4'b0101;
+		O_ALUOp=4'b0000;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
