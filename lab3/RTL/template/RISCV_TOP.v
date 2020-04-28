@@ -49,7 +49,7 @@ module RISCV_TOP (
 	wire isLUIAUI;
 	wire isJAL;
 	wire is_down_s;
-	wire [4:0]ALUOp;
+	wire [5:0]ALUOp;
 	wire [31:0]chos_LUI_JALR;
 	wire temp_WEN;
 	wire ALUSrc;
@@ -309,7 +309,7 @@ module RISCV_TOP (
 	) ADD_2(
 		.clk(CLK),
 		.rstn(RSTn),
-		.DI({temp_imm[11:1],1'b0}),
+		.DI({temp_imm[11:2],2'b0}),
 		.DI1(OUT_PC),
 		.DOUT(out_add_2)
 	);

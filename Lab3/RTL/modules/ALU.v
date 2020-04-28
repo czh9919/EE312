@@ -3,7 +3,7 @@ module ALU(
 	input  wire rstn,
 	input wire [31:0]A,
 	input wire [31:0]B,
-	input wire [4:0]OP,
+	input wire [5:0]OP,
 	output reg [31:0]C
 );
 
@@ -16,7 +16,7 @@ module ALU(
 				//Add/BEQ
 			end
 			5'b0001: begin
-				C = (A>=B)?(A-B):(~(B-A-32'h1));
+				C = (A-B);
 				//sub
 			end
 			// !Bitwise Boolean operation
@@ -51,8 +51,8 @@ module ALU(
 			end
 			// !Logic
 			5'b1000: begin
-				C=A+(B<<12);
-				//ALUPC
+				C=0;
+				//
 			end
 			5'b1001: begin
 				if (A[31]==B[31])begin
@@ -63,11 +63,11 @@ module ALU(
 						C=0;
 					end
 				end	
-				if((A[31]==1) & (B[31]==0))begin
+				else if((A[31]==1) & (B[31]==0))begin
 					C=0;
 				end
-				if((A[31]==0) & (B[31]==1))begin
-					C=0;
+				else if((A[31]==0) & (B[31]==1))begin
+					C=1;
 				end
 			end
 			// !shift
@@ -86,18 +86,18 @@ module ALU(
 			5'b1100: begin
 				if (A[31]==B[31])begin
 					if (A[30:0]<B[30:0])begin
-						C=32'b01;
+						C=1;
 					end
 					else begin
-						C=32'b00;
+						C=0;
 					end
 				end
 					
-				if((A[31]==1) & (B[31]==0))begin
-					C=32'b01;
+				else if((A[31]==1) && (B[31]==0))begin
+					C=1;
 				end
-				if((A[31]==0) & (B[31]==1))begin
-					C=32'b00;
+				else if((A[31]==0) && (B[31]==1))begin
+					C=0;
 				end
 					
 				//BLT

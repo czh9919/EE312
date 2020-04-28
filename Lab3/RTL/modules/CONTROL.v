@@ -7,7 +7,7 @@ module CONTROL (
 	output reg O_RegWrite,
 	output reg [3:0]O_MemRead,
 	output reg O_MemWrite,
-	output reg [4:0] O_ALUOp,
+	output reg [5:0] O_ALUOp,
 	output reg isnot_PC_4,
 	output reg isJALR,
 	output reg isCout,
@@ -40,24 +40,6 @@ always @(posedge rstn) begin
 end
 
 always @(*) begin
-	if (I_OP[31:25]==7'b0000000&&I_OP[6:0]==7'b0110011&&I_OP[14:12]==3'b000)begin
-		O_RegWrite=1;
-		O_MemWrite=0;
-		O_MemRead=4'b0;
-		O_MemtoReg=1;
-		O_ALUSrc=1;
-		O_ALUOp=5'b0000;
-		isnot_PC_4=0;
-		isJALR=0;
-		isCout=0;
-		isJAL=0;
-		is_down_se=0;
-		isLUI=0;
-		isLUIAUI=0;
-		is_sign_ex=0;
-		isSLLISRLISRAI=0;
-		//TODO ADD
-	end
 
 	if(I_OP[31:25]==7'b0000000&&I_OP[6:0]==7'b0110011&&I_OP[14:12]==3'b111)begin
 		O_RegWrite=1;
@@ -735,6 +717,24 @@ always @(*) begin
 			//BGEU
 	end
 
+	if (I_OP[31:25]==7'b0000000&&I_OP[6:0]==7'b0110011&&I_OP[14:12]==3'b000)begin
+		O_RegWrite=1;
+		O_MemWrite=0;
+		O_MemRead=4'b0;
+		O_MemtoReg=1;
+		O_ALUSrc=1;
+		O_ALUOp=5'b0000;
+		isnot_PC_4=0;
+		isJALR=0;
+		isCout=0;
+		isJAL=0;
+		is_down_se=0;
+		isLUI=0;
+		isLUIAUI=0;
+		is_sign_ex=0;
+		isSLLISRLISRAI=0;
+		//TODO ADD
+	end
 
 end
 endmodule //CONTROL
