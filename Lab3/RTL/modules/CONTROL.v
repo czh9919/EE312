@@ -16,8 +16,8 @@ module CONTROL (
 	output reg isLUI,
 	output reg isLUIAUI,
 	output reg is_sign_ex,
-	output reg isSLLISRLISRAI,
-	output reg issw
+	output reg isSLLISRLISRAI
+
 	//output wire O_ALUOp2
 );
 
@@ -37,7 +37,6 @@ always @(posedge rstn) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 end
 
 always @(*) begin
@@ -57,7 +56,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//TODO ADD
 	end
 
@@ -77,7 +75,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//AND
 	end
 
@@ -97,7 +94,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//OR
 	end
 
@@ -117,7 +113,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//XOR
 	end
 	if(I_OP[31:25]==7'b0000000&&I_OP[6:0]==7'b0110011&&I_OP[14:12]==3'b010)begin
@@ -136,7 +131,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//SLT
 	end
 
@@ -157,7 +151,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//SLTU
 	end
 
@@ -177,7 +170,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//SRL
 	end
 
@@ -197,13 +189,8 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//SLL
 	end
-
-
-
-
 	if (I_OP[31:25]==7'b0000000&&I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b101)begin
 		O_RegWrite=1;
 		O_MemWrite=0;
@@ -220,10 +207,8 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=1;
-		issw=0;
 			//SRLI
 	end
-
 
 	if(I_OP[31:25]==7'b0000000&&I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b001)begin
 		O_RegWrite=1;
@@ -241,7 +226,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=1;
-		issw=0;
 			//SLLI
 	end
 
@@ -261,7 +245,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//SUB
 	end
 
@@ -281,7 +264,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//SRA
 	end
 	if (I_OP[31:25]==7'b0100000&&I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b101)begin
@@ -300,7 +282,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=1;
-		issw=0;
 		//SRAI
 	end
 		//TODO R2-type
@@ -321,7 +302,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//ADDI
 	end
 	if(I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b111)begin
@@ -340,7 +320,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//ANDI
 	end
 	if(I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b110)begin
@@ -359,7 +338,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//ORI
 	end
 	if(I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b100)begin
@@ -378,7 +356,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//XORI
 	end
 	if(I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b010)begin
@@ -397,7 +374,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//SLTI
 	end
 	if(I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b011)begin
@@ -406,7 +382,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
 		O_ALUSrc=0;
-		O_ALUOp=5'b0100;
+		O_ALUOp=5'b1011;
 		isnot_PC_4=0;
 		isJALR=0;
 		isCout=0;
@@ -416,7 +392,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//SLTIU
 	end
 	if(I_OP[6:0]==7'b0110111)begin
@@ -435,7 +410,6 @@ always @(*) begin
 		isLUIAUI=1;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//LUI
 	end
 	if(I_OP[6:0]==7'b0010111)begin
@@ -444,7 +418,7 @@ always @(*) begin
 		O_MemRead=4'b0;
 		O_MemtoReg=0;
 		O_ALUSrc=1;
-		O_ALUOp=5'b1000;
+		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
 		isJALR=1;
 		isCout=0;
@@ -454,7 +428,6 @@ always @(*) begin
 		isLUIAUI=1;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//AUIPC
 	end
 
@@ -475,7 +448,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//LW
 	end
 	if(I_OP[6:0]==7'b0000011&&I_OP[14:12]==3'b000)begin
@@ -494,7 +466,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//LB
 	end
 	if(I_OP[6:0]==7'b0000011&&I_OP[14:12]==3'b001)begin
@@ -513,7 +484,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//LH
 	end
 
@@ -534,7 +504,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//LBU
 	end
 	if(I_OP[6:0]==7'b0000011&&I_OP[14:12]==3'b101)begin
@@ -553,14 +522,13 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//LHU
 	end
 	if (I_OP[6:0]==7'b0100011&&I_OP[14:12]==3'b010)begin
 		O_RegWrite=0;
 		O_MemWrite=1;
 		O_MemRead=4'b1111;
-		O_MemtoReg=0;
+		O_MemtoReg=1;
 		O_ALUSrc=0;
 		O_ALUOp=5'b0000;
 		isnot_PC_4=0;
@@ -572,8 +540,7 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=1;
-			//SW
+			//!换线SW
 	end
 	if(I_OP[6:0]==7'b0100011&&I_OP[14:12]==3'b001)begin
 		O_RegWrite=0;
@@ -591,7 +558,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=1;
 			//!SH
 	end
 	if(I_OP[6:0]==7'b0100011&&I_OP[14:12]==3'b000)begin
@@ -610,7 +576,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=1;
 			//!SB
 	end
 
@@ -630,7 +595,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//JAL
 	end
 
@@ -651,7 +615,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=0;
 		isSLLISRLISRAI=0;
-		issw=0;
 		//JALR
 	end
 
@@ -669,15 +632,14 @@ always @(*) begin
 		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
-		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=0;
+		is_sign_ex=1;
 			//BEQ
 	end
 
 
 	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b001)begin
-		O_RegWrite=1;
+		O_RegWrite=0;
 		O_MemWrite=0;
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
@@ -690,15 +652,14 @@ always @(*) begin
 		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
-		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=0;
+		is_sign_ex=1;
 			//BNE
 	end
 
 
 	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b100)begin
-		O_RegWrite=1;
+		O_RegWrite=0;
 		O_MemWrite=0;
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
@@ -711,15 +672,14 @@ always @(*) begin
 		is_down_se=0;
 		isLUI=0;
 		isLUIAUI=0;
-		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=0;
+		is_sign_ex=1;
 			//BLT
 	end
 
 
 	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b101)begin
-		O_RegWrite=1;
+		O_RegWrite=0;
 		O_MemWrite=0;
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
@@ -730,17 +690,16 @@ always @(*) begin
 		isCout=1;
 		isJAL=0;
 		is_down_se=0;
+		is_sign_ex=1;
 		isLUI=0;
 		isLUIAUI=0;
-		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//BGE
 	end
 
 
 	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b110)begin
-		O_RegWrite=1;
+		O_RegWrite=0;
 		O_MemWrite=0;
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
@@ -755,11 +714,10 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//BLTU
 	end
 	if(I_OP[6:0]==7'b1100011&&I_OP[14:12]==3'b111)begin
-		O_RegWrite=1;
+		O_RegWrite=0;
 		O_MemWrite=0;
 		O_MemRead=4'b0;
 		O_MemtoReg=1;
@@ -774,7 +732,6 @@ always @(*) begin
 		isLUIAUI=0;
 		is_sign_ex=1;
 		isSLLISRLISRAI=0;
-		issw=0;
 			//BGEU
 	end
 

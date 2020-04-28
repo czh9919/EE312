@@ -38,7 +38,7 @@ module ALU(
 				//sltu
 			end
 			5'b0101: begin
-				C = A << B;
+				C = A << B[4:0];
 				//SLL
 			end
 			5'b0110: begin
@@ -46,7 +46,7 @@ module ALU(
 				//xor
 			end
 			5'b0111: begin
-				C = A >>> B;
+				C = A >>> B[4:0];
 				//SRA
 			end
 			// !Logic
@@ -72,15 +72,15 @@ module ALU(
 			end
 			// !shift
 			5'b1010: begin
-				C=A >> B ;
+				C=A >> B[4:0] ;
 				//srl/BGE
 			end
 			5'b1011: begin 
 				if(A<B)begin
-					C=0;
+					C=1;
 				end
 				else
-					C=1;
+					C=0;
 				//JALR
 			end
 			5'b1100: begin
@@ -111,7 +111,6 @@ module ALU(
 				//BNE
 			end
 			5'b1111: begin
-				
 				C= ( A >=B) ;
 				//BGEU
 			end
