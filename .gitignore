@@ -13,3 +13,4 @@ testbench
 lab3/RTL/testbench/TB_RISCV_sort.v
 lab3/RTL/testbench/TB_RISCV_inst.v
 lab3/RTL/testbench/TB_RISCV_forloop.v
+lab3/DOC/Easyweb.pdf
