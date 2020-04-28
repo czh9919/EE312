@@ -49,12 +49,11 @@ module RISCV_TOP (
 	wire isLUIAUI;
 	wire isJAL;
 	wire is_down_s;
-	wire [3:0]ALUOp;
+	wire [5:0]ALUOp;
 	wire [31:0]chos_LUI_JALR;
 	wire temp_WEN;
 	wire ALUSrc;
 	wire isSLLISRLISRAI;
-	wire issw;
 	wire is_sign_ex;
 	wire is_down_se;
 	CONTROL CONT(
@@ -75,8 +74,7 @@ module RISCV_TOP (
 		.isLUI(isLUI),
 		.isLUIAUI(isLUIAUI),
 		.is_sign_ex(is_sign_ex),
-		.isSLLISRLISRAI(isSLLISRLISRAI),
-		.issw(issw)
+		.isSLLISRLISRAI(isSLLISRLISRAI)
 	);
 	assign D_MEM_WEN=~temp_WEN;
 	// TODO: control
@@ -105,7 +103,6 @@ module RISCV_TOP (
 	wire [31:0]MUX_TO_ALU;
 
 	wire [31:0]ALU_Ans;
-	wire CoutAns;
 
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_0;
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_2;
@@ -114,7 +111,8 @@ module RISCV_TOP (
 		.RF_RD(RF_RD1),
 		.HALT_o(HALT)
 	);
-	SIGN_EXTEND #(
+
+	SIGN_EXTEND#(
 		.I_DWIDTH(12),
 		.O_DWIDTH(32)
 	) Down_REG(
@@ -124,6 +122,14 @@ module RISCV_TOP (
 		.O_DI(SIGN_EXTEND_to_ready_MUX_ADD_0)
 	);
 	wire [31:0]SIGN_EXTEND_to_ready_MUX_ADD_1;
+	/* wire [19:0]w2;
+	Reverse #(
+		.D(20)
+	)w12(
+		.rstn(RSTn),
+		.input1(I_MEM_DI[31:12]),
+		.output1(w2[19:0])
+	); */
 	SIGN_EXTEND#(
 		.I_DWIDTH(20),
 		.O_DWIDTH(32)
@@ -160,8 +166,7 @@ module RISCV_TOP (
 		.A(RF_RD1),
 		.B(MUX_TO_ALU),
 		.OP(ALUOp),
-		.C(ALU_Ans),
-		.Cout(CoutAns)
+		.C(ALU_Ans)
 	);
 	assign D_MEM_ADDR=ALU_Ans;
 	assign D_MEM_DOUT=RF_RD2;
@@ -244,18 +249,20 @@ module RISCV_TOP (
 	);
 
 	wire [11:0]SIGN_EXTEND_to_ADD;
+	wire [11:0]temp_imm={I_MEM_DI[31:25],I_MEM_DI[11:7]};
 	SIGN_EXTEND#(
-		.I_DWIDTH(7),
+		.I_DWIDTH(12),
 		.O_DWIDTH(12)
 	)SIGN_EXTEND_to_add(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(I_MEM_DI[31:25]),
-		.O_DI(SIGN_EXTEND_to_ADD)
+		.I_DI(temp_imm[11:0]),
+		.O_DI(SIGN_EXTEND_to_ADD[11:0])
 	);
 	wire [31:0]SIGN_EXTEND_to_SW;
 	wire [31:0]SIGN_EXTEND_4;
-	wire [11:0]temp_imm={I_MEM_DI[31:25],I_MEM_DI[11:7]};
+	wire [11:0]w4;
+
 	SIGN_EXTEND#(
 		.I_DWIDTH(12),
 		.O_DWIDTH(32)
@@ -265,6 +272,8 @@ module RISCV_TOP (
 		.I_DI(temp_imm),
 		.O_DI(SIGN_EXTEND_to_SW)
 	);
+
+
 	SIGN_EXTEND#(
 		.I_DWIDTH(5),
 		.O_DWIDTH(32)
@@ -300,7 +309,7 @@ module RISCV_TOP (
 	) ADD_2(
 		.clk(CLK),
 		.rstn(RSTn),
-		.DI(SIGN_EXTEND_to_ADD),
+		.DI({temp_imm[11:2],2'b0}),
 		.DI1(OUT_PC),
 		.DOUT(out_add_2)
 	);
@@ -311,7 +320,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(isCout),
-		.DI(CoutAns),
+		.DI(ALU_Ans[0]),
 		.DI1(1'b0),
 		.DOUT(back_PC_CON)
 	);
@@ -347,9 +356,9 @@ module RISCV_TOP (
 		.CON(isLUIAUI),
 		.DI(for_LUI_AUIPC_o),
 		.DI1(D_MEM_DI),//! wrong
-		.DOUT(gan)
+		.DOUT(chos_LUI_JALR)
 	);
-	MUX #(
+/* 	MUX #(
 		.DWITH(32)
 	) MUX_under_MEM(
 		.clk(CLK),
@@ -358,6 +367,6 @@ module RISCV_TOP (
 		.DI(ALU_Ans),
 		.DI1(gan),
 		.DOUT(chos_LUI_JALR)
-	);
+	); */
 	// TODO: to end
 endmodule //

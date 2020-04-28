@@ -14,9 +14,8 @@ always @(posedge rstn) begin
 end
 
 always @(posedge clk) begin
-    if (rstn) begin
+    if (rstn)
         O_MEM_ADD[11:0]=I_MEM_ADD[11:0];
-    end
 end
 
 endmodule //PC
