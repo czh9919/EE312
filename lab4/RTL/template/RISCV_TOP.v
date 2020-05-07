@@ -34,7 +34,7 @@ module RISCV_TOP (
 	//control
 	wire CON_A;
 	wire [1:0]CON_B;
-	wire PVSwrite;
+	wire PVSwrite;//pc
 	wire [1:0]CON_sign;
 	wire PCsource;
 	wire RegDst;
