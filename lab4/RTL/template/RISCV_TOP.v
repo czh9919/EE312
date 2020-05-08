@@ -137,7 +137,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.in({27'b0,I_MEM_DI[24:20]}),
-		.DOUT(W_BS_Sign1)
+		.DOUT(W_BS_Sign2)
 	);
 	SIGN_EXTEND #(
 		.I_DWIDTH(12),
