@@ -44,7 +44,7 @@ module RISCV_TOP (
 	CONTROL control(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_OP(I_MEM_DI),
+		.temp_I(I_MEM_DI),
 		.PC_source(PCsource),
 		.MUX_A(CON_A),
 		.MUX_B(CON_B),
@@ -55,6 +55,8 @@ module RISCV_TOP (
 		.Reg_MUX(RegDst),
 		.I_MEM_write(PVSwrite)
 	);
+assign OUTPUT_PORT=RF_WD;
+	
 	//control
 	wire [11:0] back_PC;
 	wire [11:0] out_PC;
@@ -92,7 +94,7 @@ module RISCV_TOP (
 	);
 
 	always @(*) begin
-		I_MEM_ADDR=back_PC;
+		I_MEM_ADDR=out_PC;
 	end
 
 	REG#(
@@ -230,8 +232,8 @@ module RISCV_TOP (
 	);
 
 	ALU ALU_top(
-		.A(out_A),
-		.B(MUX_B_2),
+		.A(ALU_A),
+		.B(ALU_B),
 		.OP(ALUop),
 		.C(ALU_ans)
 	);
