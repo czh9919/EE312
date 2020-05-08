@@ -20,8 +20,8 @@ always @(*) begin
             C=A|B;
         end
         4'b0100:begin
-            C=A << B[4:0];        end
-        default: 
+            C=A << B[4:0];
+        end
         4'b0101:begin
             C=A >> B[4:0] ;
         end
@@ -32,18 +32,17 @@ always @(*) begin
             if (A[31]==B[31])begin
                 if (A[30:0]<B[30:0])begin
                         C=1;
-                    end
-                    else begin
-                        C=0;
-                    end
                 end
-                    
-                else if((A[31]==1) && (B[31]==0))begin
-                    C=1;
-                end
-                else if((A[31]==0) && (B[31]==1))begin
+                else begin
                     C=0;
                 end
+            end
+            else if((A[31]==1) && (B[31]==0))begin
+                C=1;
+            end
+            else if((A[31]==0) && (B[31]==1))begin
+                C=0;
+            end
         end
         4'b1000:begin
             if (A[31]==B[31])begin
@@ -53,18 +52,17 @@ always @(*) begin
                     else begin
                         C=0;
                     end
-                end	
-                else if((A[31]==1) & (B[31]==0))begin
-                    C=0;
-                end
-                else if((A[31]==0) & (B[31]==1))begin
-                    C=1;
-                end
+            end	
+            else if((A[31]==1) & (B[31]==0))begin
+                C=0;
+            end
+            else if((A[31]==0) & (B[31]==1))begin
+                C=1;
             end
         end
         4'b1001:begin
             C= ( A<B) ;
-
+        end
         4'b1010:begin
             C= (A>=B) ;
         end
@@ -74,6 +72,9 @@ always @(*) begin
         4'b1100:begin
             C= (A==B);
         end
-        
+        4'b1101:begin
+            C=A^B;
+        end
     endcase
 end
+endmodule 

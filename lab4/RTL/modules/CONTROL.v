@@ -5,66 +5,57 @@ module CONTROL (
 	output reg PC_source,//PCsource
     output reg MUX_A,//CON_A
     output reg [1:0]MUX_B,//CON_B
-	output reg MemtoReg,
 	output reg RegWrite,//Register
-	output reg I_Mem_Read,
 	output reg MemWrite,//data
 	output reg [3:0] ALUOp,
 	output reg I_MEM_write,//instrution
 	output reg [1:0] sign_ex,//CON_sign
-	reg [1:0] state,//IF 00/ ID 01 / EX 10 / WB 11
 	output reg Reg_MUX//RegDst
 	
 );
 
+reg [1:0] state;//IF 00/ ID 01 / EX 10 / WB 11
 
 always @(rstn) begin
     state=2'b00;
 	PC_source=0;
     MUX_A=0;
     MUX_B=2'b00;
-	MemtoReg=0;
 	RegWrite=0;
-	I_Mem_Read=0;
 	MemWrite=0;
 	ALUOp=4'b0;
 	I_MEM_write=0;
 	sign_ex=0;
 end
+
 always @(posedge clk) begin
     if (I_OP[31:25]==7'b0000000&&I_OP[6:0]==7'b0110011)begin
         if(state==2'b 00)begin
             PC_source=1;//PC+4
             MUX_A=0;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=1;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        ALUOp=4'b0000;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0;
-        end       
+        end
         if(state==2'b 01)begin
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=0;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0; 
         end
-		if(state==2'b 00)begin
+		if(state==2'b 10)begin
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=0;
             if(I_OP[14:12]==3'b111)begin//ADD
@@ -77,7 +68,7 @@ always @(posedge clk) begin
                 ALUOp=4'b0011;
             end
             if(I_OP[14:12]==3'b100)begin//XOR
-                ALUOp=4'b0011;//!xor在哪
+                ALUOp=4'b1101;//!xor在哪
             end
             if(I_OP[14:12]==3'b010)begin//SLT
                 ALUOp=4'b0111;
@@ -91,19 +82,17 @@ always @(posedge clk) begin
             if(I_OP[14:12]==3'b001)begin//SLL
                 ALUOp=4'b0100;
             end
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0; 
         end
-		if(state==2'b 00)begin
+		if(state==2'b 11)begin
             PC_source=0;//pc+4
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=1;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=1;
 			Reg_MUX=1;
-	        I_MEM_write=0;
+	        I_MEM_write=1;
 	        sign_ex=0;
 		end
 	end
@@ -113,34 +102,28 @@ always @(posedge clk) begin
             PC_source=1;//PC+4
             MUX_A=0;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=1;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        ALUOp=4'b0000;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0;
-        end       
+        end
         if(state==2'b 01)begin
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=0;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0; 
         end
-		if(state==2'b 00)begin
+		if(state==2'b 10)begin
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=0;
             if(I_OP[14:12]==3'b000)begin//SUB
@@ -149,19 +132,17 @@ always @(posedge clk) begin
             if(I_OP[14:12]==3'b101)begin//SRA
                 ALUOp=4'b0110;
             end
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0; 
         end
-		if(state==2'b 00)begin
+		if(state==2'b 11)begin
             PC_source=0;//pc+4
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=1;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=1;
 			Reg_MUX=1;
-	        I_MEM_write=0;
+	        I_MEM_write=1;
 	        sign_ex=0;
 		end
     end
@@ -171,34 +152,28 @@ always @(posedge clk) begin
 			PC_source=1;//PC+4
             MUX_A=0;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=1;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        ALUOp=4'b0000;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0;
 		end
 		if(state==2'b 01)begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=1;
 		end
 		if(state==2'b 10)begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b01;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
             if(I_OP[14:12]==3'b111)begin//ANDI
@@ -226,9 +201,7 @@ always @(posedge clk) begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b01;
-	        MemtoReg=1;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=1;
 			Reg_MUX=1;
 	        I_MEM_write=1;
@@ -241,34 +214,28 @@ always @(posedge clk) begin
             PC_source=1;//PC+4
             MUX_A=0;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=1;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        ALUOp=4'b0000;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0;
         end       
         if(state==2'b 01)begin
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=0;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0; 
         end
-		if(state==2'b 00)begin
+		if(state==2'b 10)begin
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=0;
             if(I_OP[14:12]==3'b101)begin//SRAI
@@ -280,19 +247,17 @@ always @(posedge clk) begin
             if(I_OP[14:12]==3'b001)begin//SLLI
 	            ALUOp=4'b0100;
             end
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0; 
         end
-		if(state==2'b 00)begin
+		if(state==2'b 11)begin
             PC_source=0;//pc+4
             MUX_A=1;
             MUX_B=2'b00;
-	        MemtoReg=1;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=1;
 			Reg_MUX=1;
-	        I_MEM_write=0;
+	        I_MEM_write=1;
 	        sign_ex=0;
 		end
 	end
@@ -302,34 +267,28 @@ always @(posedge clk) begin
 			PC_source=1;//PC+4
             MUX_A=0;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=1;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        ALUOp=4'b0000;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0;
 		end
 		if(state==2'b 01)begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=1;
 		end
 		if(state==2'b 10)begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b01;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        if(I_OP[14:12]==3'b000)begin//BEQ
@@ -357,9 +316,7 @@ always @(posedge clk) begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b01;
-	        MemtoReg=1;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=1;
 			Reg_MUX=1;
 	        I_MEM_write=1;
@@ -371,34 +328,28 @@ always @(posedge clk) begin
 			PC_source=1;//PC+4
             MUX_A=0;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=1;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        ALUOp=4'b0000;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0;
 		end
 		if(state==2'b 01)begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=1;
 		end
 		if(state==2'b 10)begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b01;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        I_MEM_write=0;
@@ -408,9 +359,7 @@ always @(posedge clk) begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b01;
-	        MemtoReg=1;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=1;
 			Reg_MUX=1;
 	        I_MEM_write=1;
@@ -422,33 +371,27 @@ always @(posedge clk) begin
 			PC_source=1;//PC+4
             MUX_A=0;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=1;
 	        MemWrite=0;
 			Reg_MUX=1;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=0;
 		end
 		if(state==2'b 01)begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b10;
-	        MemtoReg=0;
 	        RegWrite=1;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
-	        I_MEM_write=1;
+	        I_MEM_write=0;
 	        sign_ex=1;
 		end
 		if(state==2'b 10)begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b01;
-	        MemtoReg=0;
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=0;
 			Reg_MUX=1;
 	        I_MEM_write=0;
@@ -458,14 +401,14 @@ always @(posedge clk) begin
 			PC_source=0;//PC+4
             MUX_A=1;
             MUX_B=2'b01;
-	        MemtoReg=1;
+	         
 	        RegWrite=0;
-	        I_Mem_Read=0;
 	        MemWrite=1;
 			Reg_MUX=1;
 	        I_MEM_write=1;
 	        sign_ex=1;
 		end
 	end
+    state=state+1;
 end
 endmodule //CONTROL

@@ -38,11 +38,27 @@ module RISCV_TOP (
 	wire [1:0]CON_sign;
 	wire PCsource;
 	wire RegDst;
+	wire [3:0] ALUop;
 
+
+	CONTROL control(
+		.clk(CLK),
+		.rstn(RSTn),
+		.I_OP(I_MEM_DI),
+		.PC_source(PCsource),
+		.MUX_A(CON_A),
+		.MUX_B(CON_B),
+		.RegWrite(RF_WE),
+		.MemWrite(D_MEM_WEN),
+		.ALUOp(ALUop),
+		.sign_ex(CON_sign),
+		.Reg_MUX(RegDst),
+		.I_MEM_write(PVSwrite)
+	);
 	//control
 	wire [11:0] back_PC;
 	wire [11:0] out_PC;
-	wire [11:0] out_ALUout;
+	wire [31:0] out_ALUout;
 	wire [31:0] out_ins_REG;
 	wire [31:0] back_WD;
 	wire [31:0] out_A;
@@ -50,13 +66,12 @@ module RISCV_TOP (
 	wire [31:0] ALU_A;
 	wire [31:0] ALU_B;
 	wire [31:0]MUX_B_2;
-	wire [12:] W_BS_Sign0;
-	wire [12:] W_BS_Sign1;
-	wire [12:] W_BS_Sign2;
+	wire [11:0] W_BS_Sign0;
+	wire [11:0] W_BS_Sign1;
+	wire [31:0] W_BS_Sign2;
 	wire [31:0] SM0;
 	wire [31:0] SM1;
 	wire [31:0] SM2;
-	wire [3:0] ALUop;
 	wire [31:0] ALU_ans;
 	wire [31:0] out_data_reg;
 
@@ -71,12 +86,14 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.PCwrite(PVSwrite),
 		.I_MEM_ADD(back_PC),
-		.O_MEM_ADD(out_PC)
+		.O_MEM_ADD(out_PC),
 		.I_MEM_CSN(I_MEM_CSN),
 		.D_MEM_CSN(D_MEM_CSN)
 	);
 
-	assign I_MEM_ADDR=back_PC;
+	always @(*) begin
+		I_MEM_ADDR=back_PC;
+	end
 
 	REG#(
 		.DWIDTH(32)
@@ -172,7 +189,7 @@ module RISCV_TOP (
 		.DWIDTH(32)
 	)B(
 		.clk(CLK),
-		,rstn(RSTn),
+		.rstn(RSTn),
 		.in(RF_RD2),
 		.DOUT(out_B)
 	);
@@ -195,8 +212,8 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.CON(CON_B),
 		.in0(out_B),
-		.in1(32'b100),
-		.in2(MUX_B_2),
+		.in1(MUX_B_2),
+		.in2(32'b100),
 		.DOUT(ALU_B)
 	);
 
@@ -214,7 +231,7 @@ module RISCV_TOP (
 
 	ALU ALU_top(
 		.A(out_A),
-		.B(out_B),
+		.B(MUX_B_2),
 		.OP(ALUop),
 		.C(ALU_ans)
 	);
@@ -228,13 +245,13 @@ module RISCV_TOP (
 		.DOUT(out_ALUout)
 	);
 	MUX #(
-		.DWIDTH(32)
+		.DWIDTH(12)
 	) aft_ALU(
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(PCsource),
-		.in0(ALU_ans),
-		.in1(out_ALUout),
+		.in0(ALU_ans[11:0]),
+		.in1(out_ALUout[11:0]),
 		.DOUT(back_PC)
 	);
 endmodule //

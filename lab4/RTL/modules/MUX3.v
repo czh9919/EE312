@@ -16,13 +16,13 @@ end
 
 always @(*) begin
     case (CON)
-        2'b000:begin
+        2'b00:begin
             DOUT=in0;
         end
-        2'b001:begin
+        2'b01:begin
             DOUT=in1;
         end
-        2'b010:begin
+        2'b10:begin
             DOUT=in2;
         end
     endcase

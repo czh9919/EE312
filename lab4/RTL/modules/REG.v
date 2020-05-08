@@ -4,16 +4,16 @@ module REG #(
     input  wire clk,
     input  wire rstn,
     input  wire [DWIDTH-1:0] in,
-    output wire [DWIDTH-1:0] DOUT
+    output reg [DWIDTH-1:0] DOUT
 
 );
 
 always @(posedge rstn) begin
-	DOUT=32'b0;
+	DOUT[DWIDTH-1:0]=32'b0;
 end
 
-always @(posedge clk) begin
-    DOUT=in;
+always @(*) begin
+    DOUT[DWIDTH-1:0]=in;
 end
 
 endmodule //Ins_REG
