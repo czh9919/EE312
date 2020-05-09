@@ -95,7 +95,26 @@ always @(*) begin
         end
         //BEQ.........
         //_________________________________//
-
+        if (temp_I[6:0]==7'b0000011&&temp_I[14:12]==3'b010)begin//LW
+            PC_source=0;
+            MUX_A=1;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=0;
+            sign_ex=0;
+        end
+        if (temp_I[6:0]==7'b0100011&&temp_I[14:12]==3'b010)begin//SW
+            PC_source=0;
+            MUX_A=1;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=0;
+            sign_ex=0;
+        end 
 
 
 
@@ -227,7 +246,28 @@ always @(*) begin
 
         //BEQ................
         //___________________
+        if (temp_I[6:0]==7'b0000011&&temp_I[14:12]==3'b010)begin//LW
+            PC_source=0;
+            MUX_A=1;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=0;
+            sign_ex=1;
+        end
+        if (temp_I[6:0]==7'b0100011&&temp_I[14:12]==3'b010)begin//SW
+            PC_source=0;
+            MUX_A=1;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=1;
+            sign_ex=1;
+        end 
     end
+
     if(state==2'b 00)begin
         PC_source=0;//pc+4
         MUX_A=1;
