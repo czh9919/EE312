@@ -57,7 +57,7 @@ module RISCV_TOP (
 		.NUM_INS(num_inst)
 	);
 	always @(*) begin
-		NUM_INST=(num_inst-32'b01)>>2;
+		NUM_INST=(num_inst)>>2;
 	end
 	
 
