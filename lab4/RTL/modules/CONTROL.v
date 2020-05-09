@@ -10,12 +10,15 @@ module CONTROL (
     output reg [3:0] ALUOp,
     output reg I_MEM_write,//instrution
     output reg [1:0] sign_ex,//CON_sign
-    output reg Reg_MUX//RegDst
-    
+    output reg Reg_MUX,//RegDst
+    output reg [31:0] NUM_INS
 );
 reg [31:0] temp_I;
 reg [1:0] state;//IF 00/ ID 01 / EX 10 / WB 11
 //reg [31:0] temp_I;
+initial begin
+		NUM_INS <= 0;
+	end
 always @(rstn) begin
     state=2'b00;
     PC_source=0;
@@ -26,6 +29,7 @@ always @(rstn) begin
     ALUOp=4'b0;
     I_MEM_write=0;
     sign_ex=0;
+    NUM_INS=0;
 end
 always @(*) begin 
     if(state==2'b 01)begin//我感觉01的时候所有的指令都是一样的。。。
@@ -235,6 +239,7 @@ always @(*) begin
         Reg_MUX=1;
         I_MEM_write=1;
         sign_ex=0;
+        NUM_INS=NUM_INS+1;
     end
 end
 always @(posedge clk) begin

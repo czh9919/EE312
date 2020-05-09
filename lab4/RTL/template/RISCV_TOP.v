@@ -30,7 +30,9 @@ module RISCV_TOP (
 	);
 
 	// TODO: implement multi-cycle CPU
-
+initial begin
+		NUM_INST <= 0;
+	end
 	//control
 	wire CON_A;
 	wire [1:0]CON_B;
@@ -40,7 +42,7 @@ module RISCV_TOP (
 	wire RegDst;
 	wire [3:0] ALUop;
 
-
+	wire[31:0] num_inst;
 	CONTROL control(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -53,9 +55,15 @@ module RISCV_TOP (
 		.ALUOp(ALUop),
 		.sign_ex(CON_sign),
 		.Reg_MUX(RegDst),
-		.I_MEM_write(PVSwrite)
+		.I_MEM_write(PVSwrite),
+		.NUM_INS(num_inst)
 	);
-assign OUTPUT_PORT=RF_WD;
+	always @(*) begin
+		NUM_INST=num_inst;
+	end
+	
+
+	assign OUTPUT_PORT=RF_WD;
 	
 	//control
 	wire [11:0] back_PC;
