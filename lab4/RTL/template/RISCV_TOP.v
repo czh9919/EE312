@@ -44,7 +44,7 @@ module RISCV_TOP (
 	CONTROL control(
 		.clk(CLK),
 		.rstn(RSTn),
-		.temp_I(I_MEM_DI),
+		.I(I_MEM_DI),
 		.PC_source(PCsource),
 		.MUX_A(CON_A),
 		.MUX_B(CON_B),
@@ -86,7 +86,7 @@ assign OUTPUT_PORT=RF_WD;
 	PC PC_TOP(
 		.clk(CLK),
 		.rstn(RSTn),
-		.PCwrite(PVSwrite),
+		.PCwrite(PCsource),
 		.I_MEM_ADD(back_PC),
 		.O_MEM_ADD(out_PC),
 		.I_MEM_CSN(I_MEM_CSN),

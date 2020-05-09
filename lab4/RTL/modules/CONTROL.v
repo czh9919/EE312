@@ -1,7 +1,7 @@
 module CONTROL (
     input  wire clk,
     input  wire rstn,
-    input wire [31:0] temp_I,
+    input wire [31:0] I,
     output reg PC_source,//PCsource
     output reg MUX_A,//CON_A
     output reg [1:0]MUX_B,//CON_B
@@ -13,7 +13,7 @@ module CONTROL (
     output reg Reg_MUX//RegDst
     
 );
-
+reg [31:0] temp_I;
 reg [1:0] state;//IF 00/ ID 01 / EX 10 / WB 11
 //reg [31:0] temp_I;
 always @(rstn) begin
@@ -29,6 +29,7 @@ always @(rstn) begin
 end
 always @(*) begin 
     if(state==2'b 01)begin//我感觉01的时候所有的指令都是一样的。。。
+        temp_I=I;
         PC_source=1;//PC+4
         MUX_A=0;
         MUX_B=2'b10;
@@ -196,7 +197,7 @@ always @(*) begin
         end
         //_________________________________________________________________//
         if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0010011)begin
-            PC_source=1;
+            PC_source=0;
             MUX_A=0;
             MUX_B=2'b10;
             RegWrite=0;
