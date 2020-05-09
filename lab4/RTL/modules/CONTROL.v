@@ -277,10 +277,10 @@ always @(*) begin
         Reg_MUX=1;
         I_MEM_write=1;
         sign_ex=0;
-        NUM_INS=NUM_INS+1;
     end
 end
 always @(posedge clk) begin
     state=state+1;
+    NUM_INS=NUM_INS+1;
 end
 endmodule //CONTROL
