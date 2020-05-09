@@ -15,7 +15,7 @@ module CONTROL (
 );
 
 reg [1:0] state;//IF 00/ ID 01 / EX 10 / WB 11
-reg [31:0] temp_I;
+//reg [31:0] temp_I;
 always @(rstn) begin
     state=2'b00;
     PC_source=0;
@@ -236,3 +236,7 @@ always @(*) begin
         sign_ex=0;
     end
 end
+always @(posedge clk) begin
+    state=state+1;
+end
+endmodule //CONTROL
