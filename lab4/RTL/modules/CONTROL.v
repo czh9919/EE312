@@ -16,10 +16,8 @@ module CONTROL (
 reg [31:0] temp_I;
 reg [1:0] state;//IF 00/ ID 01 / EX 10 / WB 11
 //reg [31:0] temp_I;
-initial begin
-		NUM_INS <= 0;
-	end
-always @(rstn) begin
+
+always @(posedge rstn) begin
     state=2'b00;
     PC_source=0;
     MUX_A=0;

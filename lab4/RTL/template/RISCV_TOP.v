@@ -30,9 +30,7 @@ module RISCV_TOP (
 	);
 
 	// TODO: implement multi-cycle CPU
-initial begin
-		NUM_INST <= 0;
-	end
+
 	//control
 	wire CON_A;
 	wire [1:0]CON_B;
