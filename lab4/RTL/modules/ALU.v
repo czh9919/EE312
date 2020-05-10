@@ -75,6 +75,9 @@ always @(*) begin
         4'b1101:begin
             C=A^B;
         end
+        4'b1110:begin
+            C=(A+B) & 0xfffffffe;
+        end
     endcase
 end
 endmodule 
