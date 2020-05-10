@@ -319,7 +319,7 @@ always @(*) begin
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b01;
-            RegWrite=1;
+            RegWrite=0;
             MemWrite=0;
             Reg_MUX=0;
             I_MEM_write=0;
