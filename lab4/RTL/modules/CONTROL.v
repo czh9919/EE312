@@ -12,7 +12,8 @@ module CONTROL (
     output reg [1:0] sign_ex,//CON_sign
     output reg Reg_MUX,//RegDst
     output reg [31:0] NUM_INS,
-    output reg [31:0]o
+    output reg [31:0]o,
+    output reg is_BEQ
 );
 reg [31:0] temp_I;
 reg [1:0] state;//IF 00/ ID 01 / EX 10 / WB 11
@@ -29,6 +30,7 @@ always @(posedge rstn) begin
     I_MEM_write=0;
     sign_ex=0;
     NUM_INS=0;
+    is_BEQ=0;
 end
 always @(*) begin
     o=temp_I;
@@ -99,6 +101,34 @@ always @(*) begin
             sign_ex=2'b10;
         end
         //BEQ.........
+        if (temp_I[6:0]==7'b1100011)begin//BEQ
+            PC_source=0;
+            MUX_A=1;
+            MUX_B=2'b00;
+            RegWrite=0;
+            MemWrite=0;
+            Reg_MUX=1;
+            if(temp_I[14:12]==3'b000)begin//BEQ
+                ALUOp=4'b1100;
+            end
+            if(temp_I[14:12]==3'b001)begin//BNE
+                ALUOp=4'b1011;
+            end
+            if(temp_I[14:12]==3'b100)begin//BLT
+                ALUOp=4'b0111;
+            end
+            if(temp_I[14:12]==3'b101)begin//BGE
+                ALUOp=4'b1000;
+            end
+            if(temp_I[14:12]==3'b110)begin//BLTU
+                ALUOp=4'b1001;
+            end
+            if(temp_I[14:12]==3'b111)begin//BGEU
+                ALUOp=4'b1010;
+            end
+            I_MEM_write=0;
+            sign_ex=2'b00;
+        end
         //_________________________________//
         if (temp_I[6:0]==7'b0000011&&temp_I[14:12]==3'b010)begin//LW
             PC_source=0;
@@ -257,9 +287,17 @@ always @(*) begin
             sign_ex=2'b10;
         end
         //______________
-
-
-
+        if (temp_I[6:0]==7'b1100011)begin//BEQ
+            PC_source=0;
+            MUX_A=1;
+            MUX_B=2'b00;
+            RegWrite=0;
+            MemWrite=0;
+            Reg_MUX=1;
+            is_BEQ=1;
+            I_MEM_write=0;
+            sign_ex=2'b11;
+        end
 
 
 
@@ -298,6 +336,7 @@ always @(*) begin
             Reg_MUX=1;
             I_MEM_write=0;
             sign_ex=2'b00;
+            ALUOp=4'b0000;
         end
         if (temp_I[6:0]==7'b1101111&&temp_I[14:12]==3'b010)begin //jalr
             PC_source=0;
@@ -307,6 +346,7 @@ always @(*) begin
             MemWrite=0;
             Reg_MUX=1;
             I_MEM_write=0;
+            ALUOp=4'b1110;
             sign_ex=2'b00;
         end
     end
