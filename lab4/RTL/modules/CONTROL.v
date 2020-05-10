@@ -145,7 +145,7 @@ always @(*) begin
             PC_source=0;
             MUX_A=0;
             MUX_B=2'b01;
-            RegWrite=0;
+            RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
             I_MEM_write=0;
@@ -339,7 +339,7 @@ always @(*) begin
             PC_source=1;
             MUX_A=0;
             MUX_B=2'b01;
-            RegWrite=1;
+            RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
             I_MEM_write=1;
@@ -380,6 +380,16 @@ always @(*) begin
             Reg_MUX=0;
             I_MEM_write=0;
             sign_ex=2'b01;
+        end
+        else if (temp_I[6:0]==7'b1101111)begin //jal
+            PC_source=0;//pc+4
+            MUX_A=1;
+            MUX_B=2'b00;
+            RegWrite=0;
+            MemWrite=1;
+            Reg_MUX=0;
+            I_MEM_write=0;
+            sign_ex=0;
         end
         else begin
             PC_source=0;//pc+4
