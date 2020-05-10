@@ -304,7 +304,7 @@ always @(*) begin
             if(temp_I[14:12]==3'b111)begin//BGEU
                 ALUOp=4'b1010;
             end
-            I_MEM_write=0;
+            I_MEM_write=1;
             sign_ex=2'b00;
         end
 
