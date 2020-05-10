@@ -76,7 +76,7 @@ always @(*) begin
             C=A^B;
         end
         4'b1110:begin
-            C=(A+B) & 0xfffffffe;
+            C=(A+B) & 32'hfffffffe;
         end
     endcase
 end

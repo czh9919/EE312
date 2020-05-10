@@ -58,7 +58,8 @@ module RISCV_TOP (
 		.Reg_MUX(RegDst),
 		.I_MEM_write(PVSwrite),
 		.NUM_INS(num_inst),
-		.o(o)
+		.o(o),
+		.is_BEQ(isbc)
 	);
 	always @(*) begin
 		NUM_INST=(num_inst)>>2;
