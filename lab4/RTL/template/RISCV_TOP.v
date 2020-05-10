@@ -40,6 +40,8 @@ module RISCV_TOP (
 	wire RegDst;
 	wire [3:0] ALUop;
 	wire [31:0] o;
+	wire isbc;
+	wire pcwrite;
 
 	wire[31:0] num_inst;
 	CONTROL control(
@@ -75,7 +77,7 @@ module RISCV_TOP (
 	wire [31:0] out_B;
 	wire [31:0] ALU_A;
 	wire [31:0] ALU_B;
-	wire [31:0]MUX_B_2;
+	wire [31:0] MUX_B_2;
 	wire [11:0] W_BS_Sign0;
 	wire [11:0] W_BS_Sign1;
 	wire [31:0] W_BS_Sign2;
@@ -91,10 +93,12 @@ module RISCV_TOP (
 		.HALT_o(HALT)
 	);
 
+	assign pcwrite=PVSwrite|(out_ALUout&isbc);
+
 	PC PC_TOP(
 		.clk(CLK),
 		.rstn(RSTn),
-		.PCwrite(PVSwrite),
+		.PCwrite(pcwrite),
 		.I_MEM_ADD(back_PC),
 		.O_MEM_ADD(out_PC),
 		.I_MEM_CSN(I_MEM_CSN),
