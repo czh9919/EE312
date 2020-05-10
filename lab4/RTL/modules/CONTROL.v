@@ -296,7 +296,7 @@ always @(*) begin
         if (temp_I[6:0]==7'b1100011)begin//BEQ
             PC_source=0;
             MUX_A=1;
-            MUX_B=2'b00;
+            MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
