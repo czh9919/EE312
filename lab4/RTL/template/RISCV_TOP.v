@@ -39,6 +39,7 @@ module RISCV_TOP (
 	wire PCsource;
 	wire RegDst;
 	wire [3:0] ALUop;
+	wire [31:0] o;
 
 	wire[31:0] num_inst;
 	CONTROL control(
@@ -54,7 +55,8 @@ module RISCV_TOP (
 		.sign_ex(CON_sign),
 		.Reg_MUX(RegDst),
 		.I_MEM_write(PVSwrite),
-		.NUM_INS(num_inst)
+		.NUM_INS(num_inst),
+		.o(o)
 	);
 	always @(*) begin
 		NUM_INST=(num_inst)>>2;
@@ -124,10 +126,17 @@ module RISCV_TOP (
 	assign RF_RA1=out_ins_REG[19:15];
 	assign RF_RA2=out_ins_REG[24:20];
 
-	assign RF_WA1=out_ins_REG[11:7];
+	assign RF_WA1=o[11:7];
 	assign RF_WD=back_WD;
 	assign D_MEM_DOUT=out_B;
-	
+	// Reg#(
+	// 	.DWIDTH(5)
+	// ) before_WR(
+	// 	.clk(CLK),
+	// 	.rstn(RSTn),
+	// 	.in(out_ins_REG[11:7]),
+	// 	.DOUT(RF_WA1)
+	// );
 	MUX#(
 		.DWIDTH(32)
 	)before_WD(

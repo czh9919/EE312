@@ -11,7 +11,8 @@ module CONTROL (
     output reg I_MEM_write,//instrution
     output reg [1:0] sign_ex,//CON_sign
     output reg Reg_MUX,//RegDst
-    output reg [31:0] NUM_INS
+    output reg [31:0] NUM_INS,
+    output reg [31:0]o
 );
 reg [31:0] temp_I;
 reg [1:0] state;//IF 00/ ID 01 / EX 10 / WB 11
@@ -29,6 +30,10 @@ always @(posedge rstn) begin
     sign_ex=0;
     NUM_INS=0;
 end
+always @(*) begin
+    o=temp_I;
+end
+
 always @(*) begin 
     if(state==2'b 01)begin//我感觉01的时候所有的指令都是一样的。。。
         temp_I=I;
