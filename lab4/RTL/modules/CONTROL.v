@@ -386,7 +386,7 @@ always @(*) begin
             MUX_A=1;
             MUX_B=2'b00;
             RegWrite=0;
-            MemWrite=1;
+            MemWrite=0;
             Reg_MUX=0;
             I_MEM_write=0;
             sign_ex=0;
@@ -396,7 +396,7 @@ always @(*) begin
             MUX_A=1;
             MUX_B=2'b00;
             RegWrite=1;
-            MemWrite=1;
+            MemWrite=0;
             Reg_MUX=0;
             I_MEM_write=0;
             sign_ex=0;
