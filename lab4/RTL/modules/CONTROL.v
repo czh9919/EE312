@@ -96,7 +96,7 @@ always @(*) begin
             MemWrite=0;
             Reg_MUX=1;
             I_MEM_write=0;
-            sign_ex=2'b01;
+            sign_ex=2'b10;
         end
         //BEQ.........
         //_________________________________//
@@ -236,7 +236,7 @@ always @(*) begin
                 ALUOp=4'b0100;
             end
             I_MEM_write=0;
-            sign_ex=2'b00;
+            sign_ex=2'b10;
         end
         //______________
 
