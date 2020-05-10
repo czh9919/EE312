@@ -303,6 +303,7 @@ always @(*) begin
             is_BEQ=1;
             I_MEM_write=0;
             sign_ex=2'b11;
+            ALUOp=4'b0000;
         end
 
 
