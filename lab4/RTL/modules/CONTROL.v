@@ -324,7 +324,7 @@ always @(*) begin
             RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
-            I_MEM_write=1;
+            I_MEM_write=0;
             sign_ex=2'b00;
         end
         if (temp_I[6:0]==7'b1101111)begin //jal
