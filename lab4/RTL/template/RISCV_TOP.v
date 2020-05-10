@@ -143,7 +143,7 @@ module RISCV_TOP (
 	)BS0(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(I_MEM_DI[31:20]),
+		.in(out_ins_REG[31:20]),
 		.DOUT(W_BS_Sign0)
 	);
 
@@ -152,7 +152,7 @@ module RISCV_TOP (
 	)BS1(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in({{I_MEM_DI[31:25]},{I_MEM_DI[11:7]}}),
+		.in({{out_ins_REG[31:25]},{out_ins_REG[11:7]}}),
 		.DOUT(W_BS_Sign1)
 	);
 	
@@ -161,7 +161,7 @@ module RISCV_TOP (
 	)BS2(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in({27'b0,I_MEM_DI[24:20]}),
+		.in({27'b0,out_ins_REG[24:20]}),
 		.DOUT(W_BS_Sign2)
 	);
 	SIGN_EXTEND #(
