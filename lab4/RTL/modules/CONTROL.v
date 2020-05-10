@@ -108,32 +108,18 @@ always @(*) begin
         //BEQ.........
         if (temp_I[6:0]==7'b1100011)begin//BEQ
             PC_source=0;
-            MUX_A=1;
-            MUX_B=2'b00;
+            MUX_A=0;
+            MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
-            if(temp_I[14:12]==3'b000)begin//BEQ
-                ALUOp=4'b1100;
-            end
-            if(temp_I[14:12]==3'b001)begin//BNE
-                ALUOp=4'b1011;
-            end
-            if(temp_I[14:12]==3'b100)begin//BLT
-                ALUOp=4'b0111;
-            end
-            if(temp_I[14:12]==3'b101)begin//BGE
-                ALUOp=4'b1000;
-            end
-            if(temp_I[14:12]==3'b110)begin//BLTU
-                ALUOp=4'b1001;
-            end
-            if(temp_I[14:12]==3'b111)begin//BGEU
-                ALUOp=4'b1010;
-            end
+            is_BEQ=1;
             I_MEM_write=0;
-            sign_ex=2'b00;
+            sign_ex=2'b01;
+            ALUOp=4'b1111;
         end
+
+        
         //_________________________________//
         if (temp_I[6:0]==7'b0000011&&temp_I[14:12]==3'b010)begin//LW
             PC_source=0;
@@ -295,17 +281,32 @@ always @(*) begin
         //______________
         if (temp_I[6:0]==7'b1100011)begin//BEQ
             PC_source=0;
-            MUX_A=0;
-            MUX_B=2'b01;
+            MUX_A=1;
+            MUX_B=2'b00;
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
-            is_BEQ=1;
+            if(temp_I[14:12]==3'b000)begin//BEQ
+                ALUOp=4'b1100;
+            end
+            if(temp_I[14:12]==3'b001)begin//BNE
+                ALUOp=4'b1011;
+            end
+            if(temp_I[14:12]==3'b100)begin//BLT
+                ALUOp=4'b0111;
+            end
+            if(temp_I[14:12]==3'b101)begin//BGE
+                ALUOp=4'b1000;
+            end
+            if(temp_I[14:12]==3'b110)begin//BLTU
+                ALUOp=4'b1001;
+            end
+            if(temp_I[14:12]==3'b111)begin//BGEU
+                ALUOp=4'b1010;
+            end
             I_MEM_write=0;
-            sign_ex=2'b01;
-            ALUOp=4'b1111;
+            sign_ex=2'b00;
         end
-
 
 
 
