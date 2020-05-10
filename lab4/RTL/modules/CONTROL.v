@@ -304,7 +304,7 @@ always @(*) begin
             if(temp_I[14:12]==3'b111)begin//BGEU
                 ALUOp=4'b1010;
             end
-            I_MEM_write=1;
+            I_MEM_write=0;
             sign_ex=2'b00;
         end
 
@@ -400,6 +400,17 @@ always @(*) begin
             Reg_MUX=0;
             I_MEM_write=0;
             sign_ex=0;
+        end
+        if (temp_I[6:0]==7'b1100011)begin//BEQ
+            PC_source=0;//pc+4
+            MUX_A=1;
+            MUX_B=2'b00;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=0;
+            I_MEM_write=1;
+            sign_ex=0;
+            is_BEQ=1;
         end
     end
 end
