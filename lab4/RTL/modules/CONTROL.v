@@ -48,8 +48,10 @@ always @(*) begin
         ALUOp=4'b0000;
         I_MEM_write=1;
         sign_ex=0;
+        is_BEQ=0;
     end
     if (state==2'b10)begin
+        is_BEQ=0;
         if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0110011)begin//AND 
             PC_source=0;
             MUX_A=1;
@@ -175,6 +177,7 @@ always @(*) begin
     end
 
     if(state==2'b 11)begin
+    is_BEQ=0;
         if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0110011)begin
             PC_source=0;
             MUX_A=1;
@@ -324,7 +327,7 @@ always @(*) begin
             RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
-            I_MEM_write=1;
+            I_MEM_write=0;
             sign_ex=2'b00;
         end
         if (temp_I[6:0]==7'b1101111)begin //jal
@@ -352,14 +355,7 @@ always @(*) begin
     end
 
     if(state==2'b 00)begin
-        PC_source=0;//pc+4
-        MUX_A=1;
-        MUX_B=2'b00;
-        RegWrite=1;
-        MemWrite=1;
-        Reg_MUX=0;
-        I_MEM_write=0;
-        sign_ex=0;
+        is_BEQ=0;
         if (temp_I[6:0]==7'b0000011&&temp_I[14:12]==3'b010)begin//LW
             PC_source=0;
             MUX_A=1;
@@ -370,7 +366,7 @@ always @(*) begin
             I_MEM_write=0;
             sign_ex=2'b00;
         end
-        if (temp_I[6:0]==7'b0100011&&temp_I[14:12]==3'b010)begin//SW
+        else if (temp_I[6:0]==7'b0100011&&temp_I[14:12]==3'b010)begin//SW
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b01;
@@ -379,6 +375,16 @@ always @(*) begin
             Reg_MUX=1;
             I_MEM_write=0;
             sign_ex=2'b00;
+        end
+        else begin
+            PC_source=0;//pc+4
+            MUX_A=1;
+            MUX_B=2'b00;
+            RegWrite=1;
+            MemWrite=1;
+            Reg_MUX=0;
+            I_MEM_write=0;
+            sign_ex=0;
         end
     end
 end
