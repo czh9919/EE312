@@ -224,8 +224,8 @@ always @(*) begin
         //_________________________________________________________________//
         if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0010011&&(temp_I[14:12]==3'b101||temp_I[14:12]==3'b001))begin
             PC_source=0;
-            MUX_A=0;
-            MUX_B=2'b10;
+            MUX_A=1;
+            MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
