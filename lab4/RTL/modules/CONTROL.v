@@ -165,7 +165,7 @@ always @(*) begin
         if (temp_I[31:25]==7'b0100000&&temp_I[6:0]==7'b0110011)begin//sub
             PC_source=0;
             MUX_A=1;
-            MUX_B=2'b01;
+            MUX_B=2'b00;
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
