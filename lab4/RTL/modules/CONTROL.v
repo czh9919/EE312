@@ -134,10 +134,10 @@ always @(*) begin
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
-            if(temp_I[14:12]==3'b111)begin//ADD
+            if(temp_I[14:12]==3'b000)begin//ADD
                 ALUOp=4'b0000;
             end
-            if(temp_I[14:12]==3'b000)begin//AND
+            if(temp_I[14:12]==3'b111)begin//AND
                 ALUOp=4'b0010;
             end
             if(temp_I[14:12]==3'b110)begin//or
