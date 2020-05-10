@@ -65,7 +65,7 @@ module RISCV_TOP (
 		NUM_INST=(num_inst)>>2;
 	end
 	
-
+	assign D_MEM_BE=4'b1111;
 	assign OUTPUT_PORT=RF_WD;
 	
 	//control
