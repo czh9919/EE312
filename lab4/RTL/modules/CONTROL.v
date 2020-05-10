@@ -328,7 +328,7 @@ always @(*) begin
             MemWrite=0;
             Reg_MUX=1;
             I_MEM_write=0;
-            sign_ex=2'b00;
+            sign_ex=2'b01;
         end
         if (temp_I[6:0]==7'b1101111)begin //jal
             PC_source=1;
