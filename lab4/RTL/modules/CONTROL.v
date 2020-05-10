@@ -49,7 +49,7 @@ always @(*) begin
     end
     if (state==2'b10)begin
         if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0110011)begin//AND 
-            PC_source=1;
+            PC_source=0;
             MUX_A=1;
             MUX_B=2'b00;
             RegWrite=1;
