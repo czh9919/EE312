@@ -92,7 +92,7 @@ module RISCV_TOP (
 	PC PC_TOP(
 		.clk(CLK),
 		.rstn(RSTn),
-		.PCwrite(PCsource),
+		.PCwrite(PVSwrite),
 		.I_MEM_ADD(back_PC),
 		.O_MEM_ADD(out_PC),
 		.I_MEM_CSN(I_MEM_CSN),

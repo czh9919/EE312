@@ -32,7 +32,7 @@ end
 always @(*) begin 
     if(state==2'b 01)begin//我感觉01的时候所有的指令都是一样的。。。
         temp_I=I;
-        PC_source=1;//PC+4
+        PC_source=0;//PC+4
         MUX_A=0;
         MUX_B=2'b10;
         RegWrite=0;
@@ -44,7 +44,7 @@ always @(*) begin
     end
     if (state==2'b10)begin
         if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0110011)begin//AND 
-            PC_source=0;
+            PC_source=1;
             MUX_A=1;
             MUX_B=2'b01;
             RegWrite=1;
@@ -170,7 +170,7 @@ always @(*) begin
             if(temp_I[14:12]==3'b101)begin//SRA
                 ALUOp=4'b0110;
             end
-            I_MEM_write=1;
+            I_MEM_write=0;
             sign_ex=2'b00;
         end
         //___________________________________________________________________//
@@ -199,7 +199,7 @@ always @(*) begin
             if(temp_I[14:12]==3'b000)begin//ADDI
                 ALUOp=4'b0000;
             end
-            I_MEM_write=1;
+            I_MEM_write=0;
             sign_ex=2'b00;
         end
         //_________________________________________________________//
@@ -213,7 +213,7 @@ always @(*) begin
             if(temp_I[14:12]==3'b101)begin//SRAI
                 ALUOp=4'b0110;
             end
-            I_MEM_write=1;
+            I_MEM_write=0;
             sign_ex=2'b00;
         end
         //_________________________________________________________________//
@@ -230,7 +230,7 @@ always @(*) begin
             if(temp_I[14:12]==3'b001)begin//SLLI
                 ALUOp=4'b0100;
             end
-            I_MEM_write=1;
+            I_MEM_write=0;
             sign_ex=2'b00;
         end
         //______________
@@ -263,7 +263,7 @@ always @(*) begin
             RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
-            I_MEM_write=1;
+            I_MEM_write=0;
             sign_ex=2'b00;
         end 
     end
@@ -274,8 +274,8 @@ always @(*) begin
         MUX_B=2'b00;
         RegWrite=1;
         MemWrite=1;
-        Reg_MUX=1;
-        I_MEM_write=1;
+        Reg_MUX=0;
+        I_MEM_write=0;
         sign_ex=0;
     end
 end
