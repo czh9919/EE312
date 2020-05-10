@@ -61,7 +61,7 @@ always @(*) begin
             MemWrite=0;
             Reg_MUX=1;
             I_MEM_write=0;
-            sign_ex=2b'00;
+            sign_ex=2'b00;
         end
         if (temp_I[6:0]==7'b0010011)begin//ANDI
             PC_source=0;
@@ -83,7 +83,7 @@ always @(*) begin
             I_MEM_write=0;
             sign_ex=2'b01;
         end
-        if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0010011)begin//SRLI  SLLI
+        if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0010011&&(temp_I[14:12]==3'b101||temp_I[14:12]==3'b001))begin//SRLI  SLLI
             PC_source=0;
             MUX_A=1;
             MUX_B=2'b01;
