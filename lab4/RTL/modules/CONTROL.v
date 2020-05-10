@@ -136,7 +136,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=1;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=0;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -324,7 +324,7 @@ always @(*) begin
             RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
-            I_MEM_write=0;
+            I_MEM_write=1;
             sign_ex=2'b00;
         end
         if (temp_I[6:0]==7'b1101111)begin //jal
@@ -360,6 +360,26 @@ always @(*) begin
         Reg_MUX=0;
         I_MEM_write=0;
         sign_ex=0;
+        if (temp_I[6:0]==7'b0000011&&temp_I[14:12]==3'b010)begin//LW
+            PC_source=0;
+            MUX_A=1;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=0;
+            I_MEM_write=0;
+            sign_ex=2'b00;
+        end
+        if (temp_I[6:0]==7'b0100011&&temp_I[14:12]==3'b010)begin//SW
+            PC_source=0;
+            MUX_A=1;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=0;
+            sign_ex=2'b00;
+        end
     end
 end
 always @(posedge clk) begin
