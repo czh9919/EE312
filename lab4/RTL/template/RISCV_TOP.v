@@ -193,7 +193,7 @@ module RISCV_TOP (
 	) sign1(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(W_BS_Sign1),
+		.I_DI({W_BS_Sign1[11:2],2'b00}),
 		.O_DI(SM1)
 	);
 	assign SM2=W_BS_Sign2;

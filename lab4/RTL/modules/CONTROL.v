@@ -295,15 +295,15 @@ always @(*) begin
         //______________
         if (temp_I[6:0]==7'b1100011)begin//BEQ
             PC_source=0;
-            MUX_A=1;
+            MUX_A=0;
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
             is_BEQ=1;
             I_MEM_write=0;
-            sign_ex=2'b11;
-            ALUOp=4'b0000;
+            sign_ex=2'b01;
+            ALUOp=4'b1111;
         end
 
 

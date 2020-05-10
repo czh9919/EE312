@@ -78,6 +78,9 @@ always @(*) begin
         4'b1110:begin
             C=(A+B) & 32'hfffffffe;
         end
+        4'b1111:begin
+            C=(A+B)-32'b100;
+        end
     endcase
 end
 endmodule 
