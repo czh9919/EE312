@@ -47,6 +47,9 @@ always @(*) begin
         Reg_MUX=1;
         ALUOp=4'b0000;
         I_MEM_write=1;
+        if (temp_I[6:0]==7'b1101111)begin
+            I_MEM_write=0;
+        end
         sign_ex=0;
         is_BEQ=0;
     end
@@ -337,7 +340,7 @@ always @(*) begin
             RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
-            I_MEM_write=0;
+            I_MEM_write=1;
             sign_ex=2'b00;
             ALUOp=4'b0000;
         end
@@ -348,7 +351,7 @@ always @(*) begin
             RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
-            I_MEM_write=0;
+            I_MEM_write=1;
             ALUOp=4'b1110;
             sign_ex=2'b00;
         end
