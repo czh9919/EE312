@@ -49,7 +49,7 @@ always @(*) begin
     end
     if (state==2'b10)begin
         if (temp_I[31:25]==7'b0000000&&temp_I[6:0]==7'b0110011)begin//AND 
-            PC_source=1;
+            PC_source=0;
             MUX_A=1;
             MUX_B=2'b00;
             RegWrite=1;
@@ -120,8 +120,26 @@ always @(*) begin
             I_MEM_write=0;
             sign_ex=2'b00;
         end 
-
-
+        if (temp_I[6:0]==7'b1101111)begin //jal
+            PC_source=0;
+            MUX_A=0;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=0;
+            sign_ex=2'b00;
+        end
+        if (temp_I[6:0]==7'b1101111&&temp_I[14:12]==3'b000)begin //jalr
+            PC_source=0;
+            MUX_A=0;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=0;
+            sign_ex=2'b00;
+        end
 
 
     end
@@ -270,7 +288,27 @@ always @(*) begin
             Reg_MUX=1;
             I_MEM_write=0;
             sign_ex=2'b00;
-        end 
+        end
+        if (temp_I[6:0]==7'b1101111)begin //jal
+            PC_source=1;
+            MUX_A=0;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=0;
+            sign_ex=2'b00;
+        end
+        if (temp_I[6:0]==7'b1101111&&temp_I[14:12]==3'b010)begin //jalr
+            PC_source=0;
+            MUX_A=0;
+            MUX_B=2'b01;
+            RegWrite=1;
+            MemWrite=0;
+            Reg_MUX=1;
+            I_MEM_write=0;
+            sign_ex=2'b00;
+        end
     end
 
     if(state==2'b 00)begin
