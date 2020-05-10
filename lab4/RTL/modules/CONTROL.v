@@ -316,7 +316,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=1;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=0;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
