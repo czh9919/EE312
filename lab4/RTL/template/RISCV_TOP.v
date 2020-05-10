@@ -94,7 +94,7 @@ module RISCV_TOP (
 		.HALT_o(HALT)
 	);
 
-	assign pcwrite=PVSwrite|(ALU_ans&isbc);
+	assign pcwrite=(PVSwrite&(~isbc))|(PVSwrite&ALU_ans);
 
 	PC PC_TOP(
 		.clk(CLK),
