@@ -143,6 +143,7 @@ module RISCV_TOP (
 	// 	.DOUT(RF_WA1)
 	// );
 	wire [31:0] ja;
+	wire [31:0] ja2;
 	REG #(
 		.DWIDTH(32)
 	)out_PC_REG(
@@ -151,7 +152,7 @@ module RISCV_TOP (
 		.in({20'b0,out_PC}),
 		.DOUT(ja)
 	);
-
+	assign ja2=ja+4;
 	MUX3#(
 		.DWIDTH(32)
 	)before_WD(
@@ -160,7 +161,7 @@ module RISCV_TOP (
 		.CON(RegDst),
 		.in0(out_ALUout),
 		.in1(out_data_reg),
-		.in2(ja),
+		.in2(ja2),
 		.DOUT(back_WD)
 	);
 	REG #(
