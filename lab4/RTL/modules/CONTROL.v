@@ -38,20 +38,35 @@ end
 
 always @(*) begin 
     if(state==2'b 01)begin//我感觉01的时候所有的指令都是一样的。。。
-        temp_I=I;
-        PC_source=0;//PC+4
-        MUX_A=0;
-        MUX_B=2'b10;
-        RegWrite=0;
-        MemWrite=0;
-        Reg_MUX=1;
-        ALUOp=4'b0000;
-        I_MEM_write=1;
         if (temp_I[6:0]==7'b1101111)begin
+            temp_I=I;
+            PC_source=0;//PC+4
+            MUX_A=0;
+            MUX_B=2'b01;
+            RegWrite=0;
+            MemWrite=0;
+            Reg_MUX=1;
+            ALUOp=4'b0000;
             I_MEM_write=0;
+            sign_ex=2'b00;
+            is_BEQ=0;
         end
-        sign_ex=0;
-        is_BEQ=0;
+        else begin
+            temp_I=I;
+            PC_source=0;//PC+4
+            MUX_A=0;
+            MUX_B=2'b10;
+            RegWrite=0;
+            MemWrite=0;
+            Reg_MUX=1;
+            ALUOp=4'b0000;
+            I_MEM_write=1;
+            if (temp_I[6:0]==7'b1101111)begin
+                I_MEM_write=0;
+            end
+            sign_ex=0;
+            is_BEQ=0;
+        end
     end
     if (state==2'b10)begin
         is_BEQ=0;
@@ -144,7 +159,7 @@ always @(*) begin
         if (temp_I[6:0]==7'b1101111)begin //jal
             PC_source=1;
             MUX_A=0;
-            MUX_B=2'b01;
+            MUX_B=2'b10;
             RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
@@ -154,7 +169,7 @@ always @(*) begin
         if (temp_I[6:0]==7'b1101111&&temp_I[14:12]==3'b000)begin //jalr
             PC_source=1;
             MUX_A=0;
-            MUX_B=2'b01;
+            MUX_B=2'b10;
             RegWrite=1;
             MemWrite=0;
             Reg_MUX=1;
@@ -339,7 +354,7 @@ always @(*) begin
         if (temp_I[6:0]==7'b1101111)begin //jal
             PC_source=1;
             MUX_A=0;
-            MUX_B=2'b01;
+            MUX_B=2'b10;
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
@@ -350,7 +365,7 @@ always @(*) begin
         if (temp_I[6:0]==7'b1101111&&temp_I[14:12]==3'b010)begin //jalr
             PC_source=0;
             MUX_A=0;
-            MUX_B=2'b01;
+            MUX_B=2'b10;
             RegWrite=0;
             MemWrite=0;
             Reg_MUX=1;
