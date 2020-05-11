@@ -71,6 +71,7 @@ A Multi-cycle CPU processes an instruction per every four clock cycle.
 \item Whether register file needs to be written.
 \item Signals for multiple intermediate multiplexors.
 \item Whether data memory needs to be written. 
+\item Control the four states of the CPU.
 \end{enumerate}
 
 \newpage
@@ -153,7 +154,7 @@ I pass all the test in the testbench folder.
 
 \section{Conclusion}
 
-The single-cycle CPU is easy to design but have some disadvantages.
+The multi-cycle CPU is more diffticult to design but it can avoid the disadvantage of the single cycle CPU.
 Such as the clock cycle will be determined by the longest possible path, which is not the most common instruction. 
 
 \end{document}
