@@ -10,7 +10,7 @@ module CONTROL (
     output reg [3:0] ALUOp,
     output reg I_MEM_write,//instrution
     output reg [1:0] sign_ex,//CON_sign
-    output reg Reg_MUX,//RegDst
+    output reg [1:0] Reg_MUX,//RegDst
     output reg [31:0] NUM_INS,
     output reg [31:0]o,
     output reg is_BEQ
@@ -31,6 +31,7 @@ always @(posedge rstn) begin
     sign_ex=0;
     NUM_INS=0;
     is_BEQ=0;
+    Reg_MUX=2'b00;
 end
 always @(*) begin
     o=temp_I;
@@ -44,7 +45,7 @@ always @(*) begin
         MUX_B=2'b10;
         RegWrite=0;
         MemWrite=0;
-        Reg_MUX=1;
+        Reg_MUX=2'b01;
         ALUOp=4'b0000;
         I_MEM_write=1;
         if (temp_I[6:0]==7'b1101111)begin
@@ -61,7 +62,7 @@ always @(*) begin
             MUX_B=2'b00;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -71,7 +72,7 @@ always @(*) begin
             MUX_B=2'b00;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -81,7 +82,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -91,7 +92,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b01;
         end
@@ -101,7 +102,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b10;
         end
@@ -112,7 +113,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             is_BEQ=0;
             I_MEM_write=0;
             sign_ex=2'b01;
@@ -127,7 +128,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=0;
+            Reg_MUX=2'b00;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -137,7 +138,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b01;
         end 
@@ -147,7 +148,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=1;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -157,7 +158,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=1;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -173,7 +174,7 @@ always @(*) begin
             MUX_B=2'b00;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             if(temp_I[14:12]==3'b000)begin//ADD
                 ALUOp=4'b0000;
             end
@@ -208,7 +209,7 @@ always @(*) begin
             MUX_B=2'b00;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             if(temp_I[14:12]==3'b000)begin//SUB
                 ALUOp=4'b0001;
             end
@@ -225,7 +226,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             if(temp_I[14:12]==3'b111)begin//ANDI
                 ALUOp=4'b0010;
             end
@@ -254,7 +255,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             if(temp_I[14:12]==3'b101)begin//SRAI
                 ALUOp=4'b0110;
             end
@@ -268,7 +269,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             if(temp_I[14:12]==3'b101)begin//SRLI
                 ALUOp=4'b0101;
             end
@@ -285,7 +286,7 @@ always @(*) begin
             MUX_B=2'b00;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             is_BEQ=1;
             if(temp_I[14:12]==3'b000)begin//BEQ
                 ALUOp=4'b1100;
@@ -322,7 +323,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=0;
+            Reg_MUX=2'b00;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -332,7 +333,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b01;
         end
@@ -342,7 +343,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=1;
             sign_ex=2'b00;
             ALUOp=4'b0000;
@@ -353,7 +354,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=1;
             ALUOp=4'b1110;
             sign_ex=2'b00;
@@ -368,7 +369,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=1;
             MemWrite=0;
-            Reg_MUX=1;
+            Reg_MUX=2'b01;
             I_MEM_write=0;
             sign_ex=2'b00;
         end
@@ -378,7 +379,7 @@ always @(*) begin
             MUX_B=2'b01;
             RegWrite=0;
             MemWrite=1;
-            Reg_MUX=0;
+            Reg_MUX=2'b00;
             I_MEM_write=0;
             sign_ex=2'b01;
         end
@@ -388,7 +389,7 @@ always @(*) begin
             MUX_B=2'b00;
             RegWrite=0;
             MemWrite=0;
-            Reg_MUX=0;
+            Reg_MUX=2'b10;
             I_MEM_write=0;
             sign_ex=0;
         end
