@@ -149,7 +149,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.in({20'b0,out_PC}),
-		DOUT(ja)
+		.DOUT(ja)
 	);
 
 	MUX3#(
@@ -160,7 +160,7 @@ module RISCV_TOP (
 		.CON(RegDst),
 		.in0(out_ALUout),
 		.in1(out_data_reg),
-		.in2(ja);
+		.in2(ja),
 		.DOUT(back_WD)
 	);
 	REG #(
