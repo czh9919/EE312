@@ -44,6 +44,8 @@ module RISCV_TOP (
 	wire pcwrite;
 
 	wire[31:0] num_inst;
+	wire re;
+	assign D_MEM_WEN=~re;
 	CONTROL control(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -52,7 +54,7 @@ module RISCV_TOP (
 		.MUX_A(CON_A),
 		.MUX_B(CON_B),
 		.RegWrite(RF_WE),
-		.MemWrite(D_MEM_WEN),
+		.MemWrite(re),
 		.ALUOp(ALUop),
 		.sign_ex(CON_sign),
 		.Reg_MUX(RegDst),
@@ -160,7 +162,7 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.CON(RegDst),
 		.in0(out_ALUout),
-		.in1(out_data_reg),
+		.in1(D_MEM_DI),
 		.in2(ja2),
 		.DOUT(back_WD)
 	);
