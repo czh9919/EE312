@@ -19,7 +19,7 @@
   \begin{center}
     \vspace*{1cm}
 
-    \textbf{\Huge Single cycle CPU  report}
+    \textbf{\Huge Multi-cycle CPU  report}
 
     \vspace{0.5cm}
 
@@ -52,8 +52,8 @@
 
 \section{Introduction}
 
-Lab3 is required to design a Single-cycle CPU.
-A single-cycle CPU processes an instruction per every single clock cycle.
+Lab4 is required to design a Multi-cycle CPU.
+A Multi-cycle CPU processes an instruction per every four clock cycle.
 
 \subsection{Data Path}
 
@@ -64,7 +64,7 @@ A single-cycle CPU processes an instruction per every single clock cycle.
 \item Update the PC to hold the address of the next instruction. 
 \end{enumerate}
 
-\subsection{Control-Single}
+\subsection{Control-Multi}
 
 \begin{enumerate}
 \item Operation to be performed by ALU.
@@ -129,6 +129,7 @@ The whole circuit was shown below.
 
 There might be something different with the circuit.
 Such as, I cancel the cout output.
+The control module has four state, "01" is IF,"10" is ID, "11" is EX, and last "00" is MEM and WB.
 \newpage
 
 \section{Evaluation}
