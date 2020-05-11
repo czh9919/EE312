@@ -52,16 +52,16 @@
 
 \section{Introduction}
 
-Lab3 is required to design a Single-cycle CPU.
+Lab4 is required to design a Single-cycle CPU.
 A single-cycle CPU processes an instruction per every single clock cycle.
 
 \subsection{Data Path}
 
 \begin{enumerate}
-\item Fetch the instruction at the address in PC.
+\item Update the PC to hold the address of the next instruction and fetch the instruction at the address in PC.
 \item Decode the instruction.
 \item Execute the instruction.
-\item Update the PC to hold the address of the next instruction. 
+\item Save data into the memory.
 \end{enumerate}
 
 \subsection{Control-Single}
@@ -102,12 +102,6 @@ It is updated at the end of every clock cycle.
 The adder is responsible for incrementing the PC to hold the address of the next instruction.
 It takes two input values, adds them together, and outputs the result
 
-\subsubsection{HALT module}
-
-HALT is used to halt the program when a specific condition is met.
-The terminate condition is ($RF\_ RD1 = 0x0000000c$) when the received instruction is 0x00008067. 
-HALT needs to set 1 when the terminal condition is met.
-
 \subsubsection{Sign extend module}
 
 Single extend module is used to increase the number of bits of a binary number while preserving the number's sign and value. 
@@ -122,13 +116,13 @@ Mux, a data selector, which was used to select which the single will be output.
 
 The whole circuit was shown below.
 
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[height=6in, angle=90]{Lens.jpg}
-%   \end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[height=6in, angle=90]{Lens.jpg}
+  \end{figure}
 
 There might be something different with the circuit.
-Such as, I cancel the cout output.
+
 \newpage
 
 \section{Evaluation}
