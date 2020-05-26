@@ -74,6 +74,7 @@ always @(*) begin
         if(I_OP[14:12]==3'b001)begin//SLLI
             ALUOp=4'b0100;
         end
+    end
 
 	if (I_OP[31:25]==7'b0100000&&I_OP[6:0]==7'b0110011&&I_OP[14:12]==3'b101)begin
 		PC_source=0;
@@ -216,4 +217,5 @@ always @(*) begin
             ALUOp=4'b1010;
         end
     end
+end
 endmodule //CONTROL
