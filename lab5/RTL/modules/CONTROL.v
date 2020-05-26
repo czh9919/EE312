@@ -34,25 +34,25 @@ always @(*) begin
         MUX_ALU=0;
         beq_con=0;
 		if(I_OP[14:12]==3'b111)begin//AND
-            ALUOp=4'b0000;
+            ALUOp=4'b0010;
         end
         if(I_OP[14:12]==3'b110)begin//OR
-            ALUOp=4'b0000;
+            ALUOp=4'b0011;
         end
         if(I_OP[14:12]==3'b100)begin//XOR
-            ALUOp=4'b0000;
+            ALUOp=4'b1101;
         end
         if(I_OP[14:12]==3'b010)begin//SLT
-            ALUOp=4'b0000;
+            ALUOp=4'b0111;
         end
         if(I_OP[14:12]==3'b011)begin//SLTU
-            ALUOp=4'b0000;
+            ALUOp=4'b1001;
         end
         if(I_OP[14:12]==3'b101)begin//SRL
-            ALUOp=4'b0000;
+            ALUOp=4'b0101;
         end
         if(I_OP[14:12]==3'b001)begin//SLL
-            ALUOp=4'b0000;
+            ALUOp=4'b0100;
         end
         if(I_OP[14:12]==3'b000)begin//ADD
             ALUOp=4'b0000;
