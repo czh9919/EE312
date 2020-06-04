@@ -150,7 +150,7 @@ always @(*) begin
         ALUOp=4'b0000;
         Reg_MUX=0;
         MUX_ALU=1;
-        beq_con=0;
+        beq_con=1;
 			//LW
 	end
 	if (I_OP[6:0]==7'b0100011&&I_OP[14:12]==3'b010)begin
