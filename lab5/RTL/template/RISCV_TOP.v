@@ -112,11 +112,11 @@ module RISCV_TOP (
 	);
 	//第一周期
 	assign INS_0=I_MEM_DI;
-	assign PCwrite=out_control_0[11];
+	assign PCsource=out_control_0[11];
 	PC PC_TOP(
 		.clk(CLK),
 		.rstn(RSTn),
-		.PCwrite(PCwrite),
+		.PCwrite(1'b1),
 		.I_MEM_ADD(back_PC),
 		.O_MEM_ADD(out_PC),
 		.I_MEM_CSN(I_MEM_CSN),
@@ -180,9 +180,13 @@ module RISCV_TOP (
 	assign CON_sign=out_control_1[9:8];
 	assign RegDst=out_control_1[7];
 
-	assign RF_RA1=Inst2[19:15];
-	assign RF_RA2=Inst2[24:20];
-	assign RF_WA1=Inst2[11:7];
+	assign W_BS_Sign0=INS_1[31:20];
+	assign W_BS_Sign1={INS_1[31:25],INS_1[11:7]};
+	assign W_BS_Sign2={27'b0,INS_1[24:20]};
+
+	assign RF_RA1=INS_1[19:15];
+	assign RF_RA2=INS_1[24:20];
+	assign RF_WA1=INS_1[11:7];
 	
 	MUX #(
 		.DWIDTH(32)
