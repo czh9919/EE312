@@ -30,7 +30,6 @@ module RISCV_TOP (
 	);
 
 	assign OUTPUT_PORT = RF_WD;
-
 	initial begin
 		NUM_INST <= 0;
 	end
@@ -102,11 +101,12 @@ module RISCV_TOP (
 		.MUX_SEXT(out_control_0[9:8]),
 		.Reg_MUX(out_control_0[7]),
 		.MUX_ALU(out_control_0[6]),
-		.ALUOP(out_control_0[5:2]),
-		.MEMWrite(out_control_0[1]),
+		.ALUOp(out_control_0[5:2]),
+		.MemWrite(out_control_0[1]),
 		.beq_con(out_control_0[0])
 	);
 	//第一周期
+	assign INS_0=I_MEM_DI;
 	assign PCwrite=out_control_0[11];
 	PC PC_TOP(
 		.clk(CLK),
@@ -134,6 +134,14 @@ module RISCV_TOP (
 	);
 
 	//第一周期寄存器
+	REG#(
+		.DWIDTH(32)
+	)ID_EX_INS(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(INS_0),
+		.DOUT(INS_1)
+	);
 	//控制
 	REG#(
 		.DWIDTH(11)
@@ -163,7 +171,7 @@ module RISCV_TOP (
 	);
 
 	//第二周期
-	assign RF_WD=out_control_1[10];
+	assign RF_WE=out_control_1[10];
 	assign CON_sign=out_control_1[9:8];
 	assign RegDst=out_control_1[7];
 
@@ -215,6 +223,14 @@ module RISCV_TOP (
 	);
 
 	//第二周期寄存器
+	REG#(
+		.DWIDTH(32)
+	)EX_MEM_INS(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(INS_1),
+		.DOUT(INS_2)
+	);
 	//控制
 	REG #(
 		.DWIDTH(7)
@@ -260,6 +276,14 @@ module RISCV_TOP (
 
 	wire [31:0]temp;
 	//第三周期
+	//旁路
+	UNIT UNIT_TOP(
+		.rstn(RSTn),
+		.I3(INS_2),
+		.I4(INS_3),
+		.MUXA(PL_A),
+		.MUXB(PL_B)
+	);
 	//控制
 	assign CON_B=out_control_2[6];
 	assign ALUOP=out_control_2[5:2];
@@ -314,6 +338,14 @@ module RISCV_TOP (
 		.C(ALU_ans)
 	);
 	//第三周期寄存器
+	REG#(
+		.DWIDTH(32)
+	)MEM_WB_INS(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(INS_2),
+		.DOUT(INS_3)
+	);
 	REG #(
 		.DWIDTH(2)
 	)MEM_WB_CON(
