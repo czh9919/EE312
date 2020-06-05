@@ -45,7 +45,7 @@ Z4 w1590497168
 FD:/programming/EE312/lab5/RTL/modules/ALU.v
 L0 1
 Z5 OL;L;10.5;63
-Z6 !s108 1591358116.000000
+Z6 !s108 1591360573.000000
 !s107 D:/programming/EE312/lab5/RTL/modules/ALU.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/ALU.v|
 !i113 0
@@ -129,7 +129,7 @@ R4
 FD:/programming/EE312/lab5/RTL/modules/MUX3.v
 L0 1
 R5
-Z8 !s108 1591358117.000000
+R6
 !s107 D:/programming/EE312/lab5/RTL/modules/MUX3.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/MUX3.v|
 !i113 0
@@ -150,7 +150,7 @@ R4
 FD:/programming/EE312/lab5/RTL/modules/PC.v
 L0 1
 R5
-R8
+Z8 !s108 1591360574.000000
 !s107 D:/programming/EE312/lab5/RTL/modules/PC.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/PC.v|
 !i113 0
@@ -226,10 +226,10 @@ r1
 !s85 0
 31
 !i10b 1
-!s100 315@C:=Akg3?JnDm<N`8O2
-ImX2E5>9A:BNIOOIeCO_no0
+!s100 SD4QSMIm@Mjln[N@og4]42
+IhiKMObF<`6FSW2Y^gGBQ72
 R3
-w1591358079
+w1591360572
 8D:/programming/EE312/lab5/RTL/template/RISCV_TOP.v
 FD:/programming/EE312/lab5/RTL/template/RISCV_TOP.v
 L0 1

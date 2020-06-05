@@ -75,18 +75,6 @@ always @(*) begin
             ALUOp=4'b0100;
         end
     end
-
-	if (I_OP[31:25]==7'b0100000&&I_OP[6:0]==7'b0110011&&I_OP[14:12]==3'b101)begin
-		PC_source=0;
-        MUX_SEXT=2'b00;
-        RegWrite=1;
-        MemWrite=1;
-        ALUOp=4'b0000;
-        Reg_MUX=1;
-        MUX_ALU=0;
-        beq_con=0;
-		//SRA
-	end
     if (I_OP[31:25]==7'b0100000&&I_OP[6:0]==7'b0110011)begin//sub
         PC_source=0;
         MUX_SEXT=2'b00;
