@@ -50,8 +50,8 @@ module RISCV_TOP (
 	wire [1:0]CON_sign;
 	wire [3:0] ALUOP;
 	wire alu_RD;
-	wire [1:0] PL_A;
-	wire [1:0] PL_B;
+	wire  PL_A;
+	wire  PL_B;
 
 	//控制路连接线
 	wire [11:0] out_control_0;//PC_source走
@@ -69,6 +69,11 @@ module RISCV_TOP (
 	wire [11:0] W_BS_Sign1;
 	wire [11:0] A0;
 	wire [11:0] PC_imm_0;
+
+	wire [31:0] INS_0;
+	wire [31:0] INS_1;
+	wire [31:0] INS_2;
+	wire [31:0] INS_3;
 
 	wire [31:0] B0;
 	wire [31:0] W_BS_Sign2;
