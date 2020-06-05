@@ -180,8 +180,8 @@ module RISCV_TOP (
 	assign CON_sign=out_control_1[9:8];
 	assign RegDst=out_control_1[7];
 
-	assign W_BS_Sign0=INS_1[31:20];
-	assign W_BS_Sign1={INS_1[31:25],INS_1[11:7]};
+	assign W_BS_Sign1=INS_1[31:20];
+	assign W_BS_Sign0={INS_1[31:25],INS_1[11:7]};
 	assign W_BS_Sign2={27'b0,INS_1[24:20]};
 
 	assign RF_RA1=INS_1[19:15];
@@ -205,8 +205,8 @@ module RISCV_TOP (
 	) sign0(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI(W_BS_Sign0),
-		.O_DI(SM0)
+		.I_DI(W_BS_Sign1),
+		.O_DI(SM1)
 	);
 	SIGN_EXTEND #(
 		.I_DWIDTH(12),
@@ -214,8 +214,8 @@ module RISCV_TOP (
 	) sign1(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I_DI({W_BS_Sign1[11:1],1'b0}),
-		.O_DI(SM1)
+		.I_DI({W_BS_Sign0[11:1],1'b0}),
+		.O_DI(SM0)
 	);
 	assign SM2=W_BS_Sign2;
 
@@ -336,7 +336,7 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.CON(CON_B),
 		.in0(RB0),
-		.in1(sign_out),
+		.in1(B0),
 		.DOUT(B_init)
 	);
 
