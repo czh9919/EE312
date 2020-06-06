@@ -31,7 +31,7 @@ module RISCV_TOP (
 
 	assign OUTPUT_PORT = RF_WD;
 	initial begin
-		NUM_INST <= -3;
+		NUM_INST <= -2;
 	end
 
 	// Only allow for NUM_INST

@@ -12,7 +12,7 @@ always @(posedge rstn) begin
 	DOUT[DWIDTH-1:0]=32'b0;
 end
 
-always @(posedge clk) begin
+always @(negedge  clk) begin
     DOUT[DWIDTH-1:0]=in;
 end
 

@@ -14,7 +14,7 @@ always @(posedge rstn) begin
     D_MEM_CSN =0;
 end
 
-always @(posedge clk) begin
+always @(negedge  clk) begin
     if (rstn&&PCwrite)
         O_MEM_ADD[11:0]=I_MEM_ADD[11:0];
 end

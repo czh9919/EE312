@@ -11,7 +11,7 @@ always @(posedge rstn) begin
     MUXA=0;
     MUXB=0;
 end
-always @(posedge clk) begin
+always @(negedge  clk) begin
     MUXA=0;
     MUXB=0;
 end
