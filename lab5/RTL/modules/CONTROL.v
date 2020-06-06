@@ -155,7 +155,7 @@ always @(*) begin
 	
 	if(I_OP[6:0]==7'b1101111)begin
 		PC_source=1;
-        MUX_SEXT=2'b10;
+        MUX_SEXT=2'b00;
         RegWrite=0;
         MemWrite=0;
         ALUOp=4'b0000;
