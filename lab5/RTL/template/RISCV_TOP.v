@@ -186,7 +186,7 @@ module RISCV_TOP (
 
 	assign RF_RA1=INS_1[19:15];
 	assign RF_RA2=INS_1[24:20];
-	assign RF_WA1=INS_1[11:7];
+	assign RF_WA1=INS_3[11:7];
 	
 	MUX #(
 		.DWIDTH(32)
