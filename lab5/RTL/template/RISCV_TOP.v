@@ -287,6 +287,7 @@ module RISCV_TOP (
 	//第三周期
 	//旁路
 	UNIT UNIT_TOP(
+		.clk(CLK),
 		.rstn(RSTn),
 		.I3(INS_2),
 		.I4(INS_3),
