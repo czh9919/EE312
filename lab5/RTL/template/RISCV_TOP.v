@@ -68,6 +68,9 @@ module RISCV_TOP (
 	wire [11:0] PC4;
 	wire [11:0] PC_imm;
 	wire [11:0] PC4_2;
+	wire [11:0] PC4_3;
+	wire [11:0] PC4_4;
+	wire [11:0] PC4_5;
 	wire [11:0] W_BS_Sign0;
 	wire [11:0] W_BS_Sign1;
 	wire [11:0] A0;
@@ -114,12 +117,13 @@ module RISCV_TOP (
 		.MemWrite(out_control_0[1]),
 		.beq_con(out_control_0[0])
 	);
+
 	MUX#(
 		.DWIDTH(12)
-	)stall(
+	)stall_mux(
 		.clk(CLK),
 		.rstn(RSTn),
-		.CON(stall),
+		.CON(1'b0),//!stall
 		.in0(out_control_0),
 		.in1(12'b0),
 		.DOUT(out_control_0_0)
@@ -256,8 +260,9 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.in(PC4_2),
-		.DOUT(A0)
+		.DOUT(PC4_3)
 	);
+	assign A0=PC4_3-4;
 	REG#(
 		.DWIDTH(32)
 	)EX_MEM1(
@@ -367,6 +372,14 @@ module RISCV_TOP (
 		.in(out_control_2),
 		.DOUT(out_control_3)
 	);
+	REG #(
+		.DWIDTH(12)
+	)MEM_WB_PC(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(PC4_3),
+		.DOUT(PC4_4)
+	);
 	REG#(
 		.DWIDTH(12)
 	)MEM_WB0(
@@ -428,6 +441,14 @@ module RISCV_TOP (
 		.DOUT(out_control_4)
 	);
 	//数据
+	REG #(
+		.DWIDTH(12)
+	)WB_PC(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(PC4_3),
+		.DOUT(PC4_4)
+	);
 	REG#(
 		.DWIDTH(32)
 	)WB0(
@@ -436,6 +457,7 @@ module RISCV_TOP (
 		.in(R_back_WD),
 		.DOUT(back_WD)
 	);
+
 	//第五周期
 	assign RF_WA1=INS_4[11:7];
 	assign RF_WE=out_control_4[10];
@@ -446,7 +468,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(RegDst),
-		.in0({20'b0,PC4_2}),
+		.in0({20'b0,PC4_4}),
 		.in1(back_WD),
 		.DOUT(RF_WD)
 	);
