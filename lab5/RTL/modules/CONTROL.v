@@ -156,7 +156,7 @@ always @(*) begin
 	if(I_OP[6:0]==7'b1101111)begin
 		PC_source=1;
         MUX_SEXT=2'b01;
-        RegWrite=0;
+        RegWrite=1;
         MemWrite=0;
         ALUOp=4'b0000;
         Reg_MUX=0;
@@ -169,7 +169,7 @@ always @(*) begin
 	if(I_OP[6:0]==7'b1100111&&I_OP[14:12]==3'b000)begin
 		PC_source=0;
         MUX_SEXT=2'b01;
-        RegWrite=0;
+        RegWrite=1;
         MemWrite=0;
         ALUOp=4'b0000;
         Reg_MUX=1;
