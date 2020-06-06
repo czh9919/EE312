@@ -16,10 +16,6 @@ always @(*) begin
     //     MUXA=0;
     //     MUXB=1;
     // end
-    if((I3[6:0]==7'b0010011||I3[6:0]==7'b1100111)begin
-         MUXA=0;
-         MUXB=0;
-    end
     if((I3[24:20]==I4[11:7])&&I4[11:7]!=0)begin
         MUXA=0;
         MUXB=1;
