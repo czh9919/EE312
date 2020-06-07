@@ -497,7 +497,7 @@ module RISCV_TOP (
 	);
 
 	//第四周期
-	assign D_MEM_WEN=out_control_3[1];
+
 	assign alu_RD=out_control_3[12];
 	assign D_MEM_ADDR=out_ALUout[11:0];
 	MUX#(
@@ -557,7 +557,8 @@ module RISCV_TOP (
 
 	//第五周期
 	wire CONT;
-	assign PCsource=(out_control_4[11]&back_WD)^((~out_control_4[0])&out_control_0[11]);
+	assign D_MEM_WEN=out_control_4[1];
+	assign PCsource=(out_control_4[11]&back_WD)|((~out_control_4[0])&out_control_0[11]);
 	assign RF_WA1=INS_4[11:7];
 	assign RF_WE=out_control_4[10];
 	assign RegDst=out_control_4[7];
