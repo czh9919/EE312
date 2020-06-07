@@ -148,11 +148,11 @@ module RISCV_TOP (
 		.NUM_INST(NUM_INST),
 		.s(stall)
 	);
-	always @(negedge CLK) begin
+/* 	always @(negedge CLK) begin
 		if (stall) begin
-			NUM_INST=NUM_INST-3;
+			NUM_INST=NUM_INST-1;
 		end
-	end
+	end */
 	always @(*) begin
 		I_MEM_ADDR=out_PC;
 	end
