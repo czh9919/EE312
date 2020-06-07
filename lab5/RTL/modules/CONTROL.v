@@ -190,7 +190,7 @@ always @(*) begin
 	end
 
 	if (I_OP[6:0]==7'b1100011)begin//BEQ
-        PC_source=1;
+        PC_source=0;
         MUX_SEXT=2'b00;
         RegWrite=0;
         MemWrite=0;
