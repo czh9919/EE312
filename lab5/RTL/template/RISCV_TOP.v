@@ -225,7 +225,7 @@ module RISCV_TOP (
 	);
 	always @(*) begin//stall后减4
 		if (stall) begin
-			NUM_INST=NUM_INST-6;
+			NUM_INST=NUM_INST-4;
 		end
 	end
 	always @(*) begin
@@ -558,7 +558,7 @@ module RISCV_TOP (
 	//第五周期
 	wire CONT;
 	assign D_MEM_WEN=~out_control_3[1];
-	assign PCsource=((~out_control_4[0])&back_WD&out_control_4[11])|((out_control_4[11])&(~out_control_4[0]));/* (out_control_4[11]&back_WD)|((~out_control_4[0])&out_control_0[11]); */
+	assign PCsource=((out_control_4[0])&back_WD[0]&(~out_control_4[11]))|((out_control_4[11])&(~out_control_4[0]));/* (out_control_4[11]&back_WD)|((~out_control_4[0])&out_control_0[11]); */
 	assign RF_WA1=INS_4[11:7];
 	assign RF_WE=out_control_4[10];
 	assign RegDst=out_control_4[7];
