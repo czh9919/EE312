@@ -123,7 +123,7 @@ module RISCV_TOP (
 	)stall_mux(
 		.clk(CLK),
 		.rstn(RSTn),
-		.CON(1'b0),//!stall
+		.CON(stall),//!stall
 		.in0(out_control_0),
 		.in1(12'b0),
 		.DOUT(out_control_0_0)
@@ -140,6 +140,19 @@ module RISCV_TOP (
 		.I_MEM_CSN(I_MEM_CSN),
 		.D_MEM_CSN(D_MEM_CSN)
 	);
+	HAZARD HA(
+		.clk(CLK),
+		.rstn(RSTn),
+		.PC4_2(PC4_3),
+		.PC4(out_PC),
+		.NUM_INST(NUM_INST),
+		.s(stall)
+	);
+	always @(negedge CLK) begin
+		if (stall) begin
+			NUM_INST=NUM_INST-3;
+		end
+	end
 	always @(*) begin
 		I_MEM_ADDR=out_PC;
 	end
