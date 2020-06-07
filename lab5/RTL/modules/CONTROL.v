@@ -145,7 +145,7 @@ always @(*) begin
         ALUOp=4'b0000;
         Reg_MUX=0;
         MUX_ALU=1;
-        beq_con=1;
+        beq_con=0;
         pc_write=0;
 			//LW
 	end
@@ -170,7 +170,7 @@ always @(*) begin
         ALUOp=4'b0000;
         Reg_MUX=1;
         MUX_ALU=1;
-        beq_con=1;
+        beq_con=0;
         pc_write=1;
 		//JAL
 	end
@@ -185,7 +185,7 @@ always @(*) begin
         ALUOp=4'b0000;
         Reg_MUX=1;
         MUX_ALU=1;
-        beq_con=1;
+        beq_con=0;
 		//JALR
 	end
 
