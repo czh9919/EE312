@@ -1,4 +1,4 @@
-module HAZARD (
+/* module HAZARD (
     input wire clk,
     input wire rstn,
     input wire [11:0] PC4_2,
@@ -20,6 +20,6 @@ always @(negedge clk) begin
     end
 
     temp=temp+1;
-end
-
-endmodule //CONTROLHAZARD
+end */
+/* 
+endmodule //CONTROLHAZARD */
