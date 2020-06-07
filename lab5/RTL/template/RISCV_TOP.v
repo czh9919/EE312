@@ -165,8 +165,8 @@ module RISCV_TOP (
 		.in1(13'b0),
 		.DOUT(out_control_3)
 	);
-/* 	assign out_control_4=out_control_4;*/
-	MUX#(
+	assign out_control_4=out_control_4_0;
+/* 	MUX#(
 		.DWIDTH(13)
 	)stall_mux4(
 		.clk(CLK),
@@ -175,7 +175,7 @@ module RISCV_TOP (
 		.in0(out_control_4_0),
 		.in1(13'b0),
 		.DOUT(out_control_4)
-	);
+	); */
 	//第一周期
 	assign INS_0=I_MEM_DI;
 	PC PC_TOP(
@@ -224,8 +224,8 @@ module RISCV_TOP (
 		.DOUT(stall_3)
 	);
 	always @(*) begin//stall后减4
-		if (stall_2) begin
-			NUM_INST=NUM_INST-1;
+		if (stall) begin
+			NUM_INST=NUM_INST-6;
 		end
 	end
 	always @(*) begin
