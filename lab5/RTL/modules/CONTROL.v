@@ -9,6 +9,7 @@ module CONTROL (
     output reg [3:0] ALUOp,
     output reg Reg_MUX,//RegDst
     output reg MUX_ALU,
+    output reg pc_write,
     output reg beq_con
 );
 
@@ -21,6 +22,7 @@ always @(posedge rstn) begin
     Reg_MUX=0;
     MUX_ALU=0;
     beq_con=0;
+    pc_write=0;
 end
 
 always @(*) begin
@@ -33,6 +35,7 @@ always @(*) begin
         Reg_MUX=1;
         MUX_ALU=0;
         beq_con=0;
+        pc_write=0;
 		if(I_OP[14:12]==3'b111)begin//AND
             ALUOp=4'b0010;
         end
@@ -68,6 +71,7 @@ always @(*) begin
         Reg_MUX=1;
         MUX_ALU=0;
         beq_con=0;
+        pc_write=0;
         if(I_OP[14:12]==3'b101)begin//SRLI
             ALUOp=4'b0101;
         end
@@ -83,6 +87,7 @@ always @(*) begin
         Reg_MUX=1;
         MUX_ALU=0;
         beq_con=0;
+        pc_write=0;
         if(I_OP[14:12]==3'b000)begin//SUB
             ALUOp=4'b0001;
         end
@@ -93,6 +98,7 @@ always @(*) begin
 	if (I_OP[31:25]==7'b0100000&&I_OP[6:0]==7'b0010011&&I_OP[14:12]==3'b101)begin
 		PC_source=0;
         MUX_SEXT=2'b00;
+        pc_write=0;
         RegWrite=1;
         MemWrite=1;
         ALUOp=4'b0000;
@@ -111,6 +117,7 @@ always @(*) begin
         Reg_MUX=1;
         MUX_ALU=1;
         beq_con=0;
+        pc_write=0;
         if(I_OP[14:12]==3'b111)begin//ANDI
             ALUOp=4'b0010;
         end
@@ -139,6 +146,7 @@ always @(*) begin
         Reg_MUX=0;
         MUX_ALU=1;
         beq_con=1;
+        pc_write=0;
 			//LW
 	end
 	if (I_OP[6:0]==7'b0100011&&I_OP[14:12]==3'b010)begin
@@ -150,6 +158,7 @@ always @(*) begin
         Reg_MUX=1;
         MUX_ALU=1;
         beq_con=0;
+        pc_write=0;
 			//SW
 	end
 	
@@ -162,11 +171,13 @@ always @(*) begin
         Reg_MUX=0;
         MUX_ALU=1;
         beq_con=1;
+        pc_write=1;
 		//JAL
 	end
 
 
 	if(I_OP[6:0]==7'b1100111&&I_OP[14:12]==3'b000)begin
+        pc_write=1;
 		PC_source=0;
         MUX_SEXT=2'b01;
         RegWrite=1;
@@ -186,6 +197,7 @@ always @(*) begin
         Reg_MUX=1;
         MUX_ALU=1;
         beq_con=1;
+        pc_write=1;
         if(I_OP[14:12]==3'b000)begin//BEQ
             ALUOp=4'b1100;
         end
