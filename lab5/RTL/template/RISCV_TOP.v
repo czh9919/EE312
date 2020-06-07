@@ -421,10 +421,10 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(PL_B),
-		.in0(B_init),
+		.in0(RB0),
 		.in1(R_back_WD),
 		.in2(back_WD),
-		.DOUT(B)
+		.DOUT(B_init)
 	);
 
 	MUX#(
@@ -435,7 +435,7 @@ module RISCV_TOP (
 		.CON(CON_B),
 		.in0(RB0),
 		.in1(B0),
-		.DOUT(B_init)
+		.DOUT(B)
 	);
 
 	ALU ALU_TOP(
@@ -492,7 +492,7 @@ module RISCV_TOP (
 	) MEM_WB2(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(RB0),
+		.in(B_init),
 		.DOUT(D_MEM_DOUT) //第四周期的一根线
 	);
 
@@ -557,7 +557,7 @@ module RISCV_TOP (
 
 	//第五周期
 	wire CONT;
-	assign D_MEM_WEN=out_control_4[1];
+	assign D_MEM_WEN=~out_control_3[1];
 	assign PCsource=((~out_control_4[0])&back_WD&out_control_4[11])|((out_control_4[11])&(~out_control_4[0]));/* (out_control_4[11]&back_WD)|((~out_control_4[0])&out_control_0[11]); */
 	assign RF_WA1=INS_4[11:7];
 	assign RF_WE=out_control_4[10];
