@@ -71,6 +71,7 @@ module RISCV_TOP (
 	wire [11:0] out_PC;
 	wire [11:0] PC4;
 	wire [11:0] PC_imm;
+	wire [11:0] PC_imm_1;
 	wire [11:0] PC4_2;
 	wire [11:0] PC4_3;
 	wire [11:0] PC4_4;
@@ -131,7 +132,7 @@ module RISCV_TOP (
 		.in1(12'b0),
 		.DOUT(out_control_1)
 	);
-	MUX#(
+/* 	MUX#(
 		.DWIDTH(12)
 	)stall_mux2(
 		.clk(CLK),
@@ -140,7 +141,30 @@ module RISCV_TOP (
 		.in0(out_control_2_0),
 		.in1(12'b0),
 		.DOUT(out_control_2)
-	);
+	); */
+	assign out_control_2=out_control_2_0;
+	assign out_control_3=out_control_3_0;
+/* 	MUX#(
+		.DWIDTH(12)
+	)stall_mux3(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall),//!stall
+		.in0(out_control_3_0),
+		.in1(12'b0),
+		.DOUT(out_control_3)
+	); */
+/* 	assign out_control_4=out_control_4;
+ *//* 	MUX#(
+		.DWIDTH(12)
+	)stall_mux4(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall),//!stall
+		.in0(out_control_4_0),
+		.in1(12'b0),
+		.DOUT(out_control_4)
+	); */
 	//第一周期
 	assign INS_0=I_MEM_DI;
 	PC PC_TOP(
@@ -162,6 +186,7 @@ module RISCV_TOP (
 	);
 	wire stall_1;
 	wire stall_2;
+	wire stall_3;
 	REG #(
 		.DWIDTH(1)
 	)s(
@@ -177,6 +202,14 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.in(stall_1),
 		.DOUT(stall_2)
+	);
+	REG #(
+		.DWIDTH(1)
+	)s_3(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(stall_2),
+		.DOUT(stall_3)
 	);
 	always @(*) begin
 		if (stall_2) begin
@@ -195,7 +228,7 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.CON(PCsource),
 		.in0(PC4),
-		.in1(PC_imm),
+		.in1(PC_imm_1),
 		.DOUT(back_PC)
 	);
 
@@ -414,7 +447,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.in(out_control_2),
-		.DOUT(out_control_3)
+		.DOUT(out_control_3_0)
 	);
 	REG #(
 		.DWIDTH(12)
@@ -486,6 +519,14 @@ module RISCV_TOP (
 		.DOUT(out_control_4)
 	);
 	//数据
+	REG #(
+		.DWIDTH(12)
+	)WB_PC_imm(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(PC_imm),
+		.DOUT(PC_imm_1)
+	);
 	REG #(
 		.DWIDTH(12)
 	)WB_PC(

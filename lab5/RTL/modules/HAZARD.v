@@ -12,12 +12,13 @@ always @(posedge rstn) begin
     temp=0;
 end
 always @(negedge clk) begin
-    if (PC4_2!=PC4+4&&NUM_INST>0&&temp>4) begin
+    if (PC4_2!=PC4-4&&NUM_INST[31]!=1'b1&&temp>4) begin
         s=1;
     end
     else begin
         s=0;
     end
+
     temp=temp+1;
 end
 
