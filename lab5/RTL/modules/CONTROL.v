@@ -31,7 +31,7 @@ always @(*) begin
         PC_source=0;
         MUX_SEXT=2'b00;
         RegWrite=1;
-        MemWrite=1;
+        MemWrite=0;
         Reg_MUX=1;
         MUX_ALU=0;
         beq_con=0;
@@ -67,7 +67,7 @@ always @(*) begin
         PC_source=0;
         MUX_SEXT=2'b00;
         RegWrite=1;
-        MemWrite=1;
+        MemWrite=0;
         Reg_MUX=1;
         MUX_ALU=0;
         beq_con=0;
@@ -83,7 +83,7 @@ always @(*) begin
         PC_source=0;
         MUX_SEXT=2'b00;
         RegWrite=1;
-        MemWrite=1;
+        MemWrite=0;
         Reg_MUX=1;
         MUX_ALU=0;
         beq_con=0;
@@ -100,7 +100,7 @@ always @(*) begin
         MUX_SEXT=2'b00;
         data_MUX=0;
         RegWrite=1;
-        MemWrite=1;
+        MemWrite=0;
         ALUOp=4'b0000;
         Reg_MUX=1;
         MUX_ALU=0;
@@ -113,7 +113,7 @@ always @(*) begin
         PC_source=0;
         MUX_SEXT=2'b01;
         RegWrite=1;
-        MemWrite=1;
+        MemWrite=0;
         Reg_MUX=1;
         MUX_ALU=1;
         beq_con=0;
@@ -140,7 +140,7 @@ always @(*) begin
 	if(I_OP[6:0]==7'b0000011&&I_OP[14:12]== 3'b010)begin
 		PC_source=0;
         MUX_SEXT=2'b01;
-        RegWrite=0;
+        RegWrite=1;
         MemWrite=0;
         ALUOp=4'b0000;
         Reg_MUX=1;
@@ -152,7 +152,7 @@ always @(*) begin
 	if (I_OP[6:0]==7'b0100011&&I_OP[14:12]==3'b010)begin
 		PC_source=0;
         MUX_SEXT=2'b00;
-        RegWrite=1;
+        RegWrite=0;
         MemWrite=1;
         ALUOp=4'b0000;
         Reg_MUX=1;

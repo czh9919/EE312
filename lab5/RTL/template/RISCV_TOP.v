@@ -244,31 +244,20 @@ module RISCV_TOP (
 	wire stall_1;
 	wire stall_2;
 	wire stall_3;
-	REG #(
-		.DWIDTH(1)
-	)s(
+
+	HAZARD HAZARD_top(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(stall),
-		.DOUT(stall_1)
+		.I2(INS_1),
+		.I5(INS_4),
+		.s(stall_1)
 	);
-	REG #(
-		.DWIDTH(1)
-	)s_2(
-		.clk(CLK),
-		.rstn(RSTn),
-		.in(stall_1),
-		.DOUT(stall_2)
-	);
-	REG #(
-		.DWIDTH(1)
-	)s_3(
-		.clk(CLK),
-		.rstn(RSTn),
-		.in(stall_2),
-		.DOUT(stall_3)
-	);
-	always @(*) begin//stall后减4
+/* 	always @(posedge CLK) begin//stall后减4
+		if (stall_1) begin
+			NUM_INST=NUM_INST-1;
+		end
+	end */
+	always @(posedge CLK) begin//stall后减4
 		if (stall) begin
 			NUM_INST=NUM_INST-4;
 		end
@@ -295,7 +284,7 @@ module RISCV_TOP (
 	)ID_EX_INS(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(INS_0),
+		.in(INS_0_0),
 		.DOUT(INS_1)
 	);
 	//控制
@@ -330,12 +319,12 @@ module RISCV_TOP (
 
 	assign CON_sign=out_control_1[9:8];
 
-	assign W_BS_Sign1=INS_1[31:20];
-	assign W_BS_Sign0={INS_1[31:25],INS_1[11:7]};
-	assign W_BS_Sign2={27'b0,INS_1[24:20]};
+	assign W_BS_Sign1=INS_1_0[31:20];
+	assign W_BS_Sign0={INS_1_0[31:25],INS_1_0[11:7]};
+	assign W_BS_Sign2={27'b0,INS_1_0[24:20]};
 
-	assign RF_RA1=INS_1[19:15];
-	assign RF_RA2=INS_1[24:20];
+	assign RF_RA1=INS_1_0[19:15];
+	assign RF_RA2=INS_1_0[24:20];
 
 	SIGN_EXTEND #(
 		.I_DWIDTH(12),
@@ -375,7 +364,7 @@ module RISCV_TOP (
 	)EX_MEM_INS(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(INS_1),
+		.in(INS_1_0),
 		.DOUT(INS_2)
 	);
 	//控制
@@ -397,12 +386,23 @@ module RISCV_TOP (
 		.DOUT(PC4_3)
 	);
 	assign A0=PC4_3-4;
+	wire [31:0] AA;
+	MUX#(
+		.DWIDTH(32)
+	)P(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall_1),
+		.in0(RF_RD1),
+		.in1(RF_WD),
+		.DOUT(AA)
+	);
 	REG#(
 		.DWIDTH(32)
 	)EX_MEM1(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(RF_RD1),
+		.in(AA),
 		.DOUT(A_init)
 	);
 	REG#(
@@ -430,7 +430,7 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.I3(INS_2_0),
 		.I4(INS_3_0),
-		.I5(INS_4_0),
+		.I5(INS_4),
 		.MUXA(PL_A),
 		.MUXB(PL_B)
 	);
@@ -478,7 +478,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(CON_B),
-		.in0(RB0),
+		.in0(B_init),
 		.in1(B0),
 		.DOUT(B)
 	);
@@ -495,7 +495,7 @@ module RISCV_TOP (
 	)MEM_WB_INS(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(INS_2),
+		.in(INS_2_0),
 		.DOUT(INS_3)
 	);
 	REG #(
@@ -542,7 +542,7 @@ module RISCV_TOP (
 	);
 
 	//第四周期
-
+	assign D_MEM_WEN=~out_control_3[1];
 	assign alu_RD=out_control_3[12];
 	assign D_MEM_ADDR=out_ALUout[11:0];
 	MUX#(
@@ -562,7 +562,7 @@ module RISCV_TOP (
 	)WB_INS(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(INS_3),
+		.in(INS_3_0),
 		.DOUT(INS_4)
 	);
 	//控制
@@ -602,7 +602,6 @@ module RISCV_TOP (
 
 	//第五周期
 	wire CONT;
-	assign D_MEM_WEN=~out_control_3[1];
 	assign PCsource=((out_control_4[0])&back_WD[0]&(~out_control_4[11]))|((out_control_4[11])&(~out_control_4[0]));/* (out_control_4[11]&back_WD)|((~out_control_4[0])&out_control_0[11]); */
 	assign RF_WA1=INS_4[11:7];
 	assign RF_WE=out_control_4[10];
