@@ -86,6 +86,11 @@ module RISCV_TOP (
 	wire [31:0] INS_2;
 	wire [31:0] INS_3;
 	wire [31:0] INS_4;
+	wire [31:0] INS_0_0;
+	wire [31:0] INS_1_0;
+	wire [31:0] INS_2_0;
+	wire [31:0] INS_3_0;
+	wire [31:0] INS_4_0;
 
 	wire [31:0] B0;
 	wire [31:0] W_BS_Sign2;
@@ -124,6 +129,16 @@ module RISCV_TOP (
 		.beq_con(out_control_0[0])
 	);
 	MUX#(
+		.DWIDTH(32)
+	)INST_0(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall),
+		.in0(INS_0),
+		.in1(32'b0),
+		.DOUT(INS_0_0)
+	);
+	MUX#(
 		.DWIDTH(13)
 	)stall_mux_0(
 		.clk(CLK),
@@ -134,6 +149,16 @@ module RISCV_TOP (
 		.DOUT(out_control_0_0)
 	);
 	MUX#(
+		.DWIDTH(32)
+	)INST_1(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall),
+		.in0(INS_1),
+		.in1(32'b0),
+		.DOUT(INS_1_0)
+	);
+	MUX#(
 		.DWIDTH(13)
 	)stall_mux1(
 		.clk(CLK),
@@ -142,6 +167,16 @@ module RISCV_TOP (
 		.in0(out_control_1_0),
 		.in1(13'b0),
 		.DOUT(out_control_1)
+	);
+	MUX#(
+		.DWIDTH(32)
+	)INST_2(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall),
+		.in0(INS_2),
+		.in1(32'b0),
+		.DOUT(INS_2_0)
 	);
 	MUX#(
 		.DWIDTH(13)
@@ -155,6 +190,16 @@ module RISCV_TOP (
 	);
 /* 	assign out_control_2=out_control_2_0;
 	assign out_control_3=out_control_3_0; */
+	MUX#(
+		.DWIDTH(32)
+	)INST_3(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall),
+		.in0(INS_3),
+		.in1(32'b0),
+		.DOUT(INS_3_0)
+	);
 	MUX#(
 		.DWIDTH(13)
 	)stall_mux3(
@@ -383,9 +428,9 @@ module RISCV_TOP (
 	UNIT UNIT_TOP(
 		.clk(CLK),
 		.rstn(RSTn),
-		.I3(INS_2),
-		.I4(INS_3),
-		.I5(INS_4),
+		.I3(INS_2_0),
+		.I4(INS_3_0),
+		.I5(INS_4_0),
 		.MUXA(PL_A),
 		.MUXB(PL_B)
 	);
