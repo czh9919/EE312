@@ -108,12 +108,7 @@ module RISCV_TOP (
 	wire [31:0] A_init;
 	wire [31:0] B_init;
 	wire [31:0] R_back_WD;
-	//HALT
-	HALT halt(
-		.I_MEM(I_MEM_DI),
-		.RF_RD(RF_RD1),
-		.HALT_o(HALT)
-	);
+
 	CONTROL CONTROL_TOP(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -240,6 +235,12 @@ module RISCV_TOP (
 	wire stallA;
 	wire stallB;
 
+	//HALT
+	HALT halt(
+		.I_MEM1(INS_1),
+		.I_MEM2(INS_2),
+		.HALT_o(HALT)
+	);
 /* 	HAZARD HAZARD_top(
 		.clk(CLK),
 		.rstn(RSTn),
