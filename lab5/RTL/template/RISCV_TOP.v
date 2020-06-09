@@ -259,8 +259,16 @@ module RISCV_TOP (
 		.I4(INS_4),
 		.MUX(stallA)
 	);
+	REG#(
+		.DWIDTH(1)
+	)ST(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(stall),
+		.DOUT(stall_1)
+	);
 	always @(posedge CLK) begin//stall后减4
-		if (stall) begin
+		if (stall_1) begin
 			NUM_INST=NUM_INST-4;
 		end
 	end
