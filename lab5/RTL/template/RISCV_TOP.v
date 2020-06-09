@@ -257,7 +257,8 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.I1(INS_1_0),
 		.I4(INS_4),
-		.MUX(stallA)
+		.MUXA(stallA),
+		.MUXB(stallB)
 	);
 	REG#(
 		.DWIDTH(1)
@@ -384,7 +385,7 @@ module RISCV_TOP (
 	)PB(
 		.clk(CLK),
 		.rstn(RSTn),
-		.CON(1'b0),
+		.CON(stallB),
 		.in0(RF_RD2),
 		.in1(RF_WD),
 		.DOUT(BB)
@@ -461,10 +462,17 @@ module RISCV_TOP (
 	assign ALUOP=out_control_2[5:2];
 	//数据
 	//a0是12位的
+	wire [3:0] ALUOP0;
+	CONT TE(
+		.clk(CLK),
+		.rstn(RSTn),
+		.I_OP(INS_2_0),
+		.ALUOp(ALUOP0)
+	);
 	ALU ALU0(
 		.A({20'b0,A0}),
 		.B(B0),
-		.OP(4'b0),
+		.OP(ALUOP0),
 		.C(temp)
 	);
 
