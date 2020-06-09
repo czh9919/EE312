@@ -177,8 +177,7 @@ always @(*) begin
 
 
 	if(I_OP[6:0]==7'b1100111&&I_OP[14:12]==3'b000)begin
-        data_MUX=0;
-		PC_source=0;
+		PC_source=1;
         MUX_SEXT=2'b01;
         RegWrite=1;
         MemWrite=0;
@@ -186,6 +185,7 @@ always @(*) begin
         Reg_MUX=0;
         MUX_ALU=1;
         beq_con=0;
+        data_MUX=0;
 		//JALR
 	end
 
