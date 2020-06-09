@@ -244,6 +244,8 @@ module RISCV_TOP (
 	wire stall_1;
 	wire stall_2;
 	wire stall_3;
+	wire stallA;
+	wire stallB;
 
 	HAZARD HAZARD_top(
 		.clk(CLK),
@@ -387,15 +389,26 @@ module RISCV_TOP (
 	);
 	assign A0=PC4_3-4;
 	wire [31:0] AA;
+	wire [31:0] BB;
 	MUX#(
 		.DWIDTH(32)
-	)P(
+	)PA(
 		.clk(CLK),
 		.rstn(RSTn),
-		.CON(stall_1),
+		.CON(stallA),
 		.in0(RF_RD1),
 		.in1(RF_WD),
 		.DOUT(AA)
+	);
+	MUX #(
+		.DWIDTH(32)
+	)PB(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stallB),
+		.in0(RF_RD2),
+		.in1(RF_WD),
+		.DOUT(BB)
 	);
 	REG#(
 		.DWIDTH(32)
@@ -410,7 +423,7 @@ module RISCV_TOP (
 	) EX_MEM2(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(RF_RD2),
+		.in(BB),
 		.DOUT(RB0)
 	);
 	REG#(
