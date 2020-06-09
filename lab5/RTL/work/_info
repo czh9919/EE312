@@ -69,7 +69,7 @@ Z19 w1590497168
 FD:/programming/EE312/lab5/RTL/modules/ALU.v
 L0 1
 Z20 OL;L;10.5;63
-Z21 !s108 1591694636.000000
+Z21 !s108 1591713501.000000
 !s107 D:/programming/EE312/lab5/RTL/modules/ALU.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/ALU.v|
 !i113 0
@@ -82,15 +82,15 @@ r1
 !s85 0
 31
 !i10b 1
-!s100 KYzlDffFY8oCIW1?eZ]lZ0
-IYAbGlFNQ4aiFQgXoFJXI`3
+!s100 KIVd;m;bAmd@MH`Gi::Do1
+IdTzTafVPXWnlVoB5jXb[:3
 R18
-Z23 w1591666034
+w1591713487
 8D:/programming/EE312/lab5/RTL/modules/CONTROL.v
 FD:/programming/EE312/lab5/RTL/modules/CONTROL.v
 L0 1
 R20
-R21
+!s108 1591713500.000000
 !s107 D:/programming/EE312/lab5/RTL/modules/CONTROL.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/CONTROL.v|
 !i113 0
@@ -103,10 +103,10 @@ r1
 !s85 0
 31
 !i10b 1
-!s100 8ejoQRzTL4nNTR[TbGK1X3
-IhW09Jidn[<z87@g`MZz_Y3
+!s100 OAZVeZTF^25VZ8_GnT^Mj1
+I8c_hc3]B4G9[[4@2@cZlY1
 R18
-R19
+w1591704038
 8D:/programming/EE312/lab5/RTL/modules/HALT.v
 FD:/programming/EE312/lab5/RTL/modules/HALT.v
 L0 1
@@ -127,12 +127,12 @@ r1
 !s100 hd?FPM=O=iYdAj^=RUDLi2
 IJ^ji?[=]LJ9YSXFnlDPdB3
 R18
-R23
+w1591666034
 8D:/programming/EE312/lab5/RTL/modules/HAZARD.v
 FD:/programming/EE312/lab5/RTL/modules/HAZARD.v
 L0 1
 R20
-Z24 !s108 1591694637.000000
+Z23 !s108 1591713502.000000
 !s107 D:/programming/EE312/lab5/RTL/modules/HAZARD.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/HAZARD.v|
 !i113 0
@@ -174,7 +174,7 @@ R19
 FD:/programming/EE312/lab5/RTL/modules/MUX3.v
 L0 1
 R20
-R24
+R21
 !s107 D:/programming/EE312/lab5/RTL/modules/MUX3.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/MUX3.v|
 !i113 0
@@ -190,12 +190,12 @@ r1
 !s100 >X6B39?g>mRIH7HgfAUQ`3
 I@GKAcHKEKhSVbB:3CajlB1
 R18
-Z25 w1591451978
+Z24 w1591451978
 8D:/programming/EE312/lab5/RTL/modules/PC.v
 FD:/programming/EE312/lab5/RTL/modules/PC.v
 L0 1
 R20
-R24
+R21
 !s107 D:/programming/EE312/lab5/RTL/modules/PC.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/PC.v|
 !i113 0
@@ -211,12 +211,12 @@ r1
 !s100 ED6JShm>dkdL@R=]N2=O>0
 Il;MKJOe?Z;a`g2J3HFbnk0
 R18
-R25
+R24
 8D:/programming/EE312/lab5/RTL/modules/REG.v
 FD:/programming/EE312/lab5/RTL/modules/REG.v
 L0 1
 R20
-R24
+R21
 !s107 D:/programming/EE312/lab5/RTL/modules/REG.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/REG.v|
 !i113 0
@@ -232,12 +232,12 @@ r1
 !s100 5;1FCNOll_gG@e7?_;>V01
 I9lc7oIM2MDQGDgb3]zj]R2
 R18
-R25
+R24
 8D:/programming/EE312/lab5/RTL/template/REG_FILE.v
 FD:/programming/EE312/lab5/RTL/template/REG_FILE.v
 L0 1
 R20
-R24
+R23
 !s107 D:/programming/EE312/lab5/RTL/template/REG_FILE.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/template/REG_FILE.v|
 !i113 0
@@ -253,12 +253,12 @@ r1
 !s100 Y?TnlN>aeF7bN[?PhFY602
 IP0Tc91LhWIKCh=<J`PCoD2
 R18
-Z26 w1544684636
+Z25 w1544684636
 8D:/programming/EE312/lab5/RTL/template/RISCV_CLKRST.v
 FD:/programming/EE312/lab5/RTL/template/RISCV_CLKRST.v
 L0 3
 R20
-R24
+R23
 !s107 D:/programming/EE312/lab5/RTL/template/RISCV_CLKRST.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/template/RISCV_CLKRST.v|
 !i113 0
@@ -271,15 +271,15 @@ r1
 !s85 0
 31
 !i10b 1
-!s100 b5>Tnbm9QHO=Oe1NjIGE<1
-ITn5OR][kfm1z1LV0>P<Fn2
+!s100 UdEh>7=Gzb_NeXRiDNzcf1
+I_>Ckkc49E3IezhnQ:KJN]0
 R18
-R23
+w1591704762
 8D:/programming/EE312/lab5/RTL/template/RISCV_TOP.v
 FD:/programming/EE312/lab5/RTL/template/RISCV_TOP.v
 L0 1
 R20
-R24
+R23
 !s107 D:/programming/EE312/lab5/RTL/template/RISCV_TOP.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/template/RISCV_TOP.v|
 !i113 0
@@ -316,12 +316,12 @@ r1
 !s100 0j?a^aMIN3`8_NcT0]5JW2
 I^ANMMn?mhE5e^4^m_2_F20
 R18
-R26
+R25
 8D:/programming/EE312/lab5/RTL/template/Mem_Model.v
 FD:/programming/EE312/lab5/RTL/template/Mem_Model.v
 L0 2
 R20
-R24
+R23
 !s107 D:/programming/EE312/lab5/RTL/template/Mem_Model.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/template/Mem_Model.v|
 !i113 0
@@ -342,7 +342,7 @@ w1591669040
 FD:/programming/EE312/lab5/RTL/testbench/TB_RISCV_sort.v
 L0 5
 R20
-!s108 1591694638.000000
+R23
 !s107 D:/programming/EE312/lab5/RTL/testbench/TB_RISCV_sort.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/testbench/TB_RISCV_sort.v|
 !i113 0
@@ -370,3 +370,24 @@ R21
 R22
 R15
 n@u@n@i@t
+vUNIT2
+R17
+r1
+!s85 0
+31
+!i10b 1
+!s100 >idClK_1]7nB?UkOVl0070
+IS00iQ5TEDX?R_IE<FB7i32
+R18
+w1591703505
+8D:/programming/EE312/lab5/RTL/modules/UNIT2.v
+FD:/programming/EE312/lab5/RTL/modules/UNIT2.v
+L0 1
+R20
+R23
+!s107 D:/programming/EE312/lab5/RTL/modules/UNIT2.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/programming/EE312/lab5/RTL/modules/UNIT2.v|
+!i113 0
+R22
+R15
+n@u@n@i@t2
