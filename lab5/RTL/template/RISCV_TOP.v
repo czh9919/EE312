@@ -359,7 +359,28 @@ module RISCV_TOP (
 		.in2(SM2),
 		.DOUT(sign_out)
 	);
-
+	wire [31:0] AA;
+	wire [31:0] BB;
+	MUX#(
+		.DWIDTH(32)
+	)PA(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stallA),
+		.in0(RF_RD1),
+		.in1(RF_WD),
+		.DOUT(AA)
+	);
+	MUX #(
+		.DWIDTH(32)
+	)PB(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(1'b0),
+		.in0(RF_RD2),
+		.in1(RF_WD),
+		.DOUT(BB)
+	);
 	//第二周期寄存器
 	REG#(
 		.DWIDTH(32)
@@ -388,28 +409,8 @@ module RISCV_TOP (
 		.DOUT(PC4_3)
 	);
 	assign A0=PC4_3-4;
-	wire [31:0] AA;
-	wire [31:0] BB;
-	MUX#(
-		.DWIDTH(32)
-	)PA(
-		.clk(CLK),
-		.rstn(RSTn),
-		.CON(stallA),
-		.in0(RF_RD1),
-		.in1(RF_WD),
-		.DOUT(AA)
-	);
-	MUX #(
-		.DWIDTH(32)
-	)PB(
-		.clk(CLK),
-		.rstn(RSTn),
-		.CON(1'b0),
-		.in0(RF_RD2),
-		.in1(RF_WD),
-		.DOUT(BB)
-	);
+
+
 	REG#(
 		.DWIDTH(32)
 	)EX_MEM1(
