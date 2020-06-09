@@ -168,7 +168,7 @@ always @(*) begin
         RegWrite=1;
         MemWrite=0;
         ALUOp=4'b0000;
-        Reg_MUX=1;
+        Reg_MUX=0;
         MUX_ALU=1;
         beq_con=0;
         data_MUX=0;
@@ -183,7 +183,7 @@ always @(*) begin
         RegWrite=1;
         MemWrite=0;
         ALUOp=4'b0000;
-        Reg_MUX=1;
+        Reg_MUX=0;
         MUX_ALU=1;
         beq_con=0;
 		//JALR

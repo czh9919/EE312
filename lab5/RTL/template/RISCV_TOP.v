@@ -617,13 +617,15 @@ module RISCV_TOP (
 		.in1(out_ALUout),
 		.DOUT(CONT)
 	); */
+	wire [31:0] PC_R;
+	assign PC_R={20'b0,PC4_4}-31'b100;
 	MUX #(
 		.DWIDTH(32)
 	)before_WD(
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(RegDst),
-		.in0({20'b0,PC4_4}),
+		.in0(PC_R),
 		.in1(back_WD),
 		.DOUT(RF_WD)
 	);
