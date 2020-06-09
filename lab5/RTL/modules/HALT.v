@@ -11,4 +11,11 @@ always @(*) begin
         HALT_o=0;
 end
 
+always @(*) begin
+    if(I_MEM==16'h8067)
+        HALT_o=1;
+    else
+        HALT_o=0;
+end
+
 endmodule //HALT

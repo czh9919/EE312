@@ -26,7 +26,7 @@ always @(*) begin
     if((I3[19:15]==I5[11:7])&&I5[11:7]!=0)begin
         MUXA=2'b10;
         if (I5[6:0]==7'b0100011&&I5[14:12]==3'b010)begin
-            MUXB=2'b0;
+            MUXA=2'b0;
         end
     end
     if((I3[24:20]==I4[11:7])&&I4[11:7]!=0)begin
