@@ -267,7 +267,7 @@ module RISCV_TOP (
 		.in(stall),
 		.DOUT(stall_1)
 	);
-	always @(posedge CLK) begin//stall后减4
+	always @(*) begin//stall后减4
 		if (stall_1) begin
 			NUM_INST=NUM_INST-4;
 		end
