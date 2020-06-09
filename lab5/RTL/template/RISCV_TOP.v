@@ -232,14 +232,7 @@ module RISCV_TOP (
 		.I_MEM_CSN(I_MEM_CSN),
 		.D_MEM_CSN(D_MEM_CSN)
 	);
-/* 	HAZARD HA(
-		.clk(CLK),
-		.rstn(RSTn),
-		.PC4_2(PC4_3),
-		.PC4(out_PC),
-		.NUM_INST(NUM_INST),
-		.s(stall)
-	); */
+
 	assign stall=PCsource;
 	wire stall_1;
 	wire stall_2;
@@ -247,18 +240,25 @@ module RISCV_TOP (
 	wire stallA;
 	wire stallB;
 
-	HAZARD HAZARD_top(
+/* 	HAZARD HAZARD_top(
 		.clk(CLK),
 		.rstn(RSTn),
 		.I2(INS_1),
 		.I5(INS_4),
 		.s(stall_1)
-	);
+	); */
 /* 	always @(posedge CLK) begin//stall后减4
 		if (stall_1) begin
 			NUM_INST=NUM_INST-1;
 		end
 	end */
+	UNIT2 UT(
+		.clk(CLK),
+		.rstn(RSTn),
+		.I1(INS_1_0),
+		.I4(INS_4),
+		.MUX(stallA)
+	);
 	always @(posedge CLK) begin//stall后减4
 		if (stall) begin
 			NUM_INST=NUM_INST-4;
@@ -405,7 +405,7 @@ module RISCV_TOP (
 	)PB(
 		.clk(CLK),
 		.rstn(RSTn),
-		.CON(stallB),
+		.CON(1'b0),
 		.in0(RF_RD2),
 		.in1(RF_WD),
 		.DOUT(BB)
