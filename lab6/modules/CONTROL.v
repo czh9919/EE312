@@ -2,6 +2,7 @@ module CONTROL (
     input  wire clk,
     input  wire rstn,
     input wire [31:0] I,
+    input  wire stall,
     output reg PC_source,//PCsource
     output reg MUX_A,//CON_A
     output reg [1:0]MUX_B,//CON_B
@@ -404,6 +405,13 @@ always @(*) begin
             sign_ex=0;
         end
     end
+end
+always @(*) begin
+    if (stall) begin
+        state=state-1;
+        NUM_INS=NUM_INS-1;
+    end
+    
 end
 always @(posedge clk) begin
     state=state+1;
