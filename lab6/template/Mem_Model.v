@@ -1,13 +1,12 @@
 `timescale 1ns/10ps
-module SP_SRAM #(parameter ROMDATA = "", SIZE = 4096) (
+module SP_SRAM #(parameter ROMDATA = "", AWIDTH = 12, SIZE = 4096) (
 	input	wire			CLK,
 	input	wire			CSN,//chip select negative??
-	input	wire	[11:0]	ADDR,
+	input	wire	[AWIDTH-1:0]	ADDR,
 	input	wire			WEN,//write enable negative??
-	input	wire	[3:0]	BE,//byte enable
-	input	wire	[31:0]	DI, //data in
-	output	reg 	[31:0]	DOUT, // data out
-	output  reg ca//cache
+	input	wire	[3:0]		BE,//byte enable
+	input	wire	[31:0]		DI, //data in
+	output	wire	[31:0]		DOUT // data out
 );
 
 	reg		[31:0]		outline;
