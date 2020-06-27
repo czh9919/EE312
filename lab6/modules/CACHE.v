@@ -12,7 +12,7 @@ module CACHE (
 reg [31:0] data[0:31];//32*4 byte
 //todo 漏了东西 索引 有效位 标记
 reg [3:0] maps;//索引
-reg sign;//标记
+reg [7:0] sign;//标记
 reg p;//有效位
 always @(posedge rstn) begin //todo这里补下
 	stall=0;
