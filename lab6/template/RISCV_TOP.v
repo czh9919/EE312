@@ -57,8 +57,8 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.WEN(F_WEN),
 		.ADDR(F_ADDR),
-		.DI(F_DI),
-		.DOUT(F_DOUT),
+		.DI(F_DOUT),
+		.DOUT(F_DI),
 		.stall(stall),
 		.trans(trans),
 		.MEMW(MEMW),
@@ -70,7 +70,12 @@ module RISCV_TOP (
 		.BA_MEM_ADDR(BA_MEM_ADDR),
 		.BA_MEM_DI(BA_MEM_DI)
 	);
-	D_MEM D_M(
+	assign D_MEM_ADDR=MEM_ADDR;
+	assign D_MEM_DOUT=MEM_DI;
+	assign MEM_DOUT=D_MEM_DI;
+	assign D_MEM_WEN=MEMW;
+
+/* 	D_MEM D_M(
 		.clk(CLK),
 		.rstn(RSTn),
 		.trans(trans),
@@ -87,13 +92,13 @@ module RISCV_TOP (
 
 		.MEM_I(MEM_I),
 		.MEM_O(MEM_O)
-	);
-	assign D_MEM_DI=MEM_I[63:32];
+	); */
+/* 	assign D_MEM_DI=MEM_I[63:32];
 	assign D_MEM_WEN=MEM_I[64];
 	assign D_MEM_ADDR=MEM_I[76:65];
 
 	assign MEM_O={~MEM_I[77],MEM_I[76:65],D_MEM_WEN,D_MEM_DI,D_MEM_DOUT};
-	//control
+ */	//control
 	wire CON_A;
 	wire [1:0]CON_B;
 	wire PVSwrite;//pc
