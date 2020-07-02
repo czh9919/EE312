@@ -16,19 +16,19 @@ reg [31:0] data[0:LEN-1];//32*4 byte
 reg [FR_LEN:0] maps[0:LEN-1];//索引
 reg [BA_LEN:0] sign[0:LEN-1];//标记
 reg p[0:LEN-1];//有效位
-
+wire MWEN;
 always @(posedge rstn) begin //todo这里补下
 	stall=0;
 	DOUT=32'b00;
 end
 
-assign stall=p[ADD[11:8]]&(ADDR[BA_LEN:0]==sign[BA_LEN:0]);
+assign stall=~(p[ADD[11:8]]&(ADDR[BA_LEN:0]==sign[BA_LEN:0]));
 
 D_MEM(
 	.clk(clk),
 	.rstn(rstn),
 	.ADDR(ADDR),
-	.WEN()//todo
+	.WEN(MEMW)//todo
 	.DI(DI),
 	.DOUT(),//todo 二选一
 	//todo 少参数
@@ -45,8 +45,8 @@ always @(posedge clk) begin
 	end
 end
 //todo主要代码
-always @(posedge clk) begin
-	
+always @(*) begin
+
 end
 
 //可以分成两个model，一个写一个读， 一个也行，注意区分加注释
