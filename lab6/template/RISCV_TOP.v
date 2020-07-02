@@ -31,6 +31,68 @@ module RISCV_TOP (
 
 	// TODO: implement multi-cycle CPU
 
+	//cache
+	wire [77:0] MEM_I;
+	wire [77:0] MEM_O;
+	wire [31:0] cache_DI;
+	wire F_WEN;
+	wire [11:0]F_ADDR;
+	wire [31:0]F_DI;
+	wire [31:0]F_DOUT;
+	wire stall;
+	
+	wire trans;
+	wire MEMW;
+	wire [11:0] MEM_ADDR;
+	wire [31:0] MEM_DI;
+	wire [31:0] MEM_DOUT;
+
+	wire BA_trans;
+	wire BA_MEMW;
+	wire [11:0] BA_MEM_ADDR;
+	wire [31:0] BA_MEM_DI;
+	wire [31:0] BA_MEM_DOUT;
+	CACHE cache(
+		.clk(CLK),
+		.rstn(RSTn),
+		.WEN(F_WEN),
+		.ADDR(F_ADDR),
+		.DI(F_DI),
+		.DOUT(F_DOUT),
+		.stall(stall),
+		.trans(trans),
+		.MEMW(MEMW),
+		.MEM_ADDR(MEM_ADDR),
+		.MEM_DI(MEM_DI),
+		.MEM_DOUT(MEM_DOUT),
+		.BA_trans(BA_trans),
+		.BA_MEMW(BA_MEMW),
+		.BA_MEM_ADDR(BA_MEM_ADDR),
+		.BA_MEM_DI(BA_MEM_DI)
+	);
+	D_MEM D_M(
+		.clk(CLK),
+		.rstn(RSTn),
+		.trans(trans),
+		.WEN(MEMW),
+		.ADDR(MEM_ADDR),
+		.DI(MEM_DI),
+		.DOUT(MEM_DOUT),
+		
+		.trans0(BA_trans),
+		.ADDR0(BA_MEM_ADDR),
+		.WEN0(BA_MEMW),
+		.DI0(BA_MEM_DI),
+		.DOUT0(D_MEM_DOUT),
+
+		.MEM_I(MEM_I),
+		.MEM_O(MEM_O)
+	);
+	assign D_MEM_DI=MEM_I[63:32];
+	assign D_MEM_WEN=MEM_I[64];
+	assign D_MEM_ADDR=MEM_I[76:65];
+
+	assign MEM_O={~MEM_I[77],MEM_I[76:65],D_MEM_WEN,D_MEM_DI,D_MEM_DOUT};
 	//control
 	wire CON_A;
 	wire [1:0]CON_B;
@@ -45,7 +107,7 @@ module RISCV_TOP (
 
 	wire[31:0] num_inst;
 	wire re;
-	assign D_MEM_WEN=~re;
+	assign F_WEN=~re;
 	CONTROL control(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -61,7 +123,8 @@ module RISCV_TOP (
 		.I_MEM_write(PVSwrite),
 		.NUM_INS(num_inst),
 		.o(o),
-		.is_BEQ(isbc)
+		.is_BEQ(isbc),
+		.stall(stall)
 	);
 	always @(*) begin
 		NUM_INST=(num_inst)>>2;
@@ -125,17 +188,17 @@ module RISCV_TOP (
 	) data_REG(
 		.clk(CLK),
 		.rstn(RSTn),
-		.in(D_MEM_DI),
+		.in(F_DI),
 		.DOUT(out_data_reg)
 	);
 
-	assign D_MEM_ADDR=ALU_ans;
+	assign F_ADDR=ALU_ans;
 	assign RF_RA1=out_ins_REG[19:15];
 	assign RF_RA2=out_ins_REG[24:20];
 
 	assign RF_WA1=o[11:7];
 	assign RF_WD=back_WD;
-	assign D_MEM_DOUT=out_B;
+	assign F_DOUT=out_B;
 	// Reg#(
 	// 	.DWIDTH(5)
 	// ) before_WR(
@@ -162,7 +225,7 @@ module RISCV_TOP (
 		.rstn(RSTn),
 		.CON(RegDst),
 		.in0(out_ALUout),
-		.in1(D_MEM_DI),
+		.in1(F_DI),
 		.in2(ja2),
 		.DOUT(back_WD)
 	);
