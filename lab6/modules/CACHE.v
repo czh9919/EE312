@@ -1,20 +1,29 @@
 `define LEN 8
 `define FR_LEN 2
-`define MID_LEN 6
+`define MID_LEN 4
 `define BA_LEN 1
 module CACHE (
-    input wire clk,
+	input wire clk,
 	input wire rstn,
-	input wire CSN,
 	input  wire WEN,
 	input wire [11:0]	ADDR, //地址
 	input wire [31:0]	DI, //进入的数据
-	//todo input 还有线 连着自己写的mem model
 	output	reg	[31:0]	DOUT, //出去的数据
 	output  reg stall, //没找到就是1，通常为0
+
+	output reg trans;
+	output reg MEMW,
+	output reg  [11:0] MEM_ADDR,
+	output reg  [31:0] MEM_DI,
+	input  wire [31:0] MEM_DOUT,
+
+	input  wire BA_trans,
+	input  wire BA_MEMW,
+	input  wire [11:0] BA_MEM_ADDR,
+	input  wire [31:0] BA_MEM_DI,
 );
 
-reg p[0:LEN-1];
+reg [BA_LEN:0]p[0:LEN-1];
 reg [FR_LEN:0]index[0:LEN-1];
 reg [MID_LEN:0]sign[0:LEN-1];
 
@@ -24,8 +33,10 @@ reg [31:0]cache2[0:LEN-1];
 reg [31:0]cache3[0:LEN-1];
 
 reg [2:0]state;
-wire MWEN;
 reg valid;
+
+reg [31:0] MEM_DOUT;
+reg [11:0] ADDR_DOUT;
 
 always @(posedge rstn) begin //todo这里补下
 	stall=0;
@@ -33,38 +44,21 @@ always @(posedge rstn) begin //todo这里补下
 	state=0;
 end
 
-assign valid=p[ADDR[11:9]]&(sign[ADDR[11:9]]==ADDR[8:2]);
-D_MEM(
-	.clk(clk),
-	.rstn(rstn),
-	.ADDR(ADDR),
-	.WEN(MEMW)//todo
-	.DI(DI),
-	.DOUT(),//todo 二选一
-	//todo 少参数
-)
+assign valid=p[ADDR[11:9]][ADDR[3:2]]&(sign[ADDR[11:9]]==ADDR[8:4]);
+
+assign MEM_ADDR=ADDR;
+assign MEM_DI=DI;
+assign MEM_DOUT=DOUT;
 
 always @(posedge clk) begin //? 没想好有没有必要
-	/* if(~CSN)
-	begin
-		if (WEN) begin
-			state=3'b000;
-			//todo 取
-		end
-	end */
 	state=3'b0;
 	state[1]=~WEN;
-/* 	if (~CSN) begin
-		if (~WEN) begin
-			state=3'b010;
-		end
-	end */
 end
 
 MUX4(
 	.clk(clk),
 	.rstn(rstn),
-	.CON(ADDR[BA_LEN]),
+	.CON(ADDR[3:2]),
 	.in0(cache0),
 	.in1(cache1),
 	.in2(cache2),
@@ -72,51 +66,56 @@ MUX4(
 	.DOUT(DOUT)
 );
 assign state[0]=valid;
+
 always @(*) begin
 	if (state[1]==1) begin
 		MEMW=0;
+		trans=~BA_trans;
+		if (ADDR[3:2]=2'b0) begin
+			cache0[ADDR[11:9]]=DI;
+		end
+		if (ADDR[3:2]=2'b1) begin
+			cache1[ADDR[11:9]]=DI;
+		end
+		if (ADDR[3:2]=2'b10) begin
+			cache2[ADDR[11:9]]=DI;
+		end
+		if (ADDR[3:2]=2'b11) begin
+			cache3[ADDR[11:9]]=DI;
+		end
 		//save
 	end
 	if (state==3'b01) begin
-		stall=0;
+		MEMW=1;
+		trans=BA_trans;
 	end
 	if (state==3'b00) begin
-		stall=1;
 		MEMW=1;
+		trans=~BA_trans;
 	end
 end
-//todo主要代码
-/* always @(*) begin
-	if (state[1]==1) begin
-		if (stall==0) begin
-			// 进cache
+always @(*) begin
+	if (BA_MEMW) begin
+		//load
+		if (ADDR[3:2]=2'b0) begin
+			cache0[ADDR[11:9]]=MEM_DOUT;
 		end
-		// 直接进mem
-		//todo 存
+		if (ADDR[3:2]=2'b1) begin
+			cache1[ADDR[11:9]]=MEM_DOUT;
+		end
+		if (ADDR[3:2]=2'b10) begin
+			cache2[ADDR[11:9]]=MEM_DOUT;
+		end
+		if (ADDR[3:2]=2'b11) begin
+			cache3[ADDR[11:9]]=MEM_DOUT;
+		end
+		p[ADDR[11:9]][ADDR[3:2]]=1;
 	end
-	if (state[1]==0) begin
-		//todo 取
+	if (BA_trans==trans) begin
+		stall=0;
 	end
-end */
-/* reg [31:0] data[0:LEN-1];//32*4 byte
-reg [FR_LEN:0] maps[0:LEN-1];//索引
-reg [MID_LEN:0] sign0[0:LEN-1];
-reg [BA_LEN:0] sign1[0:LEN-1];//标记_2
-reg [FR_LEN]p[0:LEN-1];//有效位
-wire MWEN;
-reg [2:0]state;
-always @(posedge rstn) begin //todo这里补下
-	stall=0;
-	DOUT=32'b00;
-	state=0;
+	else begin
+		stall=1;
+	end
 end
-
-reg valid;
-assign valid=p[ADD[11:9];
-assign stall=~(valid[ADDR[BA_LEN:0]]&(ADDR[BA_LEN:0]==sign1[ADDR[BA_LEN:0]])&(ADDR[8:3]==sign0[MID_LEN:0]));
- */
-
-
-//可以分成两个model，一个写一个读， 一个也行，注意区分加注释
-//也可以一个model分两块写，记得加注释
 endmodule //CACHE
