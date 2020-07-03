@@ -84,14 +84,42 @@ As the Description of TB file mentioned, We do not need to implement memory and 
 So we design the path to connect them together.
 
 \subsection{Module design}
-\begin{enumerate}
-\item Write-through
-\item Write-allocate
-\item Blocking cache
-\end{enumerate}
+
+The PC is a state element that holds the address of the current instruction. 
+It is updated at the end of every clock cycle.
+
+\subsubsection{add module}
+
+The adder is responsible for incrementing the PC to hold the address of the next instruction.
+It takes two input values, adds them together, and outputs the result
+
+\subsubsection{Sign extend module}
+
+Single extend module is used to increase the number of bits of a binary number while preserving the number's sign and value. 
+
+\subsubsection{MUX module}
+
+Mux, a data selector, which was used to select which the single will be output.
+
+
 \newpage
 
 \section{Implementation}
+
+\begin{enumerate}
+  \item Write-through
+  \item Write-allocate
+  \item Blocking cache
+  \end{enumerate}
+
+Using the write-through policy, data is written to the cache and the backing store location at the same time. 
+The significance here is not the order in which it happens or whether it happens in parallel. 
+The significance is that I/O completion is only confirmed once the data has been written to both 
+places.
+Ensures fast retrieval while making sure the data is in the backing store and is not lost in case the cache is disrupted.
+
+Using the Write-allocate, when data is hitten in the cache, just throw the data out.
+But if it is missed, the cache needs to ask the memory for the data.
 
 %The whole circuit was shown below.
 
@@ -112,17 +140,17 @@ I pass all the test in the testbench folder.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=3in]{inst.png}
+  \includegraphics[height=3in]{inst.PNG}
   \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=3in]{forloop.png}
+  \includegraphics[height=3in]{forloop.PNG}
   \end{figure}
 
   \begin{figure}[H]
     \centering
-    \includegraphics[height=3in]{sort.png}
+    \includegraphics[height=2in]{sort.PNG}
     \end{figure}
 
 % We first encountered some problems in understanding the meaning of the question, 
