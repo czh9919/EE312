@@ -411,7 +411,7 @@ always @(posedge clk) begin
     state=state+1;
     NUM_INS=NUM_INS+1;
 end
-always @(*) begin
+always @(posedge clk) begin
     if (stall) begin
         state=state-1;
         NUM_INS=NUM_INS-1;

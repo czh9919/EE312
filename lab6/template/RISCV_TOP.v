@@ -144,7 +144,8 @@ module RISCV_TOP (
 		.BA_MEMW(BA_MEMW),
 		.BA_MEM_ADDR(BA_MEM_ADDR),
 		.BA_MEM_DI(BA_MEM_DI),
-		.s(num_inst)
+		.s(num_inst),
+		.temp_I(o)
 	);
 	always @(*) begin
 		NUM_INST=(num_inst)>>2;
@@ -249,6 +250,36 @@ module RISCV_TOP (
 		.DOUT(ja)
 	);
 	assign ja2=ja+4;
+	wire [31:0]oao;
+	wire [31:0]t_oao;
+	wire [31:0]i_oao;
+	wire stall_1;
+	REG#(
+		.DWIDTH(1)
+	)sta(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(stall),
+		.DOUT(stall_1)
+	);
+	REG#(
+		.DWIDTH(32)
+	)st(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(i_oao),
+		.DOUT(oao)
+	);
+	MUX#(
+		.DWIDTH(32)
+	)M(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall_1),
+		.in0(i_oao),
+		.in1(oao),
+		.DOUT(back_WD)
+	);
 	MUX3#(
 		.DWIDTH(32)
 	)before_WD(
@@ -258,7 +289,7 @@ module RISCV_TOP (
 		.in0(out_ALUout),
 		.in1(F_DI),
 		.in2(ja2),
-		.DOUT(back_WD)
+		.DOUT(i_oao)
 	);
 	REG #(
 		.DWIDTH(12)

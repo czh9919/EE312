@@ -21,7 +21,8 @@ module CACHE (
 	input  wire BA_MEMW,
 	input  wire [11:0] BA_MEM_ADDR,
 	input  wire [31:0] BA_MEM_DI,
-	input  wire [31:0]s
+	input  wire [31:0] s,
+	input  wire [31:0] temp_I
 );
 
 reg [`BA_LEN:0]p[0:`LEN-1];
@@ -155,7 +156,7 @@ always @(*) begin//!
 end
 reg va;
 always @(posedge clk) begin
-	va=(~WEN)?((p[ADDR[11:9]][ADDR[3:2]])&(sign[ADDR[11:9]]==ADDR[8:4])):1;
+	va=(~(temp_I[6:0]==7'b0100011&&temp_I[14:12]==3'b010))?((p[ADDR[11:9]][ADDR[3:2]])&(sign[ADDR[11:9]]==ADDR[8:4])):1'b1;
 	t=sign[ADDR[11:9]]==ADDR[8:4];
 	m=p[ADDR[11:9]][ADDR[3:2]];
 	f=s[1:0]==2'b11;
