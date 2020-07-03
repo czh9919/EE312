@@ -109,8 +109,6 @@ MUX4 mux(
 
 always @(*) begin
 	if (~WEN&&s[31:2]>0&&s[1:0]==00) begin
-		MEMW=0;
-		trans=0;
 		sign[ADDR[11:9]]=ADDR[8:4];
 		if (ADDR[3:2]==2'b0) begin
 			cache0[ADDR[11:9]]=DI;
@@ -126,14 +124,6 @@ always @(*) begin
 		end
 		p[ADDR[11:9]][ADDR[3:2]]=1;
 		//save
-	end
-	if (state==3'b01&&s[31:2]>0&&s[1:0]==11) begin
-		MEMW=1;
-		trans=0;
-	end
-	if (state==3'b00&&s[31:2]>0&&s[1:0]==11) begin
-		MEMW=1;
-		trans=1;
 	end
 end
 always @(*) begin//! 没回来
