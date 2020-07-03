@@ -1,7 +1,7 @@
 `define LEN 8
 `define FR_LEN 2
 `define MID_LEN 4
-`define BA_LEN 1
+`define BA_LEN 3
 module CACHE (
 	input wire clk,
 	input wire rstn,
@@ -69,7 +69,7 @@ always @(posedge rstn) begin //todo这里补下
 
 end
 
-reg [1:0]t;
+reg [2:0]t;
 reg [2:0]m;
 reg [1:0]f;
 reg [2:0]u;
@@ -141,21 +141,33 @@ always @(*) begin//!
 		if (BA_MEM_ADDR[3:2]==2'b0) begin
 			cache0[BA_MEM_ADDR[11:9]]=MEM_DOUT;
 		end
-		if (MEM_ADDR[3:2]==2'b1) begin
+		if (BA_MEM_ADDR[3:2]==2'b1) begin
 			cache1[BA_MEM_ADDR[11:9]]=MEM_DOUT;
 		end
-		if (MEM_ADDR[3:2]==2'b10) begin
+		if (BA_MEM_ADDR[3:2]==2'b10) begin
 			cache2[BA_MEM_ADDR[11:9]]=MEM_DOUT;
 		end
-		if (MEM_ADDR[3:2]==2'b11) begin
+		if (BA_MEM_ADDR[3:2]==2'b11) begin
 			cache3[BA_MEM_ADDR[11:9]]=MEM_DOUT;
 		end
 		p[BA_MEM_ADDR[11:9]][BA_MEM_ADDR[3:2]]=1;
 	end
-
 end
+reg va;
+
 always @(posedge clk) begin
-	valid=(s[31:2]>0&&s[1:0]==11)?p[ADDR[11:9]][ADDR[3:2]]&WEN&(sign[ADDR[11:9]]==ADDR[8:4]):1;
+	va=(s[31:2]>0&&s[1:0]==2'b00)?(p[ADDR[11:9]][ADDR[3:2]])&(sign[ADDR[11:9]]==ADDR[8:4]):1;
+	t=sign[ADDR[11:9]]==ADDR[8:4];
+	m=p[ADDR[11:9]][ADDR[3:2]];
+	f=s[1:0]==2'b11;
+end
+always @(*) begin
+	if (~WEN) begin
+		valid=va;
+	end
+	else begin
+		valid=1;
+	end
 	stall=~valid;
 end
 endmodule //CACHE

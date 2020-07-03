@@ -53,25 +53,7 @@ module RISCV_TOP (
 	wire [11:0] BA_MEM_ADDR;
 	wire [31:0] BA_MEM_DI;
 	wire [31:0] BA_MEM_DOUT;
-	CACHE cache(
-		.clk(CLK),
-		.rstn(RSTn),
-		.WEN(F_WEN),
-		.ADDR(F_ADDR),
-		.DI(F_DOUT),
-		.DOUT(F_DI),
-		.stall(stall),
-		.trans(trans),
-		.MEMW(MEMW),
-		.MEM_ADDR(MEM_ADDR),
-		.MEM_DI(MEM_DI),
-		.MEM_DOUT(MEM_DOUT),
-		.BA_trans(BA_trans),
-		.BA_MEMW(BA_MEMW),
-		.BA_MEM_ADDR(BA_MEM_ADDR),
-		.BA_MEM_DI(BA_MEM_DI),
-		.s(num_inst)
-	);
+	
 	assign D_MEM_ADDR=MEM_ADDR;
 	assign D_MEM_DOUT=MEM_DI;
 	assign MEM_DOUT=D_MEM_DI;
@@ -144,6 +126,25 @@ module RISCV_TOP (
 		.o(o),
 		.is_BEQ(isbc),
 		.stall(stall)
+	);
+	CACHE cache(
+		.clk(CLK),
+		.rstn(RSTn),
+		.WEN(F_WEN),
+		.ADDR(F_ADDR),
+		.DI(F_DOUT),
+		.DOUT(F_DI),
+		.stall(stall),
+		.trans(trans),
+		.MEMW(MEMW),
+		.MEM_ADDR(MEM_ADDR),
+		.MEM_DI(MEM_DI),
+		.MEM_DOUT(MEM_DOUT),
+		.BA_trans(BA_trans),
+		.BA_MEMW(BA_MEMW),
+		.BA_MEM_ADDR(BA_MEM_ADDR),
+		.BA_MEM_DI(BA_MEM_DI),
+		.s(num_inst)
 	);
 	always @(*) begin
 		NUM_INST=(num_inst)>>2;
