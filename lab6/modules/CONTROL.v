@@ -406,15 +406,16 @@ always @(*) begin
         end
     end
 end
+
+always @(posedge clk) begin
+    state=state+1;
+    NUM_INS=NUM_INS+1;
+end
 always @(*) begin
     if (stall) begin
         state=state-1;
         NUM_INS=NUM_INS-1;
     end
     
-end
-always @(posedge clk) begin
-    state=state+1;
-    NUM_INS=NUM_INS+1;
 end
 endmodule //CONTROL

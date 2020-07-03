@@ -77,9 +77,16 @@ module RISCV_TOP (
 	assign MEM_DOUT=D_MEM_DI;
 	assign D_MEM_WEN=MEMW;
 	reg t;
+	reg t_MEMW;
+	reg [11:0] t_ADDR;
+	reg [31:0] t_DI;
 	assign BA_trans=t;
+	assign BA_MEM_ADDR=t_ADDR;
+	assign BA_MEM_DI=t_DI;
 	always @(posedge CLK) begin
 		t=trans;
+		t_DI=MEM_DI;
+		t_ADDR=MEM_ADDR;
 	end
 /* 	D_MEM D_M(
 		.clk(CLK),

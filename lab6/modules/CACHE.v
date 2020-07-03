@@ -79,10 +79,11 @@ always @(*) begin
 	MEM_ADDR=ADDR;
 	MEM_DI=DI;
 end
-
+always @(*) begin
+	state[1]=~WEN;
+end
 always @(*) begin //? 没想好有没有必要
 	state=3'b0;
-	state[1]=~WEN;
 	tim=tim+1;
 end
 wire [31:0] out;
@@ -105,10 +106,10 @@ MUX4 mux(
 
 
 always @(*) begin
-	if (state[1]==1) begin
+	if (~WEN) begin
 		MEMW=0;
-		trans=1;
-		sign[MEM_ADDR[11:9]]=MEM_ADDR[8:4];
+		trans=0;
+		sign[ADDR[11:9]]=ADDR[8:4];
 		if (ADDR[3:2]==2'b0) begin
 			cache0[ADDR[11:9]]=DI;
 		end
@@ -121,42 +122,40 @@ always @(*) begin
 		if (ADDR[3:2]==2'b11) begin
 			cache3[ADDR[11:9]]=DI;
 		end
-		p[MEM_ADDR[11:9]][MEM_ADDR[3:2]]=1;
+		p[ADDR[11:9]][ADDR[3:2]]=1;
 		//save
 	end
-	if (state==3'b01) begin
+	if (state==3'b01&&s[31:2]>0&&s[1:0]==11) begin
 		MEMW=1;
 		trans=0;
 	end
-	if (state==3'b00) begin
+	if (state==3'b00&&s[31:2]>0&&s[1:0]==11) begin
 		MEMW=1;
 		trans=1;
 	end
 end
 always @(*) begin//!
-	if (~MEMW&&BA_trans==1) begin
+	if (~MEMW&&BA_trans==1&&stall==1) begin
 		//load
-		sign[MEM_ADDR[11:9]]=MEM_ADDR[8:4];
-		if (MEM_ADDR[3:2]==2'b0) begin
-			cache0[MEM_ADDR[11:9]]=MEM_DOUT;
+		sign[BA_MEM_ADDR[11:9]]=BA_MEM_ADDR[8:4];
+		if (BA_MEM_ADDR[3:2]==2'b0) begin
+			cache0[BA_MEM_ADDR[11:9]]=MEM_DOUT;
 		end
 		if (MEM_ADDR[3:2]==2'b1) begin
-			cache1[MEM_ADDR[11:9]]=MEM_DOUT;
+			cache1[BA_MEM_ADDR[11:9]]=MEM_DOUT;
 		end
 		if (MEM_ADDR[3:2]==2'b10) begin
-			cache2[MEM_ADDR[11:9]]=MEM_DOUT;
+			cache2[BA_MEM_ADDR[11:9]]=MEM_DOUT;
 		end
 		if (MEM_ADDR[3:2]==2'b11) begin
-			cache3[MEM_ADDR[11:9]]=MEM_DOUT;
+			cache3[BA_MEM_ADDR[11:9]]=MEM_DOUT;
 		end
-		p[MEM_ADDR[11:9]][MEM_ADDR[3:2]]=1;
+		p[BA_MEM_ADDR[11:9]][BA_MEM_ADDR[3:2]]=1;
 	end
 
 end
-always @(*) begin
+always @(posedge clk) begin
+	valid=(s[31:2]>0&&s[1:0]==11)?p[ADDR[11:9]][ADDR[3:2]]&WEN&(sign[ADDR[11:9]]==ADDR[8:4]):1;
 	stall=~valid;
-end
-always @(*) begin
-	valid=(s[31:2]>0&&s[1:0]==0)?p[ADDR[11:9]][ADDR[3:2]]&(sign[ADDR[11:9]]==ADDR[8:4]):1;
 end
 endmodule //CACHE
