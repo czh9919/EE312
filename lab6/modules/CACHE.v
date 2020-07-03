@@ -56,7 +56,7 @@ always @(posedge rstn) begin //todo这里补下
 	DOUT=32'b00;
 	state=0;
 	trans=0;
-	MEMW=0;
+	MEMW=1;
 	MEM_ADDR=0;
 	MEM_DI=0;
 	tim=0;
@@ -106,7 +106,7 @@ MUX4 mux(
 
 
 always @(*) begin
-	if (~WEN) begin
+	if (~WEN&&s[31:2]>0&&s[1:0]==00) begin
 		MEMW=0;
 		trans=0;
 		sign[ADDR[11:9]]=ADDR[8:4];

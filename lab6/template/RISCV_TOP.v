@@ -83,10 +83,12 @@ module RISCV_TOP (
 	assign BA_trans=t;
 	assign BA_MEM_ADDR=t_ADDR;
 	assign BA_MEM_DI=t_DI;
+	assign BA_MEMW=t_MEMW;
 	always @(posedge CLK) begin
 		t=trans;
 		t_DI=MEM_DI;
 		t_ADDR=MEM_ADDR;
+		t_MEMW=MEMW;
 	end
 /* 	D_MEM D_M(
 		.clk(CLK),
