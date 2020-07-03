@@ -31,6 +31,7 @@ module RISCV_TOP (
 
 	// TODO: implement multi-cycle CPU
 
+	wire[31:0] num_inst;
 	//cache
 	wire [77:0] MEM_I;
 	wire [77:0] MEM_O;
@@ -68,13 +69,18 @@ module RISCV_TOP (
 		.BA_trans(BA_trans),
 		.BA_MEMW(BA_MEMW),
 		.BA_MEM_ADDR(BA_MEM_ADDR),
-		.BA_MEM_DI(BA_MEM_DI)
+		.BA_MEM_DI(BA_MEM_DI),
+		.s(num_inst)
 	);
 	assign D_MEM_ADDR=MEM_ADDR;
 	assign D_MEM_DOUT=MEM_DI;
 	assign MEM_DOUT=D_MEM_DI;
 	assign D_MEM_WEN=MEMW;
-
+	reg t;
+	assign BA_trans=t;
+	always @(posedge CLK) begin
+		t=trans;
+	end
 /* 	D_MEM D_M(
 		.clk(CLK),
 		.rstn(RSTn),
@@ -110,7 +116,6 @@ module RISCV_TOP (
 	wire isbc;
 	wire pcwrite;
 
-	wire[31:0] num_inst;
 	wire re;
 	assign F_WEN=~re;
 	CONTROL control(
@@ -175,9 +180,20 @@ module RISCV_TOP (
 		.I_MEM_CSN(I_MEM_CSN),
 		.D_MEM_CSN(D_MEM_CSN)
 	);
-
+	wire [31:0] ja;
+	wire [31:0] bPC;
+	MUX#(
+		.DWIDTH(32)
+	)beI(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall),
+		.in0({20'b0,out_PC}),
+		.in1(ja),
+		.DOUT(bPC)
+	);
 	always @(*) begin
-		I_MEM_ADDR=out_PC;
+		I_MEM_ADDR=bPC[11:0];
 	end
 
 	REG#(
@@ -212,7 +228,7 @@ module RISCV_TOP (
 	// 	.in(out_ins_REG[11:7]),
 	// 	.DOUT(RF_WA1)
 	// );
-	wire [31:0] ja;
+
 	wire [31:0] ja2;
 	REG #(
 		.DWIDTH(32)
@@ -304,7 +320,7 @@ module RISCV_TOP (
 		.clk(CLK),
 		.rstn(RSTn),
 		.CON(CON_A),
-		.in0({20'b0,out_PC}),
+		.in0({20'b0,bPC[11:0]}),
 		.in1(out_A),
 		.DOUT(ALU_A)
 	);

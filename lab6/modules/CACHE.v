@@ -20,7 +20,8 @@ module CACHE (
 	input  wire BA_trans,
 	input  wire BA_MEMW,
 	input  wire [11:0] BA_MEM_ADDR,
-	input  wire [31:0] BA_MEM_DI
+	input  wire [31:0] BA_MEM_DI,
+	input  wire [31:0]s
 );
 
 reg [`BA_LEN:0]p[0:`LEN-1];
@@ -38,16 +39,7 @@ reg valid;
 reg [1:0] tim;
 reg [11:0] ADDR_DOUT;
 integer i;
-always @(posedge rstn) begin //todo这里补下
-	stall=0;
-	DOUT=32'b00;
-	state=0;
-	trans=0;
-	MEMW=0;
-	MEM_ADDR=0;
-	MEM_DI=0;
-	tim=0;
-
+initial begin
 	for (i = 0; i<`LEN; i=i+1) begin
 		sign[i]=0;
 	end
@@ -57,33 +49,38 @@ always @(posedge rstn) begin //todo这里补下
 	for (i = 0; i<`LEN; i=i+1) begin
 		index[i]=0;
 	end
+
+end
+always @(posedge rstn) begin //todo这里补下
+	stall=0;
+	DOUT=32'b00;
+	state=0;
+	trans=0;
+	MEMW=0;
+	MEM_ADDR=0;
+	MEM_DI=0;
+	tim=0;
 	for (i = 0; i<`LEN; i=i+1) begin
 		cache0[i]=0;
 		cache1[i]=0;
 		cache2[i]=0;
 		cache3[i]=0;
 	end
+
 end
-reg [2:0]t;
+
+reg [1:0]t;
 reg [2:0]m;
-reg s;
 reg [1:0]f;
 reg [2:0]u;
-always @(posedge clk) begin
-	valid=p[ADDR[11:9]][ADDR[3:2]]&&(sign[ADDR[11:9]]==ADDR[8:4]);
-	t=sign[ADDR[11:9]];
-	m=ADDR[11:9];
-	s=p[ADDR[11:9]][ADDR[3:2]];
-	f=p[ADDR[11:9]];
-	u=ADDR[11:9];
-end
+
 
 always @(*) begin
 	MEM_ADDR=ADDR;
 	MEM_DI=DI;
 end
 
-always @(posedge clk) begin //? 没想好有没有必要
+always @(*) begin //? 没想好有没有必要
 	state=3'b0;
 	state[1]=~WEN;
 	tim=tim+1;
@@ -91,6 +88,9 @@ end
 wire [31:0] out;
 always @(*) begin
 	DOUT=out;
+end
+always @(*) begin
+	state[0]=valid;
 end
 MUX4 mux(
 	.clk(clk),
@@ -103,12 +103,11 @@ MUX4 mux(
 	.DOUT(out)
 );
 
-always @(*) begin
-	state[0]=valid;
-end
+
 always @(*) begin
 	if (state[1]==1) begin
 		MEMW=0;
+		trans=1;
 		sign[MEM_ADDR[11:9]]=MEM_ADDR[8:4];
 		if (ADDR[3:2]==2'b0) begin
 			cache0[ADDR[11:9]]=DI;
@@ -127,13 +126,15 @@ always @(*) begin
 	end
 	if (state==3'b01) begin
 		MEMW=1;
+		trans=0;
 	end
 	if (state==3'b00) begin
 		MEMW=1;
+		trans=1;
 	end
 end
-always @(*) begin
-	if (MEMW) begin
+always @(*) begin//!
+	if (~MEMW&&BA_trans==1) begin
 		//load
 		sign[MEM_ADDR[11:9]]=MEM_ADDR[8:4];
 		if (MEM_ADDR[3:2]==2'b0) begin
@@ -154,5 +155,8 @@ always @(*) begin
 end
 always @(*) begin
 	stall=~valid;
+end
+always @(*) begin
+	valid=(s[31:2]>0&&s[1:0]==0)?p[ADDR[11:9]][ADDR[3:2]]&(sign[ADDR[11:9]]==ADDR[8:4]):1;
 end
 endmodule //CACHE
