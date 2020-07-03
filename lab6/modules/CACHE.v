@@ -79,6 +79,7 @@ reg [2:0]u;
 always @(*) begin
 	MEM_ADDR=ADDR;
 	MEM_DI=DI;
+	MEMW=WEN;
 end
 always @(*) begin
 	state[1]=~WEN;
@@ -135,8 +136,8 @@ always @(*) begin
 		trans=1;
 	end
 end
-always @(*) begin//!
-	if (~MEMW&&BA_trans==1&&stall==1) begin
+always @(*) begin//! 没回来
+	if (BA_trans==1) begin
 		//load
 		sign[BA_MEM_ADDR[11:9]]=BA_MEM_ADDR[8:4];
 		if (BA_MEM_ADDR[3:2]==2'b0) begin

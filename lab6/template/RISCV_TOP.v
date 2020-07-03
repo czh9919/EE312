@@ -53,15 +53,16 @@ module RISCV_TOP (
 	wire [11:0] BA_MEM_ADDR;
 	wire [31:0] BA_MEM_DI;
 	wire [31:0] BA_MEM_DOUT;
-	
-	assign D_MEM_ADDR=MEM_ADDR;
-	assign D_MEM_DOUT=MEM_DI;
-	assign MEM_DOUT=D_MEM_DI;
-	assign D_MEM_WEN=MEMW;
 	reg t;
 	reg t_MEMW;
 	reg [11:0] t_ADDR;
 	reg [31:0] t_DI;
+	
+	assign D_MEM_ADDR=t_ADDR;
+	assign D_MEM_DOUT=t_DI;
+	assign MEM_DOUT=D_MEM_DI;
+	assign D_MEM_WEN=t_MEMW;
+
 	assign BA_trans=t;
 	assign BA_MEM_ADDR=t_ADDR;
 	assign BA_MEM_DI=t_DI;
@@ -206,7 +207,7 @@ module RISCV_TOP (
 	always @(*) begin
 		I_MEM_ADDR=bPC[11:0];
 	end
-
+	wire stall_1;
 	REG#(
 		.DWIDTH(32)
 	) ins_REG(
@@ -223,8 +224,26 @@ module RISCV_TOP (
 		.in(F_DI),
 		.DOUT(out_data_reg)
 	);
-
-	assign F_ADDR=ALU_ans;
+	wire [31:0]an;
+	REG #(
+		.DWIDTH(32)
+	) dat(
+		.clk(CLK),
+		.rstn(RSTn),
+		.in(ALU_ans),
+		.DOUT(an)
+	);
+	MUX#(
+		.DWIDTH(12)
+	)mu(
+		.clk(CLK),
+		.rstn(RSTn),
+		.CON(stall_1),
+		.in0(ALU_ans[11:0]),
+		.in1(an[11:0]),
+		.DOUT(F_ADDR)
+	);
+	/* assign F_ADDR=ALU_ans; */
 	assign RF_RA1=out_ins_REG[19:15];
 	assign RF_RA2=out_ins_REG[24:20];
 
@@ -253,7 +272,7 @@ module RISCV_TOP (
 	wire [31:0]oao;
 	wire [31:0]t_oao;
 	wire [31:0]i_oao;
-	wire stall_1;
+
 	REG#(
 		.DWIDTH(1)
 	)sta(
