@@ -154,20 +154,18 @@ always @(*) begin//!
 	end
 end
 reg va;
-
 always @(posedge clk) begin
-	va=(s[31:2]>0&&s[1:0]==2'b00)?(p[ADDR[11:9]][ADDR[3:2]])&(sign[ADDR[11:9]]==ADDR[8:4]):1;
+	va=(~WEN)?((p[ADDR[11:9]][ADDR[3:2]])&(sign[ADDR[11:9]]==ADDR[8:4])):1;
 	t=sign[ADDR[11:9]]==ADDR[8:4];
 	m=p[ADDR[11:9]][ADDR[3:2]];
 	f=s[1:0]==2'b11;
-end
-always @(*) begin
-	if (~WEN) begin
+	if (s[31:2]>0&&s[1:0]==2'b11) begin
 		valid=va;
 	end
 	else begin
-		valid=1;
+		valid=1'b1;
 	end
 	stall=~valid;
 end
+
 endmodule //CACHE
